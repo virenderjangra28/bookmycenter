@@ -534,14 +534,12 @@ const Header = () => {
   const [utilityBarVisible, setUtilityBarVisible] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
   const [utilityBarHeight, setUtilityBarHeight] = useState(0);
-  const [mobileMenuHeight, setMobileMenuHeight] = useState(0);
 
   utilityBarVisibleRef.current = utilityBarVisible;
 
   const headerSpacerHeight =
     MAIN_NAV_HEIGHT +
-    (isDesktop && utilityBarVisible ? utilityBarHeight : 0) +
-    (mobileMenuOpen ? mobileMenuHeight : 0);
+    (isDesktop && utilityBarVisible ? utilityBarHeight : 0);
 
   const activeItem = NAV_ITEMS.find((item) => item.label === openDropdown);
 
@@ -630,27 +628,6 @@ const Header = () => {
     return () => resizeObserver.disconnect();
   }, [isDesktop, utilityBarVisible]);
 
-  useEffect(() => {
-    if (!mobileMenuOpen) {
-      setMobileMenuHeight(0);
-      return;
-    }
-
-    const mobileMenuElement = mobileMenuRef.current;
-    if (!mobileMenuElement) return;
-
-    const updateMobileMenuHeight = () => {
-      setMobileMenuHeight(mobileMenuElement.offsetHeight);
-    };
-
-    updateMobileMenuHeight();
-
-    const resizeObserver = new ResizeObserver(updateMobileMenuHeight);
-    resizeObserver.observe(mobileMenuElement);
-
-    return () => resizeObserver.disconnect();
-  }, [mobileMenuOpen, openMobileDropdown]);
-
   return (
     <>
       <header
@@ -703,7 +680,9 @@ const Header = () => {
         </div>
 
         {activeItem ? (
-          <MegaMenuPanel item={activeItem} onClose={handleDesktopClose} />
+          <div className="hidden lg:block">
+            <MegaMenuPanel item={activeItem} onClose={handleDesktopClose} />
+          </div>
         ) : null}
       </div>
 
@@ -711,7 +690,7 @@ const Header = () => {
         <nav
           ref={mobileMenuRef}
           id="mobile-nav-menu"
-          className="border-b border-[#e5e7eb] bg-white px-4 py-2 lg:hidden"
+          className="fixed inset-x-0 top-[72px] z-40 max-h-[calc(100dvh-72px)] overflow-y-auto overscroll-y-contain border-b border-[#e5e7eb] bg-white px-4 py-2 lg:hidden"
           aria-label="Mobile navigation"
         >
           <div className="mb-2 flex flex-wrap gap-4 border-b border-[#e5e7eb] pb-3">

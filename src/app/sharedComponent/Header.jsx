@@ -315,16 +315,26 @@ function Logo() {
   );
 }
 
+const MAIN_NAV_HEIGHT = 72;
+const UTILITY_BAR_HEIGHT = 40;
+const SCROLL_THRESHOLD = 16;
+const SHOW_UTILITY_BAR_AT = 64;
+
 function UtilityBar({ visible }) {
   return (
     <div
-      className={`overflow-hidden border-[#d9dde3] bg-[#f3f4f6] transition-all duration-300 ease-in-out ${
+      className={`grid border-[#d9dde3] bg-[#f3f4f6] transition-[grid-template-rows,opacity] duration-300 ease-in-out ${
         visible
-          ? "max-h-10 border-b opacity-100"
-          : "pointer-events-none max-h-0 border-b-0 opacity-0"
+          ? "grid-rows-[1fr] border-b opacity-100"
+          : "pointer-events-none grid-rows-[0fr] border-b-0 opacity-0"
       }`}
     >
-      <div className="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
+      <div className="overflow-hidden">
+        <div
+          className={`mx-auto flex h-10 max-w-7xl items-center justify-between px-4 transition-transform duration-300 ease-in-out sm:px-6 lg:px-10 ${
+            visible ? "translate-y-0" : "-translate-y-full"
+          }`}
+        >
         <div className="flex items-center gap-4 sm:gap-6">
           {UTILITY_LINKS.map((link) => (
             <Link
@@ -360,6 +370,7 @@ function UtilityBar({ visible }) {
             English
             <ChevronDownIcon className="h-3.5 w-3.5" />
           </button>
+        </div>
         </div>
       </div>
     </div>
@@ -490,12 +501,21 @@ function MobileNavDropdown({ item, isOpen, onToggle, onNavigate }) {
 
 const Header = () => {
   const headerRef = useRef(null);
+  const mobileMenuRef = useRef(null);
   const lastScrollY = useRef(0);
+  const utilityBarVisibleRef = useRef(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [openMobileDropdown, setOpenMobileDropdown] = useState(null);
   const [utilityBarVisible, setUtilityBarVisible] = useState(true);
-  const [headerHeight, setHeaderHeight] = useState(112);
+  const [mobileMenuHeight, setMobileMenuHeight] = useState(0);
+
+  utilityBarVisibleRef.current = utilityBarVisible;
+
+  const headerSpacerHeight =
+    MAIN_NAV_HEIGHT +
+    (utilityBarVisible ? UTILITY_BAR_HEIGHT : 0) +
+    (mobileMenuOpen ? mobileMenuHeight : 0);
 
   const activeItem = NAV_ITEMS.find((item) => item.label === openDropdown);
 
@@ -528,39 +548,49 @@ const Header = () => {
     const onScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY <= 0) {
-        setUtilityBarVisible(true);
-      } else if (
-        currentScrollY > lastScrollY.current &&
-        currentScrollY > 40
-      ) {
+      if (currentScrollY <= SHOW_UTILITY_BAR_AT) {
+        if (!utilityBarVisibleRef.current) {
+          setUtilityBarVisible(true);
+        }
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      const delta = currentScrollY - lastScrollY.current;
+      if (Math.abs(delta) < SCROLL_THRESHOLD) return;
+
+      if (delta > 0 && utilityBarVisibleRef.current && currentScrollY > SHOW_UTILITY_BAR_AT) {
         setUtilityBarVisible(false);
-      } else if (currentScrollY < lastScrollY.current) {
-        setUtilityBarVisible(true);
       }
 
       lastScrollY.current = currentScrollY;
     };
 
+    lastScrollY.current = window.scrollY;
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    const headerElement = headerRef.current;
-    if (!headerElement) return;
+    if (!mobileMenuOpen) {
+      setMobileMenuHeight(0);
+      return;
+    }
 
-    const updateHeaderHeight = () => {
-      setHeaderHeight(headerElement.offsetHeight);
+    const mobileMenuElement = mobileMenuRef.current;
+    if (!mobileMenuElement) return;
+
+    const updateMobileMenuHeight = () => {
+      setMobileMenuHeight(mobileMenuElement.offsetHeight);
     };
 
-    updateHeaderHeight();
+    updateMobileMenuHeight();
 
-    const resizeObserver = new ResizeObserver(updateHeaderHeight);
-    resizeObserver.observe(headerElement);
+    const resizeObserver = new ResizeObserver(updateMobileMenuHeight);
+    resizeObserver.observe(mobileMenuElement);
 
     return () => resizeObserver.disconnect();
-  }, [mobileMenuOpen, utilityBarVisible, openDropdown]);
+  }, [mobileMenuOpen, openMobileDropdown]);
 
   return (
     <>
@@ -609,6 +639,7 @@ const Header = () => {
 
       {mobileMenuOpen ? (
         <nav
+          ref={mobileMenuRef}
           id="mobile-nav-menu"
           className="border-b border-[#e5e7eb] bg-white px-4 py-2 lg:hidden"
           aria-label="Mobile navigation"
@@ -657,7 +688,11 @@ const Header = () => {
         </nav>
       ) : null}
       </header>
-      <div aria-hidden className="shrink-0" style={{ height: headerHeight }} />
+      <div
+        aria-hidden
+        className="shrink-0 transition-[height] duration-300 ease-in-out"
+        style={{ height: headerSpacerHeight }}
+      />
     </>
   );
 };

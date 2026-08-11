@@ -319,11 +319,13 @@ const MAIN_NAV_HEIGHT = 72;
 const UTILITY_BAR_HEIGHT = 40;
 const SCROLL_THRESHOLD = 16;
 const SHOW_UTILITY_BAR_AT = 64;
+const DESKTOP_MEDIA_QUERY = "(min-width: 1024px)";
 
-function UtilityBar({ visible }) {
+function UtilityBar({ visible, barRef }) {
   return (
     <div
-      className={`grid border-[#d9dde3] bg-[#f3f4f6] transition-[grid-template-rows,opacity] duration-300 ease-in-out ${
+      ref={barRef}
+      className={`hidden border-[#d9dde3] bg-[#f3f4f6] transition-[grid-template-rows,opacity] duration-300 ease-in-out lg:grid ${
         visible
           ? "grid-rows-[1fr] border-b opacity-100"
           : "pointer-events-none grid-rows-[0fr] border-b-0 opacity-0"
@@ -335,42 +337,42 @@ function UtilityBar({ visible }) {
             visible ? "translate-y-0" : "-translate-y-full"
           }`}
         >
-        <div className="flex items-center gap-4 sm:gap-6">
-          {UTILITY_LINKS.map((link) => (
+          <div className="flex items-center gap-4 sm:gap-6">
+            {UTILITY_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="text-xs font-semibold text-[#2f3640] transition-colors hover:text-[#0b1a33] sm:text-sm"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="flex shrink-0 items-center gap-4 whitespace-nowrap sm:gap-6">
             <Link
-              key={link.label}
-              href={link.href}
+              href="#search"
+              className="flex items-center gap-1.5 text-xs font-semibold text-[#2f3640] transition-colors hover:text-[#0b1a33] sm:text-sm"
+            >
+              <SearchIcon className="h-3.5 w-3.5" />
+              Search
+            </Link>
+            <Link
+              href="#contact"
               className="text-xs font-semibold text-[#2f3640] transition-colors hover:text-[#0b1a33] sm:text-sm"
             >
-              {link.label}
+              Contact Us
             </Link>
-          ))}
-        </div>
-
-        <div className="flex shrink-0 items-center gap-4 whitespace-nowrap sm:gap-6">
-          <Link
-            href="#search"
-            className="flex items-center gap-1.5 text-xs font-semibold text-[#2f3640] transition-colors hover:text-[#0b1a33] sm:text-sm"
-          >
-            <SearchIcon className="h-3.5 w-3.5" />
-            Search
-          </Link>
-          <Link
-            href="#contact"
-            className="text-xs font-semibold text-[#2f3640] transition-colors hover:text-[#0b1a33] sm:text-sm"
-          >
-            Contact Us
-          </Link>
-          <button
-            type="button"
-            className="flex items-center gap-1 text-xs font-semibold text-[#2f3640] transition-colors hover:text-[#0b1a33] sm:text-sm"
-            aria-haspopup="listbox"
-            aria-label="Select language"
-          >
-            English
-            <ChevronDownIcon className="h-3.5 w-3.5" />
-          </button>
-        </div>
+            <button
+              type="button"
+              className="flex items-center gap-1 text-xs font-semibold text-[#2f3640] transition-colors hover:text-[#0b1a33] sm:text-sm"
+              aria-haspopup="listbox"
+              aria-label="Select language"
+            >
+              English
+              <ChevronDownIcon className="h-3.5 w-3.5" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -523,19 +525,22 @@ function MobileNavDropdown({ item, isOpen, onToggle, onNavigate }) {
 const Header = () => {
   const headerRef = useRef(null);
   const mobileMenuRef = useRef(null);
+  const utilityBarRef = useRef(null);
   const lastScrollY = useRef(0);
   const utilityBarVisibleRef = useRef(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [openMobileDropdown, setOpenMobileDropdown] = useState(null);
   const [utilityBarVisible, setUtilityBarVisible] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [utilityBarHeight, setUtilityBarHeight] = useState(0);
   const [mobileMenuHeight, setMobileMenuHeight] = useState(0);
 
   utilityBarVisibleRef.current = utilityBarVisible;
 
   const headerSpacerHeight =
     MAIN_NAV_HEIGHT +
-    (utilityBarVisible ? UTILITY_BAR_HEIGHT : 0) +
+    (isDesktop && utilityBarVisible ? utilityBarHeight : 0) +
     (mobileMenuOpen ? mobileMenuHeight : 0);
 
   const activeItem = NAV_ITEMS.find((item) => item.label === openDropdown);
@@ -566,7 +571,21 @@ const Header = () => {
   }, [openDropdown, handleDesktopClose]);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia(DESKTOP_MEDIA_QUERY);
+
+    const handleViewportChange = () => {
+      setIsDesktop(mediaQuery.matches);
+    };
+
+    handleViewportChange();
+    mediaQuery.addEventListener("change", handleViewportChange);
+    return () => mediaQuery.removeEventListener("change", handleViewportChange);
+  }, []);
+
+  useEffect(() => {
     const onScroll = () => {
+      if (!window.matchMedia(DESKTOP_MEDIA_QUERY).matches) return;
+
       const currentScrollY = window.scrollY;
 
       if (currentScrollY <= SHOW_UTILITY_BAR_AT) {
@@ -591,6 +610,25 @@ const Header = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const utilityBarElement = utilityBarRef.current;
+    if (!isDesktop || !utilityBarElement || !utilityBarVisible) {
+      setUtilityBarHeight(0);
+      return;
+    }
+
+    const updateUtilityBarHeight = () => {
+      setUtilityBarHeight(utilityBarElement.offsetHeight);
+    };
+
+    updateUtilityBarHeight();
+
+    const resizeObserver = new ResizeObserver(updateUtilityBarHeight);
+    resizeObserver.observe(utilityBarElement);
+
+    return () => resizeObserver.disconnect();
+  }, [isDesktop, utilityBarVisible]);
 
   useEffect(() => {
     if (!mobileMenuOpen) {
@@ -619,7 +657,7 @@ const Header = () => {
         ref={headerRef}
         className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm"
       >
-      <UtilityBar visible={utilityBarVisible} />
+      <UtilityBar visible={utilityBarVisible} barRef={utilityBarRef} />
 
       <div
         className="relative border-b border-[#e5e7eb] bg-white"

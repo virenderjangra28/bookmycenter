@@ -315,9 +315,15 @@ function Logo() {
   );
 }
 
-function UtilityBar() {
+function UtilityBar({ visible }) {
   return (
-    <div className="border-b border-[#d9dde3] bg-[#f3f4f6]">
+    <div
+      className={`overflow-hidden border-[#d9dde3] bg-[#f3f4f6] transition-all duration-300 ease-in-out ${
+        visible
+          ? "max-h-10 border-b opacity-100"
+          : "pointer-events-none max-h-0 border-b-0 opacity-0"
+      }`}
+    >
       <div className="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
         <div className="flex items-center gap-4 sm:gap-6">
           {UTILITY_LINKS.map((link) => (
@@ -331,7 +337,7 @@ function UtilityBar() {
           ))}
         </div>
 
-        <div className="flex items-center gap-4 sm:gap-6">
+        <div className="flex shrink-0 items-center gap-4 whitespace-nowrap sm:gap-6">
           <Link
             href="#search"
             className="flex items-center gap-1.5 text-xs font-semibold text-[#2f3640] transition-colors hover:text-[#0b1a33] sm:text-sm"
@@ -484,9 +490,12 @@ function MobileNavDropdown({ item, isOpen, onToggle, onNavigate }) {
 
 const Header = () => {
   const headerRef = useRef(null);
+  const lastScrollY = useRef(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [openMobileDropdown, setOpenMobileDropdown] = useState(null);
+  const [utilityBarVisible, setUtilityBarVisible] = useState(true);
+  const [headerHeight, setHeaderHeight] = useState(112);
 
   const activeItem = NAV_ITEMS.find((item) => item.label === openDropdown);
 
@@ -515,13 +524,52 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", onPointerDown);
   }, [openDropdown, handleDesktopClose]);
 
+  useEffect(() => {
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY <= 0) {
+        setUtilityBarVisible(true);
+      } else if (
+        currentScrollY > lastScrollY.current &&
+        currentScrollY > 40
+      ) {
+        setUtilityBarVisible(false);
+      } else if (currentScrollY < lastScrollY.current) {
+        setUtilityBarVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const headerElement = headerRef.current;
+    if (!headerElement) return;
+
+    const updateHeaderHeight = () => {
+      setHeaderHeight(headerElement.offsetHeight);
+    };
+
+    updateHeaderHeight();
+
+    const resizeObserver = new ResizeObserver(updateHeaderHeight);
+    resizeObserver.observe(headerElement);
+
+    return () => resizeObserver.disconnect();
+  }, [mobileMenuOpen, utilityBarVisible, openDropdown]);
+
   return (
-    <header
-      ref={headerRef}
-      className="relative z-50 shrink-0 bg-white shadow-sm"
-      onMouseLeave={handleDesktopClose}
-    >
-      <UtilityBar />
+    <>
+      <header
+        ref={headerRef}
+        className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm"
+        onMouseLeave={handleDesktopClose}
+      >
+      <UtilityBar visible={utilityBarVisible} />
 
       <div className="relative border-b border-[#e5e7eb] bg-white">
         <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
@@ -608,7 +656,9 @@ const Header = () => {
           ))}
         </nav>
       ) : null}
-    </header>
+      </header>
+      <div aria-hidden className="shrink-0" style={{ height: headerHeight }} />
+    </>
   );
 };
 

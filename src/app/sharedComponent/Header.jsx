@@ -397,6 +397,7 @@ function MegaMenuCard({ item, onClose }) {
 
 function MegaMenuPanel({ item, onClose }) {
   const panelRef = useRef(null);
+  const bridgeRef = useRef(null);
 
   useEffect(() => {
     const onKeyDown = (event) => {
@@ -407,15 +408,35 @@ function MegaMenuPanel({ item, onClose }) {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [onClose]);
 
+  const handlePanelLeave = (event) => {
+    const relatedTarget = event.relatedTarget;
+
+    if (
+      relatedTarget instanceof Node &&
+      (panelRef.current?.contains(relatedTarget) ||
+        bridgeRef.current?.contains(relatedTarget))
+    ) {
+      return;
+    }
+
+    onClose();
+  };
+
   return (
-    <div
-      ref={panelRef}
-      className="absolute inset-x-0 top-full z-50 border-t border-[#e5e7eb] bg-white shadow-lg"
-      role="region"
-      aria-label={`${item.label} menu`}
-    >
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
-        <div className="rounded-2xl bg-[#eef1f5] px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
+    <div className="absolute inset-x-0 top-full z-50 flex justify-center pointer-events-none px-4 pb-4 sm:px-6 lg:px-10 lg:pb-6">
+      <div className="relative w-[70%] pointer-events-auto">
+        <div
+          ref={bridgeRef}
+          className="absolute -top-2 inset-x-0 h-2"
+          onMouseLeave={handlePanelLeave}
+        />
+        <div
+          ref={panelRef}
+          role="region"
+          aria-label={`${item.label} menu`}
+          className="rounded-2xl bg-[#eef1f5] px-5 py-8 shadow-lg sm:px-8 sm:py-10 lg:px-12 lg:py-12"
+          onMouseLeave={handlePanelLeave}
+        >
           <div className="mb-8 text-center lg:mb-10">
             <div className="mb-2 flex items-center justify-center gap-2.5">
               <h2 className="text-2xl font-bold text-[#0b1a33] sm:text-3xl lg:text-4xl">
@@ -597,11 +618,22 @@ const Header = () => {
       <header
         ref={headerRef}
         className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm"
-        onMouseLeave={handleDesktopClose}
       >
       <UtilityBar visible={utilityBarVisible} />
 
-      <div className="relative border-b border-[#e5e7eb] bg-white">
+      <div
+        className="relative border-b border-[#e5e7eb] bg-white"
+        onMouseLeave={(event) => {
+          const relatedTarget = event.relatedTarget;
+          if (
+            relatedTarget instanceof Node &&
+            event.currentTarget.contains(relatedTarget)
+          ) {
+            return;
+          }
+          handleDesktopClose();
+        }}
+      >
         <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
           <Logo />
 

@@ -25,7 +25,7 @@ const HeroSection = () => {
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
-              href="#find-your-exam"
+              href="/find-your-exam"
               className="inline-flex items-center justify-center rounded-full bg-[#1fe8a3] px-7 py-3 text-sm font-bold text-[#051224] transition-colors hover:bg-[#17d492]"
             >
               Find Your Exam

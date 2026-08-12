@@ -18,7 +18,7 @@ const NAV_ITEMS = [
       {
         label: "Find Your Exam",
         description: "Search our site to find your exam, schedule and more",
-        href: "#find-your-exam",
+        href: "/find-your-exam",
       },
       {
         label: "Before Your Exam",
@@ -207,7 +207,7 @@ const NAV_ITEMS = [
         href: "#contact",
       },
     ],
-  },
+  }
 ];
 
 function ChevronDownIcon({ className }) {
@@ -372,6 +372,12 @@ function UtilityBar({ visible, barRef }) {
               English
               <ChevronDownIcon className="h-3.5 w-3.5" />
             </button>
+            <Link
+              href="/login"
+              className="text-xs font-semibold text-[#2f3640] transition-colors hover:text-[#0b1a33] sm:text-sm"
+            >
+              Login/SignUp
+            </Link>
           </div>
         </div>
       </div>
@@ -718,6 +724,13 @@ const Header = () => {
               onClick={closeMobileMenu}
             >
               Contact Us
+            </Link>
+            <Link
+              href="/login"
+              className="text-xs font-semibold text-[#2f3640]"
+              onClick={closeMobileMenu}
+            >
+              Login/SignUp
             </Link>
           </div>
 

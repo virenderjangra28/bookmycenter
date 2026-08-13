@@ -1,0 +1,5 @@
+{"timestamp":"00:00:00.583","source":"Server","level":"WARN","message":"⚠ Turbopack's filesystem cache has been deleted because we previously detected an internal error in Turbopack. Builds or page loads may be slower as a result."}
+{"timestamp":"00:00:00.740","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:01:22.354","source":"Server","level":"LOG","message":"  Reload env: .env"}
+{"timestamp":"00:02:07.818","source":"Browser","level":"WARN","message":"Image with src \"/_next/static/media/logo.2qof6z4khpsp-.jpeg\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this image is above the fold.\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading"}
+{"timestamp":"00:02:08.210","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mImage with src \\\"/_next/static/media/logo.2qof6z4khpsp-.jpeg\\\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\\\"eager\\\"` property if this image is above the fold.\\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading\\u001b[39m\""}

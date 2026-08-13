@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../../public/logo.jpeg";
+import logo from "../../public/logo.jpeg";
 
 const FOOTER_COLUMNS = [
   {
     title: "Exams",
     icon: "award",
-    links: [
+    links: [ 
       { label: "Find Your Exam", href: "#find-your-exam" },
       { label: "Before Your Exam", href: "#before-your-exam" },
       { label: "Accommodations", href: "#accommodations" },

@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import logo from "../../../public/logo.jpeg";
+import logo from "../../public/logo.jpeg";
 import Image from "next/image";
+import ProfileDropdown from "./ProfileDropdown";
 
 const UTILITY_LINKS = [
   { label: "Test Center Closures", href: "#test-center-closures" },
@@ -540,6 +541,13 @@ const Header = () => {
   const [utilityBarVisible, setUtilityBarVisible] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
   const [utilityBarHeight, setUtilityBarHeight] = useState(0);
+  const [role, setRole] = useState("1");
+  const [user] = useState({
+    name: "Virender Jangra",
+    email: "virender.jangra28@gmail.com",
+  });
+
+  const isLoggedIn = role === "1" || role === "2";
 
   utilityBarVisibleRef.current = utilityBarVisible;
 
@@ -640,7 +648,8 @@ const Header = () => {
         ref={headerRef}
         className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm"
       >
-      <UtilityBar visible={utilityBarVisible} barRef={utilityBarRef} />
+          <UtilityBar visible={utilityBarVisible} barRef={utilityBarRef} />
+        
 
       <div
         className="relative border-b border-[#e5e7eb] bg-white"
@@ -657,22 +666,33 @@ const Header = () => {
       >
         <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
           <Logo />
+          {!isLoggedIn && (
+             <nav
+             className="hidden items-center gap-5 lg:flex xl:gap-7"
+             aria-label="Main navigation"
+           >
+             {NAV_ITEMS.map((item) => (
+               <DesktopNavTrigger
+                 key={item.label}
+                 item={item}
+                 isOpen={openDropdown === item.label}
+                 onOpen={() => handleDesktopOpen(item.label)}
+                 onClose={handleDesktopClose}
+               />
+             ))}
+           </nav>
+          )}
 
-          <nav
-            className="hidden items-center gap-5 lg:flex xl:gap-7"
-            aria-label="Main navigation"
-          >
-            {NAV_ITEMS.map((item) => (
-              <DesktopNavTrigger
-                key={item.label}
-                item={item}
-                isOpen={openDropdown === item.label}
-                onOpen={() => handleDesktopOpen(item.label)}
-                onClose={handleDesktopClose}
+          <div className="flex items-center gap-3">
+            {isLoggedIn ? (
+              <ProfileDropdown
+                name={user.name}
+                email={user.email}
+                role={role}
               />
-            ))}
-          </nav>
+            ) : null}
 
+            {!isLoggedIn ? (
           <button
             type="button"
             className="flex h-10 w-10 items-center justify-center rounded-md text-[#0b1a33] transition hover:bg-[#f3f4f6] lg:hidden"
@@ -683,6 +703,8 @@ const Header = () => {
           >
             <IconMenu className="h-6 w-6" />
           </button>
+            ) : null}
+          </div>
         </div>
 
         {activeItem ? (
@@ -692,14 +714,14 @@ const Header = () => {
         ) : null}
       </div>
 
-      {mobileMenuOpen ? (
-        <nav
+      {mobileMenuOpen && !isLoggedIn ? (
+          <nav
           ref={mobileMenuRef}
           id="mobile-nav-menu"
           className="fixed inset-x-0 top-[72px] z-40 max-h-[calc(100dvh-72px)] overflow-y-auto overscroll-y-contain border-b border-[#e5e7eb] bg-white px-4 py-2 lg:hidden"
           aria-label="Mobile navigation"
         >
-          <div className="mb-2 flex flex-wrap gap-4 border-b border-[#e5e7eb] pb-3">
+            <div className="mb-2 flex flex-wrap gap-4 border-b border-[#e5e7eb] pb-3">
             {UTILITY_LINKS.map((link) => (
               <Link
                 key={link.label}

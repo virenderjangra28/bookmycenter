@@ -4,7 +4,7 @@ import {
   ServiceCardsSection,
   TestimonialCarouselSection,
   TrustedPartnerSection,
-} from "./sharedComponent/homeSection/index.js";
+} from "../sharedComponent/homeSection/index.js";
 
 export default function Home() {
   return (

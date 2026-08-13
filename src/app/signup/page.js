@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import { toast } from "react-toastify";
 
 function MailIcon({ className }) {
   return (
@@ -58,7 +60,7 @@ function FormField({
           onChange={onChange}
           placeholder={placeholder}
           autoComplete={autoComplete}
-          className={`w-full rounded border bg-white py-3.5 pl-12 pr-4 text-sm uppercase tracking-wide text-[#1f2937] placeholder:text-[#9ca3af] outline-none transition-colors ${
+          className={`w-full rounded border bg-white py-3.5 pl-12 pr-4 text-sm tracking-wide text-[#1f2937] placeholder:text-[#9ca3af] outline-none transition-colors ${
             hasError
               ? "border-[#b03a2e] focus:border-[#b03a2e] focus:ring-2 focus:ring-[#b03a2e]/15"
               : "border-[#d1d5db] focus:border-[#0a7ea4] focus:ring-2 focus:ring-[#0a7ea4]/15"
@@ -73,10 +75,11 @@ function FormField({
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [mobile, setMobile] = useState("");
   const [company, setCompany] = useState("");
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const router = useRouter();
 
   const errors = useMemo(() => {
     const nextErrors = {};
@@ -89,8 +92,8 @@ export default function SignupPage() {
       nextErrors.name = "Please provide your name";
     }
 
-    if (!phone.trim()) {
-      nextErrors.phone = "This is the mandatory field";
+    if (!mobile.trim()) {
+      nextErrors.mobile = "This is the mandatory field";
     }
 
     if (!company.trim()) {
@@ -98,19 +101,41 @@ export default function SignupPage() {
     }
 
     return nextErrors;
-  }, [email, name, phone, company]);
+  }, [email, name, mobile, company]);
 
   const canSubmit =
     acceptedTerms &&
     email.trim() &&
     name.trim() &&
-    phone.trim() &&
+    mobile.trim() &&
     company.trim();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitted(true);
-    if (!canSubmit) return;
+      if (!canSubmit) return;
+      const response = await fetch("/api/admin/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          mobile,
+          company,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        toast.success(data.result);
+        setTimeout(() => {
+          router.push("/");
+        }, 4000);
+      } else {
+        toast.error(data.result);
+      }
+      console.log(data);
   };
 
   return (
@@ -152,15 +177,15 @@ export default function SignupPage() {
               hasError={submitted && !!errors.name}
             />
             <FormField
-              id="phone"
+              id="mobile"
               icon={PhoneIcon}
               type="tel"
-              value={phone}
-              onChange={(event) => setPhone(event.target.value)}
-              placeholder="YOUR PHONE NO. *"
+              value={mobile}
+              onChange={(event) => setMobile(event.target.value)}
+              placeholder="YOUR MOBILE NO. *"
               autoComplete="tel"
-              error={submitted ? errors.phone : ""}
-              hasError={submitted && !!errors.phone}
+              error={submitted ? errors.mobile : ""}
+              hasError={submitted && !!errors.mobile}
             />
           </div>
 

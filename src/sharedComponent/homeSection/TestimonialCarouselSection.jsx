@@ -1,0 +1,184 @@
+"use client";
+
+import { useCallback, useState } from "react";
+
+const TESTIMONIALS = [
+  {
+    quote:
+      "HRPA, through our implementation to Computer-Based Testing and the use of eight remote sites, has allowed us to be on the cutting edge of certification exams while still offering our exam writers the flexibility of writing their exams provincially, nationally and globally. Our relationship with BookMyCenter has been a prosperous one, and I look forward to continuing to work with them over the next four years.",
+    name: "Claude Balthazard",
+    title:
+      "Ph.D., CHRL, Vice President Regulatory Affairs and Registrar, Human Resources Professionals Association",
+  },
+  {
+    quote:
+      "BookMyCenter transformed how we manage high-stakes assessments across multiple regions. Their verified center network and seamless booking experience gave our candidates confidence and reduced administrative overhead significantly.",
+    name: "Sarah Mitchell",
+    title: "Director of Certification Programs, Global Skills Institute",
+  },
+  {
+    quote:
+      "The platform's AI proctoring and analytics dashboard helped us scale campus hiring drives without compromising exam integrity. It is the most reliable assessment partner we have worked with.",
+    name: "Rajesh Kumar",
+    title: "Head of Talent Acquisition, TechNova Solutions",
+  },
+  {
+    quote:
+      "From center discovery to post-exam reporting, BookMyCenter provides an end-to-end solution that our university partners trust. The candidate experience has improved dramatically since we switched.",
+    name: "Dr. Emily Chen",
+    title: "Dean of Academic Affairs, Pacific State University",
+  },
+  {
+    quote:
+      "We needed flexible delivery models for both in-center and remote exams. BookMyCenter delivered exactly that — secure, scalable, and supported by a responsive team at every step.",
+    name: "Michael Torres",
+    title: "VP of Operations, National Credentialing Board",
+  },
+  {
+    quote:
+      "Our test center network grew faster than expected thanks to BookMyCenter's onboarding tools and visibility. Centers love the platform, and so do our program managers.",
+    name: "Anita Desai",
+    title: "Program Manager, Allied Health Certifications",
+  },
+  {
+    quote:
+      "Security and compliance were non-negotiable for our licensing exams. BookMyCenter exceeded our expectations with robust identity verification and audit-ready reporting.",
+    name: "James Whitfield",
+    title: "Chief Exam Officer, Professional Licensing Authority",
+  },
+  {
+    quote:
+      "The ability to book verified centers across India and internationally in one place saved our organization countless hours. BookMyCenter is now core to our assessment strategy.",
+    name: "Priya Sharma",
+    title: "Assessment Lead, Enterprise Learning Group",
+  },
+  {
+    quote:
+      "Candidates consistently praise the clarity of the booking process and the quality of test centers. That feedback alone has made a measurable difference in our NPS scores.",
+    name: "David Okonkwo",
+    title: "Customer Experience Director, SkillsFirst Alliance",
+  },
+  {
+    quote:
+      "We evaluated several platforms before choosing BookMyCenter. Their combination of global reach, local center quality, and modern technology was unmatched in the market.",
+    name: "Laura Bergström",
+    title: "CEO, Nordic Assessment Partners",
+  },
+  {
+    quote:
+      "BookMyCenter helped us launch a new certification program in record time. The team understood our requirements and built a delivery model that scales with our growth.",
+    name: "Carlos Mendez",
+    title: "Founder, LatAm Professional Standards Council",
+  },
+];
+
+function ChevronLeftIcon({ className }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden>
+      <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd" />
+    </svg>
+  );
+}
+
+function ChevronRightIcon({ className }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden>
+      <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.25 4.5a.75.75 0 010 1.08l-4.25 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+    </svg>
+  );
+}
+
+const TestimonialCarouselSection = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const testimonial = TESTIMONIALS[activeIndex];
+
+  const goToPrevious = useCallback(() => {
+    setActiveIndex((current) =>
+      current === 0 ? TESTIMONIALS.length - 1 : current - 1,
+    );
+  }, []);
+
+  const goToNext = useCallback(() => {
+    setActiveIndex((current) =>
+      current === TESTIMONIALS.length - 1 ? 0 : current + 1,
+    );
+  }, []);
+
+  return (
+    <section className="relative overflow-hidden bg-[#051224] py-16 lg:py-24">
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(31,232,163,0.18)_0%,_transparent_55%)]"
+        aria-hidden
+      />
+
+      <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-10">
+        <div className="flex items-center gap-4 sm:gap-8">
+          <button
+            type="button"
+            onClick={goToPrevious}
+            aria-label="Previous testimonial"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[#051224] shadow-md transition-transform hover:scale-105 sm:h-12 sm:w-12"
+          >
+            <ChevronLeftIcon className="h-5 w-5 sm:h-6 sm:w-6" />
+          </button>
+
+          <div className="min-w-0 flex-1 text-center">
+            <blockquote>
+              <p className="text-lg font-bold leading-relaxed text-white sm:text-xl lg:text-2xl lg:leading-snug">
+                &ldquo;{testimonial.quote}&rdquo;
+              </p>
+            </blockquote>
+
+            <footer className="mt-8">
+              <cite className="not-italic">
+                <p className="text-base font-bold text-white sm:text-lg">
+                  {testimonial.name}
+                </p>
+                <p className="mx-auto mt-2 max-w-2xl text-xs leading-relaxed text-white/75 sm:text-sm">
+                  {testimonial.title}
+                </p>
+              </cite>
+            </footer>
+          </div>
+
+          <button
+            type="button"
+            onClick={goToNext}
+            aria-label="Next testimonial"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[#051224] shadow-md transition-transform hover:scale-105 sm:h-12 sm:w-12"
+          >
+            <ChevronRightIcon className="h-5 w-5 sm:h-6 sm:w-6" />
+          </button>
+        </div>
+
+        <div
+          className="mt-10 flex items-center justify-center gap-2"
+          role="tablist"
+          aria-label="Testimonial slides"
+        >
+          {TESTIMONIALS.map((item, index) => {
+            const isActive = index === activeIndex;
+
+            return (
+              <button
+                key={item.name}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-label={`Go to testimonial ${index + 1}`}
+                onClick={() => setActiveIndex(index)}
+                className={`rounded-full bg-white transition-all ${
+                  isActive
+                    ? "h-2.5 w-2.5 opacity-100"
+                    : "h-2 w-2 opacity-40 hover:opacity-70"
+                }`}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default TestimonialCarouselSection;

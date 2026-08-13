@@ -1,0 +1,45 @@
+import { NextResponse } from "next/server";
+import mongoose from "mongoose";
+import { User } from "@/app/lib/model/user";
+import { connectionString } from "@/app/lib/db";
+
+async function connectDB() {
+  if (mongoose.connection.readyState >= 1) {
+    return;
+  }
+
+  await mongoose.connect(connectionString);
+}
+
+export async function PUT(request, { params }) {
+  try {
+    await connectDB();
+
+    const { id } = await params;
+    const { isActive } = await request.json();
+
+    const user = await User.findByIdAndUpdate(
+      id,
+      { isActive: Number(isActive) },
+      { new: true }
+    );
+
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ result: user, success: true });
+  } catch (error) {
+    return NextResponse.json(
+      { result: "Failed to update user", success: false, error: error.message },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(request, { params }) {
+  return PUT(request, { params });
+}

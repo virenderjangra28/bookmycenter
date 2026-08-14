@@ -1,17 +1,8 @@
-import { connectionString } from "@/app/lib/db";
+import { connectDB } from "@/app/lib/db";
 import { User } from "@/app/lib/model/user";
-import mongoose from "mongoose";
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import { sendEmail } from "@/helper/mailer";
-
-async function connectDB() {
-    if (mongoose.connection.readyState >= 1) {
-        return;
-    }
-
-    await mongoose.connect(connectionString);
-}
 
 export async function POST(request) {
     try {

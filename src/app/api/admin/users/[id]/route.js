@@ -1,15 +1,6 @@
 import { NextResponse } from "next/server";
-import mongoose from "mongoose";
 import { User } from "@/app/lib/model/user";
-import { connectionString } from "@/app/lib/db";
-
-async function connectDB() {
-  if (mongoose.connection.readyState >= 1) {
-    return;
-  }
-
-  await mongoose.connect(connectionString);
-}
+import { connectDB } from "@/app/lib/db";
 
 export async function PUT(request, { params }) {
   try {

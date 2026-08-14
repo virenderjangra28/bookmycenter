@@ -1,0 +1,22 @@
+1:"$Sreact.fragment"
+2:I[29810,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/16b5quqfvn4uz.js","/_next/static/chunks/060nlm4fcsezt.js"],"default"]
+3:I[97367,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/16b5quqfvn4uz.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+8:I[97367,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/16b5quqfvn4uz.js"],"ViewportBoundary"]
+9:I[97367,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/16b5quqfvn4uz.js"],"MetadataBoundary"]
+a:I[27201,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/16b5quqfvn4uz.js"],"IconMark"]
+c:I[39756,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/16b5quqfvn4uz.js"],"default"]
+d:I[37457,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/16b5quqfvn4uz.js"],"default"]
+7:X
+f:X
+f:C
+0:{"buildId":"Ti3SbYsNSQ99w68Hrg9FD","data":[{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/_next/static/chunks/060nlm4fcsezt.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":"$@6","staleTime":"$7","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$L8",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L9",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"BookMyCenter"}],["$","meta","1",{"name":"description","content":"One platform to discover, verify and book Test, Training, Assessment and Business Centers across India and worldwide."}],["$","link","2",{"rel":"icon","href":"/favicon.ico?favicon.2vob68tjqpejf.ico","sizes":"256x256","type":"image/x-icon"}],["$","$La","3",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":"$@b","staleTime":"$7","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}]}]]}],"isPartial":"$@e","staleTime":"$7","varyParams":"$f"},{"rsc":["$","$1","c",{"children":[null,["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}]}]]}],"isPartial":"$@10","staleTime":"$7","varyParams":"$f"}],"isUpgradeableISRFallback":false,"a":"$@11","rootVaryParams":null,"needsRuntimeRequest":"$@12"}
+5:null
+12:true
+7:300
+7:C
+11:0
+b:"$undefined"
+e:"$undefined"
+10:"$undefined"
+6:"$undefined"

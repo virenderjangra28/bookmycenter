@@ -80,6 +80,8 @@ export default function SignupPage() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [password, setPassword] = useState("");
 
   const errors = useMemo(() => {
     const nextErrors = {};
@@ -112,6 +114,7 @@ export default function SignupPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     setSubmitted(true);
       if (!canSubmit) return;
       const response = await fetch("/api/admin/users/signup", {
@@ -130,10 +133,12 @@ export default function SignupPage() {
       if (response.ok && data.success) {
         toast.success(data.result);
         setTimeout(() => {
+          setIsLoading(false);
           router.push("/");
         }, 4000);
       } else {
         toast.error(data.result);
+        setIsLoading(false);
       }
       console.log(data);
   };
@@ -236,7 +241,7 @@ export default function SignupPage() {
                 : "cursor-not-allowed bg-[#e5e7eb] text-[#9ca3af]"
             }`}
           >
-            I ACCEPT AND PROCEED
+            {isLoading ? "Processing..." : "I ACCEPT AND PROCEED"}
           </button>
         </form>
       </div>

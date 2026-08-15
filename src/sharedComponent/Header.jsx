@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import logo from "../../public/logo.jpeg";
 import Image from "next/image";
 import ProfileDropdown from "./ProfileDropdown";
+import UserContext from "@/context/userContext";
 
 const UTILITY_LINKS = [
   { label: "Test Center Closures", href: "#test-center-closures" },
@@ -541,12 +542,8 @@ const Header = () => {
   const [utilityBarVisible, setUtilityBarVisible] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
   const [utilityBarHeight, setUtilityBarHeight] = useState(0);
-  const [role, setRole] = useState("3");
-  const [user] = useState({
-    name: "Virender Jangra",
-    email: "virender.jangra28@gmail.com",
-  });
-
+  const { user } = useContext(UserContext);
+  const role = user?.role != null ? String(user.role) : "";
   const isLoggedIn = role === "1" || role === "2";
 
   utilityBarVisibleRef.current = utilityBarVisible;
@@ -686,8 +683,8 @@ const Header = () => {
           <div className="flex items-center gap-3">
             {isLoggedIn ? (
               <ProfileDropdown
-                name={user.name}
-                email={user.email}
+                name={user?.name ?? "User"}
+                email={user?.email ?? ""}
                 role={role}
               />
             ) : null}

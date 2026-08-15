@@ -22,6 +22,55 @@ function UserIcon({ className }) {
   );
 }
 
+function PasswordIcon({ className }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden>
+      <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+    </svg>
+  );
+}
+
+function EyeIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.75}
+      stroke="currentColor"
+      className={className}
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  );
+}
+
+function EyeSlashIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.75}
+      stroke="currentColor"
+      className={className}
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 01-4.243-4.243m4.242 4.242L9.88 9.88"
+      />
+    </svg>
+  );
+}
+
 function PhoneIcon({ className }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden>
@@ -48,24 +97,44 @@ function FormField({
   autoComplete,
   error,
   hasError,
+  showPasswordToggle = false,
 }) {
+  const [visible, setVisible] = useState(false);
+  const inputType = showPasswordToggle ? (visible ? "text" : "password") : type;
+
   return (
     <div>
       <div className="relative">
         <Icon className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#9ca3af]" />
         <input
           id={id}
-          type={type}
+          type={inputType}
           value={value}
           onChange={onChange}
           placeholder={placeholder}
           autoComplete={autoComplete}
-          className={`w-full rounded border bg-white py-3.5 pl-12 pr-4 text-sm tracking-wide text-[#1f2937] placeholder:text-[#9ca3af] outline-none transition-colors ${
+          className={`w-full rounded border bg-white py-3.5 pl-12 text-sm tracking-wide text-[#1f2937] placeholder:text-[#9ca3af] outline-none transition-colors ${
+            showPasswordToggle ? "pr-11" : "pr-4"
+          } ${
             hasError
               ? "border-[#b03a2e] focus:border-[#b03a2e] focus:ring-2 focus:ring-[#b03a2e]/15"
               : "border-[#d1d5db] focus:border-[#0a7ea4] focus:ring-2 focus:ring-[#0a7ea4]/15"
           }`}
         />
+        {showPasswordToggle ? (
+          <button
+            type="button"
+            onClick={() => setVisible((current) => !current)}
+            className="absolute right-2.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md text-[#6b7280] transition-colors hover:bg-[#f3f4f6] hover:text-[#0a7ea4] focus:outline-none focus:ring-2 focus:ring-[#0a7ea4]/20"
+            aria-label={visible ? "Hide password" : "Show password"}
+          >
+            {visible ? (
+              <EyeSlashIcon className="h-[18px] w-[18px]" />
+            ) : (
+              <EyeIcon className="h-[18px] w-[18px]" />
+            )}
+          </button>
+        ) : null}
       </div>
       {error ? <p className="mt-1.5 text-sm text-[#b03a2e]">{error}</p> : null}
     </div>
@@ -75,13 +144,14 @@ function FormField({
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [mobile, setMobile] = useState("");
   const [company, setCompany] = useState("");
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [password, setPassword] = useState("");
 
   const errors = useMemo(() => {
     const nextErrors = {};
@@ -97,20 +167,33 @@ export default function SignupPage() {
     if (!mobile.trim()) {
       nextErrors.mobile = "This is the mandatory field";
     }
+    if (!password.trim()) {
+      nextErrors.password = "This is the mandatory field";
+    }
+    if (!confirmPassword.trim()) {
+      nextErrors.confirmPassword = "This is the mandatory field";
+    }
 
     if (!company.trim()) {
       nextErrors.company = "This is the mandatory field";
     }
 
+    if (password !== confirmPassword) {
+      nextErrors.confirmPassword = "Passwords do not match";
+    }
+
     return nextErrors;
-  }, [email, name, mobile, company]);
+  }, [email, name, mobile, company, password, confirmPassword]);
 
   const canSubmit =
     acceptedTerms &&
     email.trim() &&
     name.trim() &&
     mobile.trim() &&
-    company.trim();
+    company.trim() &&
+    password.trim() &&
+    confirmPassword.trim() &&
+    password === confirmPassword;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -126,14 +209,15 @@ export default function SignupPage() {
           name,
           email,
           mobile,
+          password,
           company,
         }),
       });
       const data = await response.json();
       if (response.ok && data.success) {
         toast.success(data.result);
+        setIsLoading(false);
         setTimeout(() => {
-          setIsLoading(false);
           router.push("/");
         }, 4000);
       } else {
@@ -194,6 +278,33 @@ export default function SignupPage() {
             />
           </div>
 
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <FormField
+              id="password"
+              icon={PasswordIcon}
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="YOUR PASSWORD *"
+              autoComplete="new-password"
+              showPasswordToggle
+              error={submitted ? errors.password : ""}
+              hasError={submitted && !!errors.password}
+            />
+            <FormField
+              id="confirmPassword"
+              icon={PasswordIcon}
+              type="password"
+              value={confirmPassword}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+              placeholder="CONFIRM YOUR PASSWORD *"
+              autoComplete="new-password"
+              showPasswordToggle
+              error={submitted ? errors.confirmPassword : ""}
+              hasError={submitted && !!errors.confirmPassword}
+            />
+          </div>
+
           <FormField
             id="company"
             icon={BuildingIcon}
@@ -234,7 +345,7 @@ export default function SignupPage() {
 
           <button
             type="submit"
-            disabled={!canSubmit}
+            disabled={!canSubmit || isLoading}
             className={`w-full rounded py-3.5 text-sm font-semibold tracking-wide transition-colors ${
               canSubmit
                 ? "bg-[#0a5f7a] text-white hover:bg-[#084d63]"

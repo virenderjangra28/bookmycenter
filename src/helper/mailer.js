@@ -59,7 +59,7 @@ export const sendEmail = async ({ email, emailType, userId }) => {
 
     const domain = process.env.DOMAIN || "http://localhost:3000";
     const verifyPath =
-      emailType === "VERIFY" ? "verifyemail" : "reset-password";
+      emailType === "VERIFY" ? "verify/verify-email" : "verify/reset-password";
 
     const mailOption = {
       from: process.env.MAIL_FROM || "noreply@bookmycenter.com",
@@ -68,7 +68,7 @@ export const sendEmail = async ({ email, emailType, userId }) => {
         emailType === "VERIFY"
           ? "Verify your email"
           : "Reset your password",
-      html: `Click <a href="${domain}/${verifyPath}?token=${token}">here</a> to ${
+      html: `Click <a href="${domain}/${verifyPath}?token=${encodeURIComponent(token)}">here</a> to ${
         emailType === "VERIFY" ? "verify your email" : "reset your password"
       }.`,
     };

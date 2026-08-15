@@ -1,6 +1,15 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
   "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/api/admin/users/login/route": "app/api/admin/users/login/route.js",
+  "/api/admin/users/logout/route": "app/api/admin/users/logout/route.js",
+  "/api/admin/users/me/route": "app/api/admin/users/me/route.js",
   "/api/admin/users/route": "app/api/admin/users/route.js",
-  "/page": "app/page.js"
+  "/api/admin/users/signup/route": "app/api/admin/users/signup/route.js",
+  "/api/verify/verify-email/route": "app/api/verify/verify-email/route.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js",
+  "/signup/page": "app/signup/page.js",
+  "/verify/verify-email/[token]/page": "app/verify/verify-email/[token]/page.js",
+  "/verify/verify-email/page": "app/verify/verify-email/page.js"
 }

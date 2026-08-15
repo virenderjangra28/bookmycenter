@@ -4,9 +4,11 @@ import { NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import { sendEmail } from "@/helper/mailer";
 
+await connectDB();
+
 export async function POST(request) {
     try {
-         await connectDB();
+         
         const payload = await request.json();
         const { email, password } = payload;
        

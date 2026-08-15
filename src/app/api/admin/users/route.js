@@ -2,9 +2,10 @@ import { connectDB } from "@/app/lib/db";
 import { User } from "@/app/lib/model/user";
 import { NextResponse } from "next/server";
 
+await connectDB();
+
 export async function GET() {
     try {
-        await connectDB();
         const data = await User.find();
         return NextResponse.json({ result: data, success: true, status: 201 });
     } catch (error) {
@@ -18,8 +19,6 @@ export async function GET() {
 export async function POST(request) {
     try {
         const payload = await request.json();
-
-        await connectDB();
 
         const user = await User.create({
             email: payload.email,

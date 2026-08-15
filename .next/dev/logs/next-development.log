@@ -1122,3 +1122,34 @@
 >>>>>>> virender
 {"timestamp":"23:17:50.472","source":"Server","level":"LOG","message":"  Reload env: .env"}
 {"timestamp":"23:17:53.276","source":"Server","level":"ERROR","message":"⨯ ReferenceError: window is not defined"}
+{"timestamp":"23:19:08.982","source":"Server","level":"ERROR","message":"⨯ ReferenceError: window is not defined"}
+{"timestamp":"23:19:24.843","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:24.844","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:24.928","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:24.929","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:24.947","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:24.948","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:24.961","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:24.962","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:24.981","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:24.982","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.001","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.002","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.015","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.016","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.034","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.035","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.047","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.048","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.063","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.064","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.079","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.080","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.097","source":"Browser","level":"ERROR","message":"Failed to fetch RSC payload for http://localhost:3000/client/profile. Falling back to browser navigation. TypeError: Failed to fetch"}
+{"timestamp":"23:19:25.098","source":"Server","level":"ERROR","message":"[browser] \"Failed to fetch RSC payload for http://localhost:3000/client/profile. Falling back to browser navigation.\" \"\\u001b[31mTypeError: Failed to fetch\\u001b[39m\""}
+{"timestamp":"23:19:25.144","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.146","source":"Server","level":"ERROR","message":"⨯ Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.574","source":"Browser","level":"ERROR","message":"Uncaught Error: The default export is not a React Component in \"/client/profile/page\""}
+{"timestamp":"23:19:25.575","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mUncaught Error: The default export is not a React Component in \\\"/client/profile/page\\\"\\u001b[39m\""}
+{"timestamp":"23:19:52.118","source":"Server","level":"ERROR","message":"⨯ ./src/app/client/profile/page.js:1:1\nError: Module not found: Can't resolve './Profile'\n> 1 | import Profile from \"./Profile\";\n    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  2 |\n  3 | export default function ProfilePage() {\n  4 |   return <Profile />;\n\n\n\nhttps://nextjs.org/docs/messages/module-not-found\n\n"}
+{"timestamp":"23:19:52.120","source":"Server","level":"ERROR","message":"⨯ ./src/app/client/profile/page.js:1:1\nError: Module not found: Can't resolve './Profile'\n> 1 | import Profile from \"./Profile\";\n    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  2 |\n  3 | export default function ProfilePage() {\n  4 |   return <Profile />;\n\n\n\nhttps://nextjs.org/docs/messages/module-not-found\n\n"}

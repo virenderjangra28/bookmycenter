@@ -10,6 +10,8 @@
   "/api/client/center/route": "app/api/client/center/route.js",
   "/api/verify/verify-email/route": "app/api/verify/verify-email/route.js",
   "/client/dashboard/page": "app/client/dashboard/page.js",
+  "/client/payment-history/page": "app/client/payment-history/page.js",
+  "/client/profile/page": "app/client/profile/page.js",
   "/client/update-center/page": "app/client/update-center/page.js",
   "/login/page": "app/login/page.js",
   "/page": "app/page.js",

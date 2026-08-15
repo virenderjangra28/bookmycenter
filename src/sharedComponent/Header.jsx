@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import logo from "../../public/logo.jpeg";
 import Image from "next/image";
 import ProfileDropdown from "./ProfileDropdown";
+import UserContext from "@/context/userContext";
 
 const UTILITY_LINKS = [
   { label: "Test Center Closures", href: "#test-center-closures" },
@@ -331,7 +332,8 @@ function UtilityBar({ visible, barRef }) {
           ? "grid-rows-[1fr] border-b opacity-100"
           : "pointer-events-none grid-rows-[0fr] border-b-0 opacity-0"
       }`}
-    >
+    > 
+    
       <div className="overflow-hidden">
         <div
           className={`mx-auto flex h-10 max-w-7xl items-center justify-between px-4 transition-transform duration-300 ease-in-out sm:px-6 lg:px-10 ${
@@ -541,12 +543,8 @@ const Header = () => {
   const [utilityBarVisible, setUtilityBarVisible] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
   const [utilityBarHeight, setUtilityBarHeight] = useState(0);
-  const [role, setRole] = useState("3");
-  const [user] = useState({
-    name: "Virender Jangra",
-    email: "virender.jangra28@gmail.com",
-  });
-
+  const { user } = useContext(UserContext);
+  const role = user?.role != null ? String(user.role) : "";
   const isLoggedIn = role === "1" || role === "2";
 
   utilityBarVisibleRef.current = utilityBarVisible;
@@ -648,7 +646,9 @@ const Header = () => {
         ref={headerRef}
         className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm"
       >
-          <UtilityBar visible={utilityBarVisible} barRef={utilityBarRef} />
+          {!isLoggedIn && (
+            <UtilityBar visible={utilityBarVisible} barRef={utilityBarRef} />
+          )}
         
 
       <div
@@ -686,8 +686,8 @@ const Header = () => {
           <div className="flex items-center gap-3">
             {isLoggedIn ? (
               <ProfileDropdown
-                name={user.name}
-                email={user.email}
+                name={user?.name ?? "User"}
+                email={user?.email ?? ""}
                 role={role}
               />
             ) : null}

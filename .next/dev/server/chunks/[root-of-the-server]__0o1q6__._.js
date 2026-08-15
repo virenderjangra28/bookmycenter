@@ -62,6 +62,7 @@ module.exports = mod;
 "[project]/src/app/api/admin/users/route.js [app-route] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
+return __turbopack_context__.a(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
 __turbopack_context__.s([
     "GET",
     ()=>GET,
@@ -74,9 +75,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$serv
 ;
 ;
 ;
+await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$db$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["connectDB"])();
 async function GET() {
     try {
-        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$db$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["connectDB"])();
         const data = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$model$2f$user$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["User"].find();
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             result: data,
@@ -95,7 +96,6 @@ async function GET() {
 async function POST(request) {
     try {
         const payload = await request.json();
-        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$db$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["connectDB"])();
         const user = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$model$2f$user$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["User"].create({
             email: payload.email,
             name: payload.name,
@@ -126,7 +126,8 @@ async function POST(request) {
         });
     }
 }
-}),
+__turbopack_async_result__();
+} catch(e) { __turbopack_async_result__(e); } }, true);}),
 "[project]/src/app/lib/db.js [app-route] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 

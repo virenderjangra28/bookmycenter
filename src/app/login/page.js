@@ -2,16 +2,52 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import UserContext from "@/context/userContext";
 
-const TRUSTED_BY = ["SAP", "Optimizely", "Grant Thornton"];
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = (event) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const context = useContext(UserContext);
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+    const response = await fetch("/api/admin/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await response.json();
+    if (data.success) {
+      toast.success(data.result);
+      const userData = {}
+          const user = {}
+          user['id'] = data.data.id;
+          user['email'] = data.data.email;
+          user['name'] = data.data.name;
+          user['role'] = data.data.role;
+      userData['user'] = user;
+      userData['token'] = data.token;
+      const userDataString = btoa(JSON.stringify(userData));
+      localStorage.setItem("sessionData", userDataString);
+      context.login(userData.user);
+      if(data.data.role == 1){
+        setTimeout(() => {
+          router.push("/admin/dashboard");
+        }, 2000);
+      } else if(data.data.role == 2) {
+        router.push("/client/dashboard");
+      }
+    } else {
+      toast.error(data.result);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -30,7 +66,9 @@ export default function LoginPage() {
 
         <div className="relative flex h-full flex-col justify-between px-8 py-10 xl:px-12 xl:py-12">
           <div className="text-white">
-            <p className="text-lg font-semibold tracking-wide">BookMyCenter</p>
+            <p className="text-lg font-semibold tracking-wide">
+              <Link href="/">BookMyCenter</Link>
+            </p>
           </div>
 
           <div className="max-w-md text-white">
@@ -43,7 +81,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <div>
+          {/* <div>
             <p className="mb-4 text-sm font-medium text-white/80">Trusted By:</p>
             <div className="flex flex-wrap items-center gap-6">
               {TRUSTED_BY.map((brand) => (
@@ -55,7 +93,7 @@ export default function LoginPage() {
                 </span>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -123,9 +161,10 @@ export default function LoginPage() {
 
               <button
                 type="submit"
+                
                 className="w-full rounded bg-[#0a5f7a] py-3.5 text-base font-semibold text-white transition-colors hover:bg-[#084d63]"
               >
-                Login to BookMyCenter
+                {isLoading ? "Loading..." : "Login to BookMyCenter"}
               </button>
             </form>
 

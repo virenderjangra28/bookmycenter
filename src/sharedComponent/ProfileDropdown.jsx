@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import UserContext from "@/context/userContext";
 
 function getInitials(name = "") {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -18,8 +20,10 @@ const ADMIN_MENU = [
 ];
 
 const CLIENT_MENU = [
-  { label: "Dashboard", href: "/admin/dashboard" },
-  { label: "My Profile", href: "/profile" },
+  { label: "Dashboard", href: "/client/dashboard" },
+  { label: "My Profile", href: "/client/profile" },
+  { label: "Update Center", href: "/client/update-center" },
+  { label: "Payment History", href: "/client/payment-history" },
 ];
 
 export default function ProfileDropdown({
@@ -29,7 +33,15 @@ export default function ProfileDropdown({
 }) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
+  const router = useRouter();
+  const { logout } = useContext(UserContext);
   const menuItems = role === "1" ? ADMIN_MENU : CLIENT_MENU;
+
+  const handleLogout = async () => {
+    setOpen(false);
+    await logout();
+    router.push("/");
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -95,14 +107,14 @@ export default function ProfileDropdown({
             </Link>
           ))}
 
-          <Link
-            href="/login"
+          <button
+            type="button"
             role="menuitem"
-            className="block border-t border-[#e5e7eb] px-4 py-2.5 text-sm text-[#b03a2e] transition hover:bg-[#fef2f2]"
-            onClick={() => setOpen(false)}
+            className="block w-full border-t border-[#e5e7eb] px-4 py-2.5 text-left text-sm text-[#b03a2e] transition hover:bg-[#fef2f2]"
+            onClick={handleLogout}
           >
             Logout
-          </Link>
+          </button>
         </div>
       ) : null}
     </div>

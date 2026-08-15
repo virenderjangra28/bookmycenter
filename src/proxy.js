@@ -26,7 +26,7 @@ async function getAuthPayload(request) {
   }
 }
 
-export async function middleware(request) {
+export async function proxy(request) {
   const { pathname } = request.nextUrl;
   const payload = await getAuthPayload(request);
   const role = normalizeRole(payload?.role);

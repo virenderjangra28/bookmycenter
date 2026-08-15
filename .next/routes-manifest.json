@@ -31,12 +31,36 @@
       "namedRegex": "^/admin/user\\-details/(?<nxtPslug>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/api/admin/users/[id]",
+      "regex": "^/api/admin/users/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/users/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/exams/[id]",
       "regex": "^/exams/([^/]+?)(?:/)?$",
       "routeKeys": {
         "nxtPid": "nxtPid"
       },
       "namedRegex": "^/exams/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/verify/reset-password/[token]",
+      "regex": "^/verify/reset\\-password/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPtoken": "nxtPtoken"
+      },
+      "namedRegex": "^/verify/reset\\-password/(?<nxtPtoken>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/verify/verify-email/[token]",
+      "regex": "^/verify/verify\\-email/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPtoken": "nxtPtoken"
+      },
+      "namedRegex": "^/verify/verify\\-email/(?<nxtPtoken>[^/]+?)(?:/)?$"
     }
   ],
   "staticRoutes": [
@@ -77,16 +101,70 @@
       "namedRegex": "^/api/admin/users(?:/)?$"
     },
     {
+      "page": "/api/admin/users/login",
+      "regex": "^/api/admin/users/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/users/login(?:/)?$"
+    },
+    {
+      "page": "/api/admin/users/logout",
+      "regex": "^/api/admin/users/logout(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/users/logout(?:/)?$"
+    },
+    {
+      "page": "/api/admin/users/me",
+      "regex": "^/api/admin/users/me(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/users/me(?:/)?$"
+    },
+    {
       "page": "/api/admin/users/signup",
       "regex": "^/api/admin/users/signup(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/admin/users/signup(?:/)?$"
     },
     {
+      "page": "/api/client/center",
+      "regex": "^/api/client/center(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/client/center(?:/)?$"
+    },
+    {
+      "page": "/api/verify/verify-email",
+      "regex": "^/api/verify/verify\\-email(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/verify/verify\\-email(?:/)?$"
+    },
+    {
       "page": "/book-center",
       "regex": "^/book\\-center(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/book\\-center(?:/)?$"
+    },
+    {
+      "page": "/client/dashboard",
+      "regex": "^/client/dashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/dashboard(?:/)?$"
+    },
+    {
+      "page": "/client/payment-history",
+      "regex": "^/client/payment\\-history(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/payment\\-history(?:/)?$"
+    },
+    {
+      "page": "/client/profile",
+      "regex": "^/client/profile(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/profile(?:/)?$"
+    },
+    {
+      "page": "/client/update-center",
+      "regex": "^/client/update\\-center(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/update\\-center(?:/)?$"
     },
     {
       "page": "/favicon.ico",
@@ -111,6 +189,12 @@
       "regex": "^/signup(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/signup(?:/)?$"
+    },
+    {
+      "page": "/verify/verify-email",
+      "regex": "^/verify/verify\\-email(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/verify/verify\\-email(?:/)?$"
     }
   ],
   "dataRoutes": [],

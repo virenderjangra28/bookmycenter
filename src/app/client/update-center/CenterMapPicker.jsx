@@ -1,20 +1,8 @@
 "use client";
 
-import L from "leaflet";
-import { useEffect, useRef } from "react";
-import "leaflet/dist/leaflet.css";
+import { useEffect, useRef, useState } from "react";
 
 const DEFAULT_CENTER = [28.6139, 77.209];
-
-const markerIcon = L.icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-});
 
 function parseCoords(latitude, longitude) {
   const lat = latitude === "" ? null : Number(latitude);
@@ -27,6 +15,18 @@ function parseCoords(latitude, longitude) {
   return [lat, lng];
 }
 
+function createMarkerIcon(L) {
+  return L.icon({
+    iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+    iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
+}
+
 export default function CenterMapPicker({
   latitude,
   longitude,
@@ -36,57 +36,78 @@ export default function CenterMapPicker({
   const mapRef = useRef(null);
   const markerRef = useRef(null);
   const onLocationChangeRef = useRef(onLocationChange);
+  const [mapReady, setMapReady] = useState(false);
 
   useEffect(() => {
     onLocationChangeRef.current = onLocationChange;
   }, [onLocationChange]);
 
   useEffect(() => {
-    if (!containerRef.current || mapRef.current) {
-      return;
+    let cancelled = false;
+
+    async function initMap() {
+      if (!containerRef.current || mapRef.current) {
+        return;
+      }
+
+      const [{ default: L }] = await Promise.all([
+        import("leaflet"),
+        import("leaflet/dist/leaflet.css"),
+      ]);
+
+      if (cancelled || !containerRef.current || mapRef.current) {
+        return;
+      }
+
+      const coords = parseCoords(latitude, longitude);
+      const center = coords ?? DEFAULT_CENTER;
+
+      const map = L.map(containerRef.current, {
+        center,
+        zoom: coords ? 15 : 5,
+      });
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 19,
+      }).addTo(map);
+
+      const marker = L.marker(center, {
+        draggable: true,
+        icon: createMarkerIcon(L),
+      }).addTo(map);
+
+      marker.on("dragend", () => {
+        const { lat, lng } = marker.getLatLng();
+        onLocationChangeRef.current(lat, lng);
+      });
+
+      map.on("click", (event) => {
+        marker.setLatLng(event.latlng);
+        onLocationChangeRef.current(event.latlng.lat, event.latlng.lng);
+      });
+
+      mapRef.current = map;
+      markerRef.current = marker;
+      setMapReady(true);
     }
 
-    const coords = parseCoords(latitude, longitude);
-    const center = coords ?? DEFAULT_CENTER;
-
-    const map = L.map(containerRef.current, {
-      center,
-      zoom: coords ? 15 : 5,
-    });
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      maxZoom: 19,
-    }).addTo(map);
-
-    const marker = L.marker(center, {
-      draggable: true,
-      icon: markerIcon,
-    }).addTo(map);
-
-    marker.on("dragend", () => {
-      const { lat, lng } = marker.getLatLng();
-      onLocationChangeRef.current(lat, lng);
-    });
-
-    map.on("click", (event) => {
-      marker.setLatLng(event.latlng);
-      onLocationChangeRef.current(event.latlng.lat, event.latlng.lng);
-    });
-
-    mapRef.current = map;
-    markerRef.current = marker;
+    initMap();
 
     return () => {
-      map.remove();
-      mapRef.current = null;
-      markerRef.current = null;
+      cancelled = true;
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+        markerRef.current = null;
+      }
+      setMapReady(false);
     };
   }, []);
 
   useEffect(() => {
-    if (!mapRef.current || !markerRef.current) {
+    if (!mapReady || !mapRef.current || !markerRef.current) {
       return;
     }
 
@@ -97,17 +118,21 @@ export default function CenterMapPicker({
 
     markerRef.current.setLatLng(coords);
     mapRef.current.setView(coords, 15);
-  }, [latitude, longitude]);
+  }, [latitude, longitude, mapReady]);
 
   return (
     <>
       <div
         ref={containerRef}
-        className="z-0 h-80 w-full overflow-hidden rounded-xl border border-[#e5e7eb]"
+        className="z-0 h-80 w-full overflow-hidden rounded-xl border border-[#e5e7eb] bg-[#f3f4f6]"
       />
-      <p className="mt-2 text-xs text-[#6b7280]">
-        Click on the map or drag the marker to set your center location coordinates.
-      </p>
+      {!mapReady ? (
+        <p className="mt-2 text-xs text-[#6b7280]">Loading map...</p>
+      ) : (
+        <p className="mt-2 text-xs text-[#6b7280]">
+          Click on the map or drag the marker to set your center location coordinates.
+        </p>
+      )}
     </>
   );
 }

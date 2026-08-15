@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 
 function normalizeToken(rawToken) {
   if (!rawToken || typeof rawToken !== "string") {
@@ -86,7 +86,7 @@ function ErrorIcon({ className }) {
   );
 }
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const params = useParams();
   const searchParams = useSearchParams();
 
@@ -209,5 +209,35 @@ export default function VerifyEmailPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+function VerifyEmailFallback() {
+  return (
+    <main className="fixed inset-0 z-[60] overflow-y-auto bg-gradient-to-br from-[#0a7ea4] via-[#0a5f7a] to-[#3cb878] px-4 py-10">
+      <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-lg items-center">
+        <div className="w-full rounded-lg bg-white p-8 shadow-xl sm:p-10">
+          <div className="flex flex-col items-center text-center">
+            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#0a7ea4]/10 text-[#0a7ea4]">
+              <SpinnerIcon className="h-10 w-10 animate-spin" />
+            </div>
+            <h1 className="text-2xl font-bold text-[#0b1a33] sm:text-3xl">
+              Email Verification
+            </h1>
+            <p className="mt-4 text-sm leading-relaxed text-[#6b7280] sm:text-base">
+              Preparing verification...
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<VerifyEmailFallback />}>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }

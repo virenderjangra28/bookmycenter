@@ -40,9 +40,9 @@ export default function LoginPage() {
       if(data.data.role == 1){
         setTimeout(() => {
           router.push("/admin/dashboard");
-        }, 3000);
+        }, 2000);
       } else if(data.data.role == 2) {
-        router.push("/user/dashboard");
+        router.push("/client/dashboard");
       }
     } else {
       toast.error(data.result);

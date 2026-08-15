@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import bcryptjs from "bcryptjs";
-import { User } from "@/app/lib/model/user";
+import { User } from "@/lib/model/user";
 
 async function createMailTransport() {
   const user = process.env.MAILTRAP_USER?.trim();

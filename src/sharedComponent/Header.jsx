@@ -332,7 +332,8 @@ function UtilityBar({ visible, barRef }) {
           ? "grid-rows-[1fr] border-b opacity-100"
           : "pointer-events-none grid-rows-[0fr] border-b-0 opacity-0"
       }`}
-    >
+    > 
+    
       <div className="overflow-hidden">
         <div
           className={`mx-auto flex h-10 max-w-7xl items-center justify-between px-4 transition-transform duration-300 ease-in-out sm:px-6 lg:px-10 ${
@@ -645,7 +646,9 @@ const Header = () => {
         ref={headerRef}
         className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm"
       >
-          <UtilityBar visible={utilityBarVisible} barRef={utilityBarRef} />
+          {!isLoggedIn && (
+            <UtilityBar visible={utilityBarVisible} barRef={utilityBarRef} />
+          )}
         
 
       <div

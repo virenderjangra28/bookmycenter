@@ -1,5 +1,5 @@
-import { connectDB } from "@/app/lib/db";
-import { User } from "@/app/lib/model/user";
+import { connectDB } from "@/lib/db";
+import { User } from "@/lib/model/user";
 import { NextResponse, NextRequest } from "next/server";
 
 await connectDB();

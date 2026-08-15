@@ -1,5 +1,5 @@
-import { connectDB } from "@/app/lib/db";
-import { User } from "@/app/lib/model/user";
+import { connectDB } from "@/lib/db";
+import { User } from "@/lib/model/user";
 import { NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -21,6 +21,10 @@ export async function POST(request) {
         const isPasswordCorrect = await bcryptjs.compare(password, user.password);
         if (!isPasswordCorrect) {
             return NextResponse.json({ result: "Invalid password", success: false, status: 400 });
+        }
+
+        if(!user.isVerified) {
+            return NextResponse.json({ result: "Please verify your email to login", success: false, status: 400 });
         }
 
         const tokenData = { 

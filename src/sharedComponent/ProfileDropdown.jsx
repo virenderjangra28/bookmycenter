@@ -20,8 +20,10 @@ const ADMIN_MENU = [
 ];
 
 const CLIENT_MENU = [
-  { label: "Dashboard", href: "/admin/dashboard" },
-  { label: "My Profile", href: "/profile" },
+  { label: "Dashboard", href: "/client/dashboard" },
+  { label: "My Profile", href: "/client/profile" },
+  { label: "Update Center", href: "/client/update-center" },
+  { label: "Payment History", href: "/client/payment-history" },
 ];
 
 export default function ProfileDropdown({
@@ -38,7 +40,7 @@ export default function ProfileDropdown({
   const handleLogout = async () => {
     setOpen(false);
     await logout();
-    router.push("/login");
+    router.push("/");
   };
 
   useEffect(() => {

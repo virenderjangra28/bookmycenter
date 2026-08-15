@@ -60,9 +60,9 @@ function LoginPage() {
             if (data.data.role == 1) {
                 setTimeout(()=>{
                     router.push("/admin/dashboard");
-                }, 3000);
+                }, 2000);
             } else if (data.data.role == 2) {
-                router.push("/user/dashboard");
+                router.push("/client/dashboard");
             }
         } else {
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error(data.result);

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/app/lib/db";
-import { User } from "@/app/lib/model/user";
+import { connectDB } from "@/lib/db";
+import { User } from "@/lib/model/user";
 
 function normalizeToken(rawToken) {
   if (!rawToken || typeof rawToken !== "string") {

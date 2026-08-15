@@ -1135,3 +1135,4 @@
 {"timestamp":"25:27:51.435","source":"Server","level":"LOG","message":"✓ Compiled in 104ms"}
 {"timestamp":"25:27:51.475","source":"Server","level":"WARN","message":"⚠ Fast Refresh had to perform a full reload when ./src/app/verify/verify-email/VerifyEmailPage.jsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload"}
 {"timestamp":"25:27:51.476","source":"Server","level":"WARN","message":"⚠ Fast Refresh had to perform a full reload when ./src/app/verify/verify-email/VerifyEmailPage.jsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload"}
+{"timestamp":"00:04:37.408","source":"Server","level":"LOG","message":"✓ Compiled in 248ms"}

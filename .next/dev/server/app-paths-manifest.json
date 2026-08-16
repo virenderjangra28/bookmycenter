@@ -1,10 +1,9 @@
 {
-<<<<<<< HEAD
   "/_not-found/page": "app/_not-found/page.js",
-=======
->>>>>>> virender
+  "/api/centers/search/route": "app/api/centers/search/route.js",
   "/api/countrylist/route": "app/api/countrylist/route.js",
+  "/become-partner/page": "app/become-partner/page.js",
+  "/book-a-center/page": "app/book-a-center/page.js",
   "/country/page": "app/country/page.js",
-  "/login/page": "app/login/page.js",
   "/page": "app/page.js"
 }

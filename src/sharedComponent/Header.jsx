@@ -8,8 +8,8 @@ import ProfileDropdown from "./ProfileDropdown";
 import UserContext from "@/context/userContext";
 
 const UTILITY_LINKS = [
-  { label: "Test Center Closures", href: "#test-center-closures" },
-  { label: "Become a Test Center", href: "#become-a-test-center" },
+  { label: "Book A Center", href: "/book-a-center" },
+  { label: "Become a Test Center", href: "/become-partner" },
 ];
 
 const NAV_ITEMS = [
@@ -48,9 +48,9 @@ const NAV_ITEMS = [
         href: "#faq",
       },
       {
-        label: "Test Center Closures",
+        label: "Book A Center",
         description: "Learn about any current test center closures",
-        href: "#test-center-closures",
+        href: "/book-a-center",
       },
     ],
   },

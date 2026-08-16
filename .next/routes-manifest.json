@@ -125,10 +125,22 @@
       "namedRegex": "^/api/admin/users/signup(?:/)?$"
     },
     {
+      "page": "/api/centers/search",
+      "regex": "^/api/centers/search(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/centers/search(?:/)?$"
+    },
+    {
       "page": "/api/client/center",
       "regex": "^/api/client/center(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/client/center(?:/)?$"
+    },
+    {
+      "page": "/api/countrylist",
+      "regex": "^/api/countrylist(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/countrylist(?:/)?$"
     },
     {
       "page": "/api/verify/verify-email",
@@ -137,10 +149,16 @@
       "namedRegex": "^/api/verify/verify\\-email(?:/)?$"
     },
     {
-      "page": "/book-center",
-      "regex": "^/book\\-center(?:/)?$",
+      "page": "/become-partner",
+      "regex": "^/become\\-partner(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/book\\-center(?:/)?$"
+      "namedRegex": "^/become\\-partner(?:/)?$"
+    },
+    {
+      "page": "/book-a-center",
+      "regex": "^/book\\-a\\-center(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/book\\-a\\-center(?:/)?$"
     },
     {
       "page": "/client/dashboard",
@@ -165,6 +183,12 @@
       "regex": "^/client/update\\-center(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/client/update\\-center(?:/)?$"
+    },
+    {
+      "page": "/country",
+      "regex": "^/country(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/country(?:/)?$"
     },
     {
       "page": "/favicon.ico",

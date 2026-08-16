@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { statelist } from "../services/statelist";
 
 const CENTER_TYPES = [
   "CBT Centers",
@@ -8,39 +9,6 @@ const CENTER_TYPES = [
   "Certification Test Centers",
   "Government Exam Centers",
   "Training Center",
-];
-
-const INDIAN_STATES = [
-  "Andhra Pradesh",
-  "Arunachal Pradesh",
-  "Assam",
-  "Bihar",
-  "Chhattisgarh",
-  "Delhi",
-  "Goa",
-  "Gujarat",
-  "Haryana",
-  "Himachal Pradesh",
-  "Jammu and Kashmir",
-  "Jharkhand",
-  "Karnataka",
-  "Kerala",
-  "Madhya Pradesh",
-  "Maharashtra",
-  "Manipur",
-  "Meghalaya",
-  "Mizoram",
-  "Nagaland",
-  "Odisha",
-  "Punjab",
-  "Rajasthan",
-  "Sikkim",
-  "Tamil Nadu",
-  "Telangana",
-  "Tripura",
-  "Uttar Pradesh",
-  "Uttarakhand",
-  "West Bengal",
 ];
 
 const INITIAL_FORM = {
@@ -91,6 +59,7 @@ function SearchIcon({ className }) {
 }
 
 export default function BookCenter() {
+  const initialized = useRef(false);
   const [form, setForm] = useState(INITIAL_FORM);
   const [countries, setCountries] = useState([]);
   const [results, setResults] = useState([]);
@@ -100,34 +69,41 @@ export default function BookCenter() {
   const [error, setError] = useState(null);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const countrySearchRef = useRef(null);
+  const [states, setStates] = useState([]);
 
   const filteredCountries = useMemo(() => {
     const query = form.country.trim().toLowerCase();
-    if (!query) return countries.slice(0, 12);
+    if (!query) return countries;
 
     return countries.filter((country) =>
       country.name.toLowerCase().includes(query)
     );
   }, [countries, form.country]);
 
+  //get country list
+
+  const getCountryAllList = async () => {
+    try {
+      const response = await fetch("/api/countrylist");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to fetch countries");
+      }
+
+      setCountries(Array.isArray(data) ? data : []);
+    } catch (fetchError) {
+      setError(fetchError);
+      setCountries([]);
+    } finally {
+      setLoadingCountries(false);
+    }
+  };
+
   useEffect(() => {
-    fetch("/api/countrylist?source=db")
-      .then((response) => response.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setCountries(data);
-          return;
-        }
-        return fetch("/api/countrylist")
-          .then((response) => response.json())
-          .then((externalData) => {
-            if (Array.isArray(externalData)) {
-              setCountries(externalData);
-            }
-          });
-      })
-      .catch(() => setError(new Error("Failed to load countries")))
-      .finally(() => setLoadingCountries(false));
+    if(initialized.current) return;
+      initialized.current = true;
+      getCountryAllList();
   }, []);
 
   useEffect(() => {
@@ -152,14 +128,13 @@ export default function BookCenter() {
     setHasSearched(true);
 
     try {
-      const params = new URLSearchParams();
-      Object.entries(form).forEach(([key, value]) => {
-        if (value) {
-          params.set(key, value);
-        }
+      const response = await fetch(`/api/centers/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(form)
       });
-
-      const response = await fetch(`/api/centers/search?${params.toString()}`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -188,9 +163,13 @@ export default function BookCenter() {
     setShowCountryDropdown(true);
   };
 
-  const handleCountrySelect = (countryName) => {
+  const handleCountrySelect = async (countryName) => {
+    setStates([]);
+    form.state = "";
     setForm((prev) => ({ ...prev, country: countryName }));
     setShowCountryDropdown(false);
+    const statesData = await statelist(countryName);
+    setStates(statesData);
   };
 
   return (
@@ -302,8 +281,8 @@ export default function BookCenter() {
                 className={inputClass()}
               />
               <datalist id="state-options">
-                {INDIAN_STATES.map((state) => (
-                  <option key={state} value={state} />
+                {states.map((state) => (
+                  <option key={state.name} value={state.name} />
                 ))}
               </datalist>
             </FormField>

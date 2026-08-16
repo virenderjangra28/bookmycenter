@@ -60,7 +60,21 @@
       }
     }
   },
-  "/book-center": {
+  "/become-partner": {
+    "hints": 0,
+    "slots": {
+      "children": {
+        "hints": 64,
+        "slots": {
+          "children": {
+            "hints": 160,
+            "slots": null
+          }
+        }
+      }
+    }
+  },
+  "/book-a-center": {
     "hints": 0,
     "slots": {
       "children": {
@@ -188,6 +202,20 @@
     }
   },
   "/signup": {
+    "hints": 0,
+    "slots": {
+      "children": {
+        "hints": 64,
+        "slots": {
+          "children": {
+            "hints": 160,
+            "slots": null
+          }
+        }
+      }
+    }
+  },
+  "/state": {
     "hints": 0,
     "slots": {
       "children": {

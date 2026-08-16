@@ -10,20 +10,20 @@ function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-export async function GET(request) {
+export async function POST(request) {
   try {
     await connectDB();
 
-    const { searchParams } = request.nextUrl;
-    const centerType = searchParams.get("centerType")?.trim();
-    const country = searchParams.get("country")?.trim();
-    const state = searchParams.get("state")?.trim();
-    const city = searchParams.get("city")?.trim();
-    const dateFrom = searchParams.get("dateFrom")?.trim();
-    const dateTo = searchParams.get("dateTo")?.trim();
-    const timeFrom = searchParams.get("timeFrom")?.trim();
-    const timeTo = searchParams.get("timeTo")?.trim();
-    const capacity = Number(searchParams.get("capacity"));
+    const body = await request.json();
+    const centerType = body.centerType?.trim();
+    const country = body.country?.trim();
+    const state = body.state?.trim();
+    const city = body.city?.trim();
+    const dateFrom = body.dateFrom?.trim();
+    const dateTo = body.dateTo?.trim();
+    const timeFrom = body.timeFrom?.trim();
+    const timeTo = body.timeTo?.trim();
+    const capacity = Number(body.capacity);
 
     const query = {
       role: { $in: [2, "2"] },

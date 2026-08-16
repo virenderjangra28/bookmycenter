@@ -5,7 +5,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 100509,
+      "htmlSize": 100485,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -62,7 +62,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 49066,
+      "htmlSize": 49042,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -90,7 +90,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 54622,
+      "htmlSize": 54598,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -118,7 +118,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 50082,
+      "htmlSize": 50058,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -142,11 +142,11 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/book-center": {
+    "/become-partner": {
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 47522,
+      "htmlSize": 100819,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -159,8 +159,36 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/book-center",
-      "dataRoute": "/book-center.rsc",
+      "srcRoute": "/become-partner",
+      "dataRoute": "/become-partner.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/book-a-center": {
+      "routeType": "page",
+      "response": "complete",
+      "compute": "static",
+      "htmlSize": 53823,
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/book-a-center",
+      "dataRoute": "/book-a-center.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -174,7 +202,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 57305,
+      "htmlSize": 57281,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -202,7 +230,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 49328,
+      "htmlSize": 49304,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -230,7 +258,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 49159,
+      "htmlSize": 49135,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -258,7 +286,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 49244,
+      "htmlSize": 49552,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -318,7 +346,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 50492,
+      "htmlSize": 50468,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -346,7 +374,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 54090,
+      "htmlSize": 54066,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -374,7 +402,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 56463,
+      "htmlSize": 56439,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -398,11 +426,39 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/state": {
+      "routeType": "page",
+      "response": "complete",
+      "compute": "static",
+      "htmlSize": 48449,
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/state",
+      "dataRoute": "/state.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/verify/verify-email": {
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 49805,
+      "htmlSize": 49781,
       "experimentalBypassFor": [
         {
           "type": "header",

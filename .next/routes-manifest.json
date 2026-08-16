@@ -125,10 +125,40 @@
       "namedRegex": "^/api/admin/users/signup(?:/)?$"
     },
     {
+      "page": "/api/centerlist",
+      "regex": "^/api/centerlist(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/centerlist(?:/)?$"
+    },
+    {
+      "page": "/api/centers/search",
+      "regex": "^/api/centers/search(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/centers/search(?:/)?$"
+    },
+    {
       "page": "/api/client/center",
       "regex": "^/api/client/center(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/client/center(?:/)?$"
+    },
+    {
+      "page": "/api/countrylist",
+      "regex": "^/api/countrylist(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/countrylist(?:/)?$"
+    },
+    {
+      "page": "/api/partner/otp",
+      "regex": "^/api/partner/otp(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/partner/otp(?:/)?$"
+    },
+    {
+      "page": "/api/statelist",
+      "regex": "^/api/statelist(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/statelist(?:/)?$"
     },
     {
       "page": "/api/verify/verify-email",
@@ -137,10 +167,16 @@
       "namedRegex": "^/api/verify/verify\\-email(?:/)?$"
     },
     {
-      "page": "/book-center",
-      "regex": "^/book\\-center(?:/)?$",
+      "page": "/become-partner",
+      "regex": "^/become\\-partner(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/book\\-center(?:/)?$"
+      "namedRegex": "^/become\\-partner(?:/)?$"
+    },
+    {
+      "page": "/book-a-center",
+      "regex": "^/book\\-a\\-center(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/book\\-a\\-center(?:/)?$"
     },
     {
       "page": "/client/dashboard",
@@ -189,6 +225,12 @@
       "regex": "^/signup(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/signup(?:/)?$"
+    },
+    {
+      "page": "/state",
+      "regex": "^/state(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/state(?:/)?$"
     },
     {
       "page": "/verify/verify-email",

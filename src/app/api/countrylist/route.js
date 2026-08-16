@@ -38,12 +38,19 @@ export async function GET(request) {
     }
 
     try {
+        await connectDB();
+        const dbCountries = await Country.find().sort({ name: 1 }).lean();
+
+        if (dbCountries.length > 0) {
+            return NextResponse.json(dbCountries);
+        }
+
         const response = await fetch("https://countries.dev/countries");
         const data = await response.json();
-        return NextResponse.json(data);
+        return NextResponse.json(Array.isArray(data) ? data : []);
     } catch (error) {
         return NextResponse.json(
-            { error: "Failed to fetch countries" },
+            { error: error.message || "Failed to fetch countries" },
             { status: 500 }
         );
     }

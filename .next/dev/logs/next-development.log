@@ -2,3 +2,5 @@
 {"timestamp":"00:00:01.054","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead.\n\n  To migrate automatically, run:\n  npx @next/codemod@canary middleware-to-proxy .\n\n  Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
 {"timestamp":"00:00:01.286","source":"Server","level":"LOG","message":""}
 {"timestamp":"00:02:19.584","source":"Server","level":"LOG","message":"✓ Compiled in 91ms"}
+{"timestamp":"02:14:59.438","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead.\n\n  To migrate automatically, run:\n  npx @next/codemod@canary middleware-to-proxy .\n\n  Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
+{"timestamp":"02:17:36.640","source":"Browser","level":"WARN","message":"Image with src \"/_next/static/media/logo.2qof6z4khpsp-.jpeg\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this image is above the fold.\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading"}

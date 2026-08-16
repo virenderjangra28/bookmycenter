@@ -2,3 +2,4 @@
 {"timestamp":"00:00:02.526","source":"Server","level":"LOG","message":""}
 {"timestamp":"00:03:26.924","source":"Server","level":"LOG","message":"✓ Compiled in 809ms"}
 {"timestamp":"00:20:36.268","source":"Server","level":"WARN","message":"⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload"}
+{"timestamp":"02:13:43.170","source":"Server","level":"ERROR","message":"⨯ \"unhandledRejection:\" TurbopackInternalError: range start index 1594757380 out of range for slice of length 5357568"}

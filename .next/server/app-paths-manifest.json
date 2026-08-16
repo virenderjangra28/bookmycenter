@@ -10,9 +10,18 @@
   "/api/admin/users/me/route": "app/api/admin/users/me/route.js",
   "/api/admin/users/route": "app/api/admin/users/route.js",
   "/api/admin/users/signup/route": "app/api/admin/users/signup/route.js",
+<<<<<<< HEAD
   "/api/centers/search/route": "app/api/centers/search/route.js",
   "/api/client/center/route": "app/api/client/center/route.js",
   "/api/countrylist/route": "app/api/countrylist/route.js",
+=======
+  "/api/centerlist/route": "app/api/centerlist/route.js",
+  "/api/centers/search/route": "app/api/centers/search/route.js",
+  "/api/client/center/route": "app/api/client/center/route.js",
+  "/api/countrylist/route": "app/api/countrylist/route.js",
+  "/api/partner/otp/route": "app/api/partner/otp/route.js",
+  "/api/statelist/route": "app/api/statelist/route.js",
+>>>>>>> virender-jangra
   "/api/verify/verify-email/route": "app/api/verify/verify-email/route.js",
   "/become-partner/page": "app/become-partner/page.js",
   "/book-a-center/page": "app/book-a-center/page.js",
@@ -27,6 +36,7 @@
   "/login/page": "app/login/page.js",
   "/page": "app/page.js",
   "/signup/page": "app/signup/page.js",
+  "/state/page": "app/state/page.js",
   "/verify/reset-password/[token]/page": "app/verify/reset-password/[token]/page.js",
   "/verify/verify-email/[token]/page": "app/verify/verify-email/[token]/page.js",
   "/verify/verify-email/page": "app/verify/verify-email/page.js"

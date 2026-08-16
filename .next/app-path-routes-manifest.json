@@ -10,9 +10,18 @@
   "/api/admin/users/me/route": "/api/admin/users/me",
   "/api/admin/users/route": "/api/admin/users",
   "/api/admin/users/signup/route": "/api/admin/users/signup",
+<<<<<<< HEAD
   "/api/centers/search/route": "/api/centers/search",
   "/api/client/center/route": "/api/client/center",
   "/api/countrylist/route": "/api/countrylist",
+=======
+  "/api/centerlist/route": "/api/centerlist",
+  "/api/centers/search/route": "/api/centers/search",
+  "/api/client/center/route": "/api/client/center",
+  "/api/countrylist/route": "/api/countrylist",
+  "/api/partner/otp/route": "/api/partner/otp",
+  "/api/statelist/route": "/api/statelist",
+>>>>>>> virender-jangra
   "/api/verify/verify-email/route": "/api/verify/verify-email",
   "/become-partner/page": "/become-partner",
   "/book-a-center/page": "/book-a-center",
@@ -27,6 +36,7 @@
   "/login/page": "/login",
   "/page": "/",
   "/signup/page": "/signup",
+  "/state/page": "/state",
   "/verify/reset-password/[token]/page": "/verify/reset-password/[token]",
   "/verify/verify-email/[token]/page": "/verify/verify-email/[token]",
   "/verify/verify-email/page": "/verify/verify-email"

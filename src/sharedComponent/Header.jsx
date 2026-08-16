@@ -9,7 +9,7 @@ import UserContext from "@/context/userContext";
 
 const UTILITY_LINKS = [
   { label: "Book A Center", href: "/book-a-center" },
-  { label: "Become a Test Center", href: "/become-partner" },
+  { label: "Become A Partner", href: "/become-partner" },
 ];
 
 const NAV_ITEMS = [

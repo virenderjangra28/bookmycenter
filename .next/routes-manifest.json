@@ -125,6 +125,15 @@
       "namedRegex": "^/api/admin/users/signup(?:/)?$"
     },
     {
+<<<<<<< HEAD
+=======
+      "page": "/api/centerlist",
+      "regex": "^/api/centerlist(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/centerlist(?:/)?$"
+    },
+    {
+>>>>>>> virender-jangra
       "page": "/api/centers/search",
       "regex": "^/api/centers/search(?:/)?$",
       "routeKeys": {},
@@ -143,6 +152,21 @@
       "namedRegex": "^/api/countrylist(?:/)?$"
     },
     {
+<<<<<<< HEAD
+=======
+      "page": "/api/partner/otp",
+      "regex": "^/api/partner/otp(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/partner/otp(?:/)?$"
+    },
+    {
+      "page": "/api/statelist",
+      "regex": "^/api/statelist(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/statelist(?:/)?$"
+    },
+    {
+>>>>>>> virender-jangra
       "page": "/api/verify/verify-email",
       "regex": "^/api/verify/verify\\-email(?:/)?$",
       "routeKeys": {},
@@ -213,6 +237,12 @@
       "regex": "^/signup(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/signup(?:/)?$"
+    },
+    {
+      "page": "/state",
+      "regex": "^/state(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/state(?:/)?$"
     },
     {
       "page": "/verify/verify-email",

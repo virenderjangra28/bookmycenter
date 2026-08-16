@@ -1,9 +1,9 @@
 "use client";
 
+import CenterMapPicker from "@/sharedComponent/CenterMapPicker";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import CenterMapPicker from "./CenterMapPicker";
 
 const INDIAN_STATES = [
   "Andhra Pradesh",
@@ -107,8 +107,8 @@ export default function UpdateCenter() {
   const handleLocationChange = useCallback((lat, lng) => {
     setForm((prev) => ({
       ...prev,
-      latitude: lat.toFixed(6),
-      longitude: lng.toFixed(6),
+      latitude: lat == null ? "" : lat.toFixed(6),
+      longitude: lng == null ? "" : lng.toFixed(6),
     }));
   }, []);
 

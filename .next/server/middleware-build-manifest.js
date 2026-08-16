@@ -7,9 +7,15 @@ globalThis.__BUILD_MANIFEST = {
     "static/chunks/0cz1d0mv5g_q7.js"
   ],
   "lowPriorityFiles": [
+<<<<<<< HEAD
     "static/LmcfRMU9nDqQuJDesNu0k/_buildManifest.js",
     "static/LmcfRMU9nDqQuJDesNu0k/_ssgManifest.js",
     "static/LmcfRMU9nDqQuJDesNu0k/_clientMiddlewareManifest.js"
+=======
+    "static/lyQpNgVsoicpBEDijylCt/_buildManifest.js",
+    "static/lyQpNgVsoicpBEDijylCt/_ssgManifest.js",
+    "static/lyQpNgVsoicpBEDijylCt/_clientMiddlewareManifest.js"
+>>>>>>> virender-jangra
   ],
   "rootMainFiles": [
     "static/chunks/3s6nzrbk-8mnv.js",

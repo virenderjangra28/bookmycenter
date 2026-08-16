@@ -1,5 +1,5 @@
-"use client";
+import BecomePartner from "./BecomePartner";
 
-export default function BecomePartner() {
-  return <div>BecomePartner</div>;
+export default function BecomePartnerPage() {
+  return <BecomePartner />;
 }

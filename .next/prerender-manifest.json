@@ -5,7 +5,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 100489,
+=======
+      "htmlSize": 100485,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -62,7 +66,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 49046,
+=======
+      "htmlSize": 49042,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -90,7 +98,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 54602,
+=======
+      "htmlSize": 54598,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -118,7 +130,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 50062,
+=======
+      "htmlSize": 50058,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -146,7 +162,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 48198,
+=======
+      "htmlSize": 100819,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -174,7 +194,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 54883,
+=======
+      "htmlSize": 53823,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -202,7 +226,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 57285,
+=======
+      "htmlSize": 57281,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -230,7 +258,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 49308,
+=======
+      "htmlSize": 49304,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -258,7 +290,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 49139,
+=======
+      "htmlSize": 49135,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -286,7 +322,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 49224,
+=======
+      "htmlSize": 49552,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -374,7 +414,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 50472,
+=======
+      "htmlSize": 50468,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -402,7 +446,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 54070,
+=======
+      "htmlSize": 54066,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -430,7 +478,11 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 56443,
+=======
+      "htmlSize": 56439,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -454,11 +506,43 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/state": {
+      "routeType": "page",
+      "response": "complete",
+      "compute": "static",
+      "htmlSize": 48449,
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/state",
+      "dataRoute": "/state.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/verify/verify-email": {
       "routeType": "page",
       "response": "complete",
       "compute": "static",
+<<<<<<< HEAD
       "htmlSize": 49785,
+=======
+      "htmlSize": 49781,
+>>>>>>> virender-jangra
       "experimentalBypassFor": [
         {
           "type": "header",

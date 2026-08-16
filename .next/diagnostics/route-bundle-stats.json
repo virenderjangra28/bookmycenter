@@ -1,11 +1,36 @@
 [
   {
+<<<<<<< HEAD
     "route": "/admin/dashboard",
     "firstLoadUncompressedJsBytes": 544725,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "route": "/become-partner",
+    "firstLoadUncompressedJsBytes": 573984,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+      ".next/static/chunks/1k_yf1gck76k1.js",
+      ".next/static/chunks/3hi9v8yx8o1ax.js",
+      ".next/static/chunks/3s6nzrbk-8mnv.js",
+      ".next/static/chunks/2mmpezlrfmbu5.js",
+      ".next/static/chunks/1r74ual3939ty.js",
+      ".next/static/chunks/213zvx-x_gk21.js",
+      ".next/static/chunks/turbopack-17wwzbj2kitae.js"
+    ]
+  },
+  {
+    "route": "/admin/dashboard",
+    "firstLoadUncompressedJsBytes": 544721,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/0h5th5brtadjj.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
@@ -15,6 +40,7 @@
     ]
   },
   {
+<<<<<<< HEAD
     "route": "/book-a-center",
     "firstLoadUncompressedJsBytes": 541999,
     "firstLoadChunkPaths": [
@@ -22,6 +48,15 @@
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
       ".next/static/chunks/1zek091mo-t-2.js",
+=======
+    "route": "/client/update-center",
+    "firstLoadUncompressedJsBytes": 543627,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+      ".next/static/chunks/3zzl6qe_iqpq5.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
       ".next/static/chunks/1r74ual3939ty.js",
@@ -30,6 +65,7 @@
     ]
   },
   {
+<<<<<<< HEAD
     "route": "/client/update-center",
     "firstLoadUncompressedJsBytes": 541288,
     "firstLoadChunkPaths": [
@@ -37,6 +73,15 @@
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
       ".next/static/chunks/0sbp8rw_dcs0d.js",
+=======
+    "route": "/book-a-center",
+    "firstLoadUncompressedJsBytes": 541880,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+      ".next/static/chunks/2mnweqzni8qf_.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
       ".next/static/chunks/1r74ual3939ty.js",
@@ -46,11 +91,19 @@
   },
   {
     "route": "/signup",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 540785,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 540781,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/2250kfhvv9jcs.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
@@ -61,11 +114,19 @@
   },
   {
     "route": "/client/dashboard",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 539586,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 539582,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/0bi494bgo5dtj.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
@@ -76,11 +137,19 @@
   },
   {
     "route": "/",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 537653,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 537649,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/1qqp1mo4-j98b.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
@@ -91,11 +160,19 @@
   },
   {
     "route": "/admin/user-list",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 537212,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 537208,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/2mjzdok05qtnz.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
@@ -106,11 +183,19 @@
   },
   {
     "route": "/verify/verify-email",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 536915,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 536911,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/2ijwgojbyd6p_.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
@@ -121,11 +206,19 @@
   },
   {
     "route": "/verify/verify-email/[token]",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 536915,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 536911,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/2ijwgojbyd6p_.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
@@ -136,11 +229,19 @@
   },
   {
     "route": "/login",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 536224,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 536220,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/28-z8tcabb01e.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
@@ -151,11 +252,19 @@
   },
   {
     "route": "/find-your-exam",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 535483,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 535479,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/05k-1vfefmumj.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
@@ -166,11 +275,19 @@
   },
   {
     "route": "/client/profile",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 533677,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 533673,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/1gwz9i9jdhys7.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
@@ -180,6 +297,7 @@
     ]
   },
   {
+<<<<<<< HEAD
     "route": "/country",
     "firstLoadUncompressedJsBytes": 533080,
     "firstLoadChunkPaths": [
@@ -201,6 +319,14 @@
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "route": "/client/payment-history",
+    "firstLoadUncompressedJsBytes": 532756,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/20s7nhqglmq-y.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
@@ -210,6 +336,7 @@
     ]
   },
   {
+<<<<<<< HEAD
     "route": "/become-partner",
     "firstLoadUncompressedJsBytes": 531552,
     "firstLoadChunkPaths": [
@@ -217,6 +344,15 @@
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
       ".next/static/chunks/24kfgst6sesp3.js",
+=======
+    "route": "/state",
+    "firstLoadUncompressedJsBytes": 532310,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+      ".next/static/chunks/2y_z8_oi54h8c.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
       ".next/static/chunks/1r74ual3939ty.js",
@@ -226,11 +362,19 @@
   },
   {
     "route": "/_not-found",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 531316,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 531312,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
       ".next/static/chunks/1r74ual3939ty.js",
@@ -240,11 +384,19 @@
   },
   {
     "route": "/admin/user-details/[slug]",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 531316,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 531312,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
       ".next/static/chunks/1r74ual3939ty.js",
@@ -254,11 +406,19 @@
   },
   {
     "route": "/exams/[id]",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 531316,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 531312,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
       ".next/static/chunks/1r74ual3939ty.js",
@@ -268,11 +428,19 @@
   },
   {
     "route": "/verify/reset-password/[token]",
+<<<<<<< HEAD
     "firstLoadUncompressedJsBytes": 531316,
     "firstLoadChunkPaths": [
       ".next/static/chunks/3fntmmi971322.js",
       ".next/static/chunks/3puepyi7s1mdr.js",
       ".next/static/chunks/0gfecsxdm9lez.js",
+=======
+    "firstLoadUncompressedJsBytes": 531312,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/3fntmmi971322.js",
+      ".next/static/chunks/2lu3nx6j5n110.js",
+      ".next/static/chunks/3koys74g3a4q1.js",
+>>>>>>> virender-jangra
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
       ".next/static/chunks/1r74ual3939ty.js",

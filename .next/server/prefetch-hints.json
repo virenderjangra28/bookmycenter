@@ -229,6 +229,20 @@
       }
     }
   },
+  "/state": {
+    "hints": 0,
+    "slots": {
+      "children": {
+        "hints": 64,
+        "slots": {
+          "children": {
+            "hints": 160,
+            "slots": null
+          }
+        }
+      }
+    }
+  },
   "/verify/verify-email": {
     "hints": 0,
     "slots": {

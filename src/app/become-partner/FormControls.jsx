@@ -204,18 +204,18 @@ export function OtpVerificationField({
             required={required}
             disabled={verified}
           />
-          <button
+          {/* <button
             type="button"
             onClick={sendOtp}
             disabled={sending || verified}
             className="inline-flex shrink-0 items-center justify-center rounded-lg border border-[#0a7ea4] px-4 py-3 text-sm font-semibold text-[#0a7ea4] transition hover:bg-[#0a7ea4]/5 disabled:opacity-60"
           >
             {sending ? "Sending..." : "Send OTP"}
-          </button>
+          </button> */}
         </div>
       </FormField>
 
-      <FormField label={`${label} OTP`} id={otpId}>
+      {/* <FormField label={`${label} OTP`} id={otpId}>
         <div className="flex flex-col gap-2 sm:flex-row">
           <input
             id={otpId}
@@ -239,7 +239,7 @@ export function OtpVerificationField({
         {verified ? (
           <p className="mt-1 text-xs font-medium text-[#0a7ea4]">Verification complete</p>
         ) : null}
-      </FormField>
+      </FormField> */}
     </div>
   );
 }

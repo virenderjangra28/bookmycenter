@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema(
     isActive: { type: mongoose.Schema.Types.Mixed, default: 0 },
     role: { type: mongoose.Schema.Types.Mixed, default: 0 },
     mobile: String,
+    centerType: String,
+    centerRating: Number,
+    centerCapacity: String,
     created_at: { type: Date, default: Date.now }
   },
 );

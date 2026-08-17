@@ -1,97 +1,168 @@
 import mongoose from "mongoose";
 
-const centerlistSchema = new mongoose.Schema({
-    user_id: { 
-        type: String,
-        ref: "User"
+const cbtInfrastructureSchema = new mongoose.Schema(
+    {
+        totalComputers: String,
+        backupComputers: String,
+        processorConfiguration: String,
+        minimumRam: String,
+        operatingSystem: String,
+        monitorSize: String,
+        webcamAvailable: String,
+        headphonesAvailable: String,
+        microphoneAvailable: String,
+        lanConnectivity: String,
+        systemsConnectedThroughLan: String,
+        usbPortsDisabled: String,
+        localAdminRestricted: String,
+        secureBrowserCompatible: String,
     },
-    centerName: { 
-        type: String, 
-        required: true 
-    },
-    centerType: { 
-        type: String, 
-        required: true 
-    },
-    owner: { 
-        type: String, 
-        ref: "User",
-    },
-    capacity: { 
-        type: String, 
-        required: true 
-    },
-    country: { 
-        type: String, 
-        ref: "Country",
-        required: true 
-    },
-    State: { 
-        type: String,
-        ref: "State"
-    },
-    city: { 
-        type: String, 
-        ref: "City"
-    },
-    phone: {    
-         type: String, 
-         required: true },
-    longitude: { 
-        type: String, 
-        required: true 
-    },
-    latitude: { 
-        type: String, 
-        required: true 
-    },
-    isVerified: { 
-        type: Boolean, 
-        default: false,
-    },
-    address: { 
-        type: String, 
-        required: true 
-    },
-    startDate: { 
-        type: Date, 
-        required: true,
-        default: Date.now
-    },
-    endDate: { 
-        type: Date, 
-        required: true,
-        default: Date.now
-    },
-    startTime: { 
-        type: Date, 
-        required: true 
-    },
-    endTime: { 
-        type: Date, 
-        required: true,
-        default: Date.now
-    },
-    washroomPhoto: { 
-        type: String, 
-        required: true 
-    },
-    mainEntryPhoto: { 
-        type: String, 
-        required: true 
-    },
-    others: { 
-        type: String, 
-        required: true 
-    },
-    availability: { 
-        type: String, 
-    },
-    applicationData: {
-        type: mongoose.Schema.Types.Mixed,
-    }
-}, { collection: "centerLists", strict: false });
+    { _id: false }
+);
 
-export const Centerlist = mongoose.models.Centerlist || mongoose.model("Centerlist", centerlistSchema);
+const internetInfrastructureSchema = new mongoose.Schema(
+    {
+        primaryIsp: String,
+        primarySpeed: String,
+        connectionType: String,
+        dedicatedConnection: String,
+        staticIpAvailable: String,
+        backupInternetAvailable: String,
+        backupIspName: String,
+        backupSpeed: String,
+        loadBalancingAvailable: String,
+    },
+    { _id: false }
+);
+
+const pbtInfrastructureSchema = new mongoose.Schema(
+    {
+        seatingCapacity: String,
+        numberOfRooms: String,
+        individualDeskAvailable: String,
+        secureQuestionPaperStorage: String,
+        cctvCoverage: String,
+        printerFacility: String,
+        omrHandlingFacility: String,
+        secureMaterialStorage: String,
+        materialDispatchFacility: String,
+    },
+    { _id: false }
+);
+
+const powerInfrastructureSchema = new mongoose.Schema(
+    {
+        electricityAvailable: String,
+        upsAvailable: String,
+        upsBackupDuration: String,
+        generatorAvailable: String,
+        generatorCapacity: String,
+        inverterBackup: String,
+        labOperatesDuringPowerFailure: String,
+    },
+    { _id: false }
+);
+
+const cctvSecuritySchema = new mongoose.Schema(
+    {
+        cctvInstalled: String,
+        numberOfCameras: String,
+        cctvCoverage: [String],
+        recordingAvailable: String,
+        retentionPeriod: String,
+        liveMonitoringAvailable: String,
+        remoteAccessPossible: String,
+        securityGuardAvailable: String,
+        fireExtinguishersAvailable: String,
+        emergencyExitAvailable: String,
+        fireSafetyCertificateAvailable: String,
+    },
+    { _id: false }
+);
+
+const accessibilitySchema = new mongoose.Schema(
+    {
+        wheelchairAccessible: String,
+        liftAvailable: String,
+        rampAvailable: String,
+        accessibleToilet: String,
+        drinkingWater: String,
+        separateToilets: String,
+        airConditioning: String,
+        properVentilation: String,
+        waitingArea: String,
+        parkingFacility: String,
+        publicTransportNearby: String,
+    },
+    { _id: false }
+);
+
+const staffSchema = new mongoose.Schema(
+    {
+        centreManager: String,
+        technicalSupportStaff: String,
+        invigilators: String,
+        registrationStaff: String,
+        securityPersonnel: String,
+        femaleInvigilators: String,
+        itAdministrator: String,
+    },
+    { _id: false }
+);
+
+const photosSchema = new mongoose.Schema(
+    {
+        buildingFront: [String],
+        reception: [String],
+        computerLab: [String],
+        candidateSeating: [String],
+        cctvCoverage: [String],
+        upsPowerBackup: [String],
+        washrooms: [String],
+        drinkingWater: [String],
+        fireSafety: [String],
+        emergencyExit: [String],
+    },
+    { _id: false }
+);
+
+const centerlistSchema = new mongoose.Schema(
+    {
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
+        centerId: String,
+        label: String,
+        separateRegistrationArea: String,
+        bagStorage: String,
+        totalAreaSqFt: String,
+        examRooms: String,
+        totalSeatingCapacity: String,
+        totalComputerCapacity: String,
+        maxCandidatesPerShift: String,
+        shiftsPerDay: String,
+        waitingArea: String,
+        cbtInfrastructure: cbtInfrastructureSchema,
+        internetInfrastructure: internetInfrastructureSchema,
+        pbtInfrastructure: pbtInfrastructureSchema,
+        powerInfrastructure: powerInfrastructureSchema,
+        cctvSecurity: cctvSecuritySchema,
+        authenticationFacilities: [String],
+        accessibility: accessibilitySchema,
+        staff: staffSchema,
+        photos: photosSchema,
+        additionalPhotos: [String],
+        created_at: { type: Date, default: Date.now },
+    },
+    { collection: "centerLists" }
+);
+
+if (mongoose.models.Centerlist) {
+    mongoose.deleteModel("Centerlist");
+}
+
+export const Centerlist = mongoose.model("Centerlist", centerlistSchema);
 
 export default Centerlist;

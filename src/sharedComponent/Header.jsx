@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import logo from "../../public/logo.jpeg";
 
 const NAV_LINKS = [
   { label: "Book a Center", href: "/book-a-center" },
@@ -27,14 +29,15 @@ const DROPDOWN_LINKS = {
 function LogoMark() {
   return (
     <Link href="/" className="inline-flex shrink-0 items-center gap-2">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" className="h-9 w-9" aria-hidden>
+      {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" className="h-9 w-9" aria-hidden>
         <path fill="#0056D2" d="M20 2.5c-7.18 0-13 5.82-13 13 0 9.75 13 21.5 13 21.5s13-11.75 13-21.5c0-7.18-5.82-13-13-13z" />
         <rect x="14" y="10" width="12" height="10" rx="1.2" fill="#fff" />
         <path d="M16 12.2h8M16 14.7h8M16 17.2h5" stroke="#0056D2" strokeWidth="1.3" strokeLinecap="round" />
       </svg>
       <span className="text-[17px] font-bold tracking-tight text-[#0b1a33]">
         BookMyCenter
-      </span>
+      </span> */}
+      <Image src={logo} alt="BookMyCenter" width={149} height={60} />
     </Link>
   );
 }

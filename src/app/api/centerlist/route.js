@@ -4,6 +4,10 @@ import Centerlist from "@/lib/model/centerlist";
 import { User } from "@/lib/model/user";
 import bcryptjs from "bcryptjs";
 import Location from "@/lib/model/location";
+import LegalRegistration from "@/lib/model/legalRegistration";
+import BankingDetail from "@/lib/model/bankingDetail";
+import CenterAvilability from "@/lib/model/centerAvailability";
+import CompDeclaration from "@/lib/model/complianceDeclaration";
 
 function parseCenterRating(value) {
     if (value === null || value === undefined || value === "") {
@@ -74,6 +78,8 @@ export async function POST(request) {
         });
 
         const userId = await newUser._id;
+
+        //Add Location
         const location = await Location.create({
             userId: userId,
             country: body.country || "",
@@ -85,9 +91,91 @@ export async function POST(request) {
             longitude: body.longitude || "",
             locationPhotos: body.locationPhotos || {},
         });
+
+        //Add Legal Registration
+        const legalRegistration = await LegalRegistration.create({
+            userId: userId,
+            gstNumber: body.gstNumber || "",
+            panNumber: body.panNumber || "",
+            corporateNumber: body.corporateNumber || "",
+            legalRegistrationPhotos: body.legalRegistrationPhotos || {},
+        });
+
+        //Bank Details 
+        const bankingDetail = await BankingDetail.create({
+            userId: userId,
+            accountName: body.accountName || "",
+            bankName: body.bankName || "",
+            accountNumber: body.accountNumber || "",
+            ifscCode: body.ifscCode || "",
+            branchName: body.branchName || "",
+            cancelCheckPhotos: body.cancelCheckPhotos?.checkPhoto || "",
+        });
+
+        //Centre Availability
+        const centerAvailability = await CenterAvilability.create({
+            userId: userId,
+            operatingDays: Array.isArray(body.availability?.operatingDays)
+                ? body.availability.operatingDays
+                : [],
+            operatingHoursFrom: body.availability?.hoursFrom || "",
+            operatingHoursTo: body.availability?.hoursTo || "",
+            weekdayExams: Boolean(body.availability?.weekdayExams),
+            weekendExams: Boolean(body.availability?.weekendExams),
+            multiDayExams: Boolean(body.availability?.multiDayExams),
+            shortNoticeExams: Boolean(body.availability?.shortNoticeExams),
+        });
+
+        //Compliance Declaration
+        const complianceDeclaration = await CompDeclaration.create({
+            userId: userId,
+            authorityName: body.complianceDeclaration?.authorityName || "",
+            authorityDesignation: body.complianceDeclaration?.authorityDesignation || "",
+            authDate: body.complianceDeclaration?.authDate || "",
+        });
+
+        //Centre Details
+        const centers = Array.isArray(body.centers) ? body.centers : [];
+        if (centers.length) {
+            await Centerlist.insertMany(
+                centers.map((center) => ({
+                    userId,
+                    centerId: center.id || "",
+                    label: center.label || "",
+                    separateRegistrationArea: center.separateRegistrationArea || "",
+                    bagStorage: center.bagStorage || "",
+                    totalAreaSqFt: center.totalAreaSqFt || "",
+                    examRooms: center.examRooms || "",
+                    totalSeatingCapacity: center.totalSeatingCapacity || "",
+                    totalComputerCapacity: center.totalComputerCapacity || "",
+                    maxCandidatesPerShift: center.maxCandidatesPerShift || "",
+                    shiftsPerDay: center.shiftsPerDay || "",
+                    waitingArea: center.waitingArea || "",
+                    cbtInfrastructure: center.cbtInfrastructure || {},
+                    internetInfrastructure: center.internetInfrastructure || {},
+                    pbtInfrastructure: center.pbtInfrastructure || {},
+                    powerInfrastructure: center.powerInfrastructure || {},
+                    cctvSecurity: {
+                        ...(center.cctvSecurity || {}),
+                        cctvCoverage: Array.isArray(center.cctvSecurity?.cctvCoverage)
+                            ? center.cctvSecurity.cctvCoverage
+                            : [],
+                    },
+                    authenticationFacilities: Array.isArray(center.authenticationFacilities)
+                        ? center.authenticationFacilities
+                        : [],
+                    accessibility: center.accessibility || {},
+                    staff: center.staff || {},
+                    photos: center.photos || {},
+                    additionalPhotos: Array.isArray(center.additionalPhotos)
+                        ? center.additionalPhotos
+                        : [],
+                }))
+            );
+        }
        
         return NextResponse.json(
-            { result: "Thank you for registering and location added! Your account is currently under review and will be activated within 2 hours.", success: true, status: 201 },
+            { result: "Thank you for registering! Your account is currently under review and will be activated within 2 hours.", success: true, status: 201 },
             { status: 201 }
         );
        

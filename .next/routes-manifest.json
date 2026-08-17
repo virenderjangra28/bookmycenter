@@ -149,6 +149,18 @@
       "namedRegex": "^/api/countrylist(?:/)?$"
     },
     {
+      "page": "/api/legalRegistration",
+      "regex": "^/api/legalRegistration(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/legalRegistration(?:/)?$"
+    },
+    {
+      "page": "/api/locations",
+      "regex": "^/api/locations(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/locations(?:/)?$"
+    },
+    {
       "page": "/api/partner/otp",
       "regex": "^/api/partner/otp(?:/)?$",
       "routeKeys": {},
@@ -213,6 +225,12 @@
       "regex": "^/find\\-your\\-exam(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/find\\-your\\-exam(?:/)?$"
+    },
+    {
+      "page": "/location",
+      "regex": "^/location(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/location(?:/)?$"
     },
     {
       "page": "/login",

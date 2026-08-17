@@ -206,14 +206,44 @@ const Footer = () => {
 
         <div className="mt-12 flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
           <Link href="/" className="inline-flex shrink-0">
-            <Image
+            {/* <Image
               src={logo}
               alt="BookMyCenter"
               width={180}
               height={44}
               className="h-9 w-auto brightness-0 invert"
               style={{ width: "auto", height: "auto" }}
-            />
+            /> */}
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 40 40"
+                className="h-9 w-9"
+                aria-hidden
+              >
+                <rect width="40" height="40" fill="#000000" />
+
+                <path
+                  fill="#3B82F6"
+                  d="M20 2.5c-7.18 0-13 5.82-13 13 0 9.75 13 21.5 13 21.5s13-11.75 13-21.5c0-7.18-5.82-13-13-13z"
+                />
+
+                <rect
+                  x="14"
+                  y="10"
+                  width="12"
+                  height="10"
+                  rx="1.2"
+                  fill="#FFFFFF"
+                />
+
+                <path
+                  d="M16 12.2h8M16 14.7h8M16 17.2h5"
+                  stroke="#3B82F6"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <span className="text-[17px] font-bold tracking-tight text-[#FFF]">BookMyCenter</span>
           </Link>
 
           <div className="flex items-center gap-5">

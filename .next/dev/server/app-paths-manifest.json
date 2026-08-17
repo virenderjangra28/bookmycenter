@@ -1,8 +1,11 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/api/centerlist/route": "app/api/centerlist/route.js",
   "/api/countrylist/route": "app/api/countrylist/route.js",
-  "/api/partner/otp/route": "app/api/partner/otp/route.js",
+  "/api/locations/route": "app/api/locations/route.js",
   "/become-partner/page": "app/become-partner/page.js",
   "/book-a-center/page": "app/book-a-center/page.js",
+  "/location/page": "app/location/page.js",
+  "/login/page": "app/login/page.js",
   "/page": "app/page.js"
 }

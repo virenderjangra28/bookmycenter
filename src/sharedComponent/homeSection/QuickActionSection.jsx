@@ -58,7 +58,7 @@ const QuickActionSection = () => {
             <div className="flex flex-col items-start">
               <Link
                 href="/book-a-center"
-                className="inline-flex h-10 w-[188px] items-center justify-center gap-1.5 rounded-md bg-[#0056D2] text-[15px] font-semibold text-white transition hover:bg-[#0046b0]"
+                className="inline-flex h-10 w-[200px] items-center justify-center gap-1.5 rounded-md bg-[#0056D2] text-[15px] font-semibold text-white transition hover:bg-[#0046b0]"
               >
                 Book a Center
                 <ArrowRightIcon className="h-4 w-4" />
@@ -75,7 +75,7 @@ const QuickActionSection = () => {
             <div className="flex flex-col items-start">
               <Link
                 href="/become-partner"
-                className="inline-flex h-10 w-[188px] items-center justify-center gap-1.5 rounded-md border border-[#0056D2] bg-white text-[15px] font-semibold text-[#0056D2] transition hover:bg-[#f4f8ff]"
+                className="inline-flex h-10 w-[200px] items-center justify-center gap-1.5 rounded-md border border-[#0056D2] bg-white text-[15px] font-semibold text-[#0056D2] transition hover:bg-[#f4f8ff]"
               >
                 List Your Center
                 <ArrowRightIcon className="h-4 w-4" />

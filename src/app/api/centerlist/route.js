@@ -170,6 +170,8 @@ export async function POST(request) {
                     additionalPhotos: Array.isArray(center.additionalPhotos)
                         ? center.additionalPhotos
                         : [],
+                    isVerified: false,
+                    isAvailable: false,
                 }))
             );
         }

@@ -5,9 +5,15 @@
   "devFiles": [],
   "polyfillFiles": [],
   "lowPriorityFiles": [
+<<<<<<< HEAD
     "static/oFKavydTKB5HPF5b3034o/_buildManifest.js",
     "static/oFKavydTKB5HPF5b3034o/_ssgManifest.js",
     "static/oFKavydTKB5HPF5b3034o/_clientMiddlewareManifest.js"
+=======
+    "static/pjsyzELovD9DLG971LVy1/_buildManifest.js",
+    "static/pjsyzELovD9DLG971LVy1/_ssgManifest.js",
+    "static/pjsyzELovD9DLG971LVy1/_clientMiddlewareManifest.js"
+>>>>>>> virender-jangra
   ],
   "rootMainFiles": [],
   "rootMainFilesTree": {},

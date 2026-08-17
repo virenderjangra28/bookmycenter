@@ -99,7 +99,7 @@ export default function LoginPage() {
 
       {/* Right login panel */}
       <section className="flex flex-1 flex-col bg-white">
-        <div className="flex items-center justify-end gap-3 px-6 py-5 sm:px-10">
+        {/* <div className="flex items-center justify-end gap-3 px-6 py-5 sm:px-10">
           <span className="text-sm text-[#6b7280]">
             Don&apos;t have an account yet?
           </span>
@@ -109,7 +109,7 @@ export default function LoginPage() {
           >
             Get Started
           </Link>
-        </div>
+        </div> */}
 
         <div className="flex flex-1 flex-col items-center justify-center px-6 pb-10 sm:px-10">
           <div className="w-full max-w-md">

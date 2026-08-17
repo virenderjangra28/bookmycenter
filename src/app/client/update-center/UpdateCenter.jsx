@@ -138,25 +138,17 @@ export default function UpdateCenter() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f4f7fb] px-4 py-8 sm:px-6 lg:px-10">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-[#0a7ea4]">
-              Client Portal
-            </p>
-            <h1 className="mt-1 text-3xl font-bold text-[#0b1a33]">Update Center</h1>
-            <p className="mt-2 max-w-2xl text-sm text-[#6b7280]">
-              Add your test center details, location coordinates, seating capacity, and contact
-              information for BookMyCenter review.
-            </p>
-          </div>
-          <Link
-            href="/client/dashboard"
-            className="inline-flex items-center justify-center rounded-lg border border-[#0a7ea4] px-4 py-2 text-sm font-semibold text-[#0a7ea4] transition hover:bg-[#0a7ea4]/5"
-          >
-            Back to Dashboard
-          </Link>
+    <main className="px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
+      <div className="max-w-5xl">
+        <div className="mb-8">
+          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#2563eb]">
+            Client Portal
+          </p>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#0b1a33]">Update Center</h1>
+          <p className="mt-2 max-w-2xl text-sm text-[#64748b]">
+            Add your test center details, location coordinates, seating capacity, and contact
+            information for BookMyCenter review.
+          </p>
         </div>
 
         {loading ? (

@@ -1,44 +1,42 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import { CENTER_TYPES, STAR_RATINGS } from "../become-partner/constants";
+import {
+  FormField,
+  inputClass,
+  OtpVerificationField,
+} from "../become-partner/FormControls";
+import { citylist } from "../services/citylist";
 import { statelist } from "../services/statelist";
 
-const CENTER_TYPES = [
-  "CBT Centers",
-  "PBT / Paper Exam Centers",
-  "Certification Test Centers",
-  "Government Exam Centers",
-  "Training Center",
-];
+const INDIA = "India";
+const MIN_CAPACITY = 100;
 
 const INITIAL_FORM = {
-  centerType: "",
+  regionType: "",
   country: "",
   state: "",
   city: "",
-  dateFrom: "",
-  dateTo: "",
-  timeFrom: "",
-  timeTo: "",
+  pinCode: "",
+  fullAddress: "",
+  centerType: "",
+  category: "",
+  startDate: "",
+  endDate: "",
+  startTime: "",
+  endTime: "",
   capacity: "",
+  organizationName: "",
+  contactPersonName: "",
+  email: "",
+  emailOtp: "",
+  emailVerified: false,
+  contactNumber: "",
+  mobileOtp: "",
+  mobileVerified: false,
 };
-
-function FormField({ label, id, required, children, hint }) {
-  return (
-    <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-[#0b1a33]">
-        {label}
-        {required ? <span className="text-[#b03a2e]"> *</span> : null}
-      </label>
-      {children}
-      {hint ? <p className="mt-1 text-xs text-[#6b7280]">{hint}</p> : null}
-    </div>
-  );
-}
-
-function inputClass() {
-  return "w-full rounded-lg border border-[#e5e7eb] bg-white px-4 py-3 text-sm text-[#1f2937] outline-none transition-colors focus:border-[#0a7ea4] focus:ring-2 focus:ring-[#0a7ea4]/15";
-}
 
 function SearchIcon({ className }) {
   return (
@@ -58,6 +56,11 @@ function SearchIcon({ className }) {
   );
 }
 
+function formatStarLabel(value) {
+  const rating = STAR_RATINGS.find((item) => String(item.value) === String(value));
+  return rating?.label || (value ? `${value} Star` : "—");
+}
+
 export default function BookCenter() {
   const initialized = useRef(false);
   const [form, setForm] = useState(INITIAL_FORM);
@@ -70,17 +73,20 @@ export default function BookCenter() {
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const countrySearchRef = useRef(null);
   const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  const isDomestic = form.regionType === "Domestic";
+  const today = new Date().toISOString().split("T")[0];
 
   const filteredCountries = useMemo(() => {
     const query = form.country.trim().toLowerCase();
-    if (!query) return countries;
+    const list = isDomestic
+      ? countries.filter((country) => country.name.toLowerCase() === INDIA.toLowerCase())
+      : countries.filter((country) => country.name.toLowerCase() !== INDIA.toLowerCase());
 
-    return countries.filter((country) =>
-      country.name.toLowerCase().includes(query)
-    );
-  }, [countries, form.country]);
-
-  //get country list
+    if (!query) return list;
+    return list.filter((country) => country.name.toLowerCase().includes(query));
+  }, [countries, form.country, isDomestic]);
 
   const getCountryAllList = async () => {
     try {
@@ -100,10 +106,40 @@ export default function BookCenter() {
     }
   };
 
+  const loadStates = async (countryName) => {
+    if (!countryName) {
+      setStates([]);
+      setCities([]);
+      return;
+    }
+
+    try {
+      const statesData = await statelist(countryName);
+      setStates(Array.isArray(statesData) ? statesData : []);
+    } catch {
+      setStates([]);
+    }
+    setCities([]);
+  };
+
+  const loadCities = async (countryName, stateName) => {
+    if (!countryName || !stateName) {
+      setCities([]);
+      return;
+    }
+
+    try {
+      const citiesData = await citylist(countryName, stateName);
+      setCities(Array.isArray(citiesData) ? citiesData : []);
+    } catch {
+      setCities([]);
+    }
+  };
+
   useEffect(() => {
-    if(initialized.current) return;
-      initialized.current = true;
-      getCountryAllList();
+    if (initialized.current) return;
+    initialized.current = true;
+    getCountryAllList();
   }, []);
 
   useEffect(() => {
@@ -117,23 +153,97 @@ export default function BookCenter() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const updateForm = (updates) => {
+    setForm((prev) => ({ ...prev, ...updates }));
+  };
+
   const handleChange = (field) => (event) => {
-    setForm((prev) => ({ ...prev, [field]: event.target.value }));
+    updateForm({ [field]: event.target.value });
+  };
+
+  const handleRegionTypeChange = async (regionType) => {
+    setShowCountryDropdown(false);
+    setCities([]);
+
+    if (regionType === "Domestic") {
+      updateForm({
+        regionType,
+        country: INDIA,
+        state: "",
+        city: "",
+        pinCode: "",
+      });
+      await loadStates(INDIA);
+      return;
+    }
+
+    updateForm({
+      regionType,
+      country: "",
+      state: "",
+      city: "",
+      pinCode: "",
+    });
+    setStates([]);
+  };
+
+  const handleCountryChange = (event) => {
+    updateForm({ country: event.target.value, state: "", city: "", pinCode: "" });
+    setStates([]);
+    setCities([]);
+    setShowCountryDropdown(true);
+  };
+
+  const handleCountrySelect = async (countryName) => {
+    updateForm({ country: countryName, state: "", city: "", pinCode: "" });
+    setShowCountryDropdown(false);
+    await loadStates(countryName);
+  };
+
+  const handleStateChange = async (event) => {
+    const stateName = event.target.value;
+    updateForm({ state: stateName, city: "", pinCode: "" });
+
+    const matchedState = states.find(
+      (state) => state.name.toLowerCase() === stateName.trim().toLowerCase()
+    );
+    if (matchedState && form.country) {
+      await loadCities(form.country, matchedState.name);
+      return;
+    }
+
+    setCities([]);
+  };
+
+  const handleCityChange = (event) => {
+    updateForm({ city: event.target.value, pinCode: "" });
   };
 
   const handleSearch = async (event) => {
     event.preventDefault();
-    setSearching(true);
     setError(null);
+
+    if (!form.emailVerified || !form.mobileVerified) {
+      toast.error("Please verify email and mobile number with OTP");
+      return;
+    }
+
+    const capacity = Number(form.capacity);
+    if (!Number.isFinite(capacity) || capacity < MIN_CAPACITY) {
+      toast.error(`Required capacity must be at least ${MIN_CAPACITY} seats`);
+      return;
+    }
+
+    setSearching(true);
     setHasSearched(true);
 
     try {
       const response = await fetch(`/api/centers/search`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(form)
+        body: JSON.stringify(form),
       });
       const data = await response.json();
 
@@ -156,20 +266,8 @@ export default function BookCenter() {
     setHasSearched(false);
     setError(null);
     setShowCountryDropdown(false);
-  };
-
-  const handleCountryChange = (event) => {
-    setForm((prev) => ({ ...prev, country: event.target.value }));
-    setShowCountryDropdown(true);
-  };
-
-  const handleCountrySelect = async (countryName) => {
     setStates([]);
-    form.state = "";
-    setForm((prev) => ({ ...prev, country: countryName }));
-    setShowCountryDropdown(false);
-    const statesData = await statelist(countryName);
-    setStates(statesData);
+    setCities([]);
   };
 
   return (
@@ -183,8 +281,8 @@ export default function BookCenter() {
             Find and book a test center
           </h1>
           <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[#6b7280] sm:text-base">
-            Search verified centers by type, location, date, timing, and seating capacity.
-            All fields remain editable so you can refine your search anytime.
+            Complete the required booking details below. Email and mobile OTP verification is
+            required before searching matching centers.
           </p>
         </div>
 
@@ -194,30 +292,32 @@ export default function BookCenter() {
         >
           <h2 className="text-xl font-bold text-[#0b1a33]">Search Centers</h2>
           <p className="mt-1 text-sm text-[#6b7280]">
-            Fill in the details below and click Search Center.
+            All fields marked with * are required.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
             <div className="md:col-span-2">
-              <FormField label="Center Type" id="centerType" required>
-                <select
-                  id="centerType"
-                  value={form.centerType}
-                  onChange={handleChange("centerType")}
-                  className={inputClass()}
-                  required
-                >
-                  <option value="">Select center type</option>
-                  {CENTER_TYPES.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
+              <FormField label="Select International or Domestic" id="regionType" required>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+                  {["Domestic", "International"].map((type) => (
+                    <label key={type} className="flex items-center gap-2 text-sm text-[#1f2937]">
+                      <input
+                        type="radio"
+                        name="regionType"
+                        value={type}
+                        checked={form.regionType === type}
+                        onChange={() => handleRegionTypeChange(type)}
+                        className="h-4 w-4 border-[#d1d5db] text-[#0a7ea4] focus:ring-[#0a7ea4]"
+                        required
+                      />
+                      <span>{type}</span>
+                    </label>
                   ))}
-                </select>
+                </div>
               </FormField>
             </div>
 
-            <FormField label="Search by Country" id="country">
+            <FormField label="Country" id="country" required>
               <div ref={countrySearchRef} className="relative">
                 <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6b7280]" />
                 <input
@@ -225,19 +325,28 @@ export default function BookCenter() {
                   type="search"
                   value={form.country}
                   onChange={handleCountryChange}
-                  onFocus={() => setShowCountryDropdown(true)}
+                  onFocus={() => {
+                    if (!isDomestic) setShowCountryDropdown(true);
+                  }}
                   placeholder={
-                    loadingCountries ? "Loading countries..." : "Search or enter country"
+                    !form.regionType
+                      ? "Select Domestic or International first"
+                      : loadingCountries
+                        ? "Loading countries..."
+                        : isDomestic
+                          ? INDIA
+                          : "Search or select country"
                   }
                   autoComplete="off"
                   role="combobox"
                   aria-expanded={showCountryDropdown}
                   aria-controls="country-search-results"
                   aria-autocomplete="list"
-                  disabled={loadingCountries}
+                  disabled={loadingCountries || !form.regionType || isDomestic}
                   className={`${inputClass()} pl-11`}
+                  required
                 />
-                {showCountryDropdown && !loadingCountries ? (
+                {showCountryDropdown && !loadingCountries && !isDomestic ? (
                   <ul
                     id="country-search-results"
                     role="listbox"
@@ -270,15 +379,17 @@ export default function BookCenter() {
               </div>
             </FormField>
 
-            <FormField label="Search by State" id="state">
+            <FormField label="State" id="state" required>
               <input
                 id="state"
                 type="text"
                 list="state-options"
                 value={form.state}
-                onChange={handleChange("state")}
-                placeholder="Enter or select state"
+                onChange={handleStateChange}
+                placeholder={form.country ? "Enter or select state" : "Select country first"}
                 className={inputClass()}
+                disabled={!form.country}
+                required
               />
               <datalist id="state-options">
                 {states.map((state) => (
@@ -287,71 +398,229 @@ export default function BookCenter() {
               </datalist>
             </FormField>
 
-            <FormField label="Search by City" id="city">
+            <FormField label="City" id="city" required>
               <input
                 id="city"
                 type="text"
+                list="city-options"
                 value={form.city}
-                onChange={handleChange("city")}
-                placeholder="Enter city name"
+                onChange={handleCityChange}
+                placeholder={form.state ? "Enter or select city" : "Select state first"}
                 className={inputClass()}
+                disabled={!form.state}
+                required
+              />
+              <datalist id="city-options">
+                {cities.map((city) => (
+                  <option key={city} value={city} />
+                ))}
+              </datalist>
+            </FormField>
+
+            <FormField label="Pin Code" id="pinCode" required>
+              <input
+                id="pinCode"
+                type="text"
+                inputMode="numeric"
+                value={form.pinCode}
+                onChange={handleChange("pinCode")}
+                placeholder={isDomestic ? "6-digit pin code" : "Enter pin / postal code"}
+                className={inputClass()}
+                pattern={isDomestic ? "[0-9]{6}" : "[A-Za-z0-9\\- ]{3,12}"}
+                minLength={isDomestic ? 6 : 3}
+                maxLength={isDomestic ? 6 : 12}
+                required
               />
             </FormField>
 
-            <FormField label="Required Capacity" id="capacity">
+            <div className="md:col-span-2">
+              <FormField label="Full Address" id="fullAddress" required>
+                <textarea
+                  id="fullAddress"
+                  value={form.fullAddress}
+                  onChange={handleChange("fullAddress")}
+                  placeholder="Enter the full address"
+                  rows={3}
+                  className={inputClass()}
+                  required
+                />
+              </FormField>
+            </div>
+
+            <FormField label="Centre Type" id="centerType" required>
+              <select
+                id="centerType"
+                value={form.centerType}
+                onChange={handleChange("centerType")}
+                className={inputClass()}
+                required
+              >
+                <option value="">Select centre type</option>
+                {CENTER_TYPES.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+            </FormField>
+
+            <FormField label="Category" id="category" required>
+              <select
+                id="category"
+                value={form.category}
+                onChange={handleChange("category")}
+                className={inputClass()}
+                required
+              >
+                <option value="">Select category</option>
+                {STAR_RATINGS.map((rating) => (
+                  <option key={rating.value} value={rating.value}>
+                    {rating.label}
+                  </option>
+                ))}
+              </select>
+            </FormField>
+
+            <FormField label="Start Date" id="startDate" required>
+              <input
+                id="startDate"
+                type="date"
+                value={form.startDate}
+                onChange={handleChange("startDate")}
+                min={today}
+                className={inputClass()}
+                required
+              />
+            </FormField>
+
+            <FormField label="End Date" id="endDate" required>
+              <input
+                id="endDate"
+                type="date"
+                value={form.endDate}
+                onChange={handleChange("endDate")}
+                min={form.startDate || today}
+                className={inputClass()}
+                required
+              />
+            </FormField>
+
+            <FormField label="Start Time" id="startTime" required>
+              <input
+                id="startTime"
+                type="time"
+                value={form.startTime}
+                onChange={handleChange("startTime")}
+                className={inputClass()}
+                required
+              />
+            </FormField>
+
+            <FormField label="End Time" id="endTime" required>
+              <input
+                id="endTime"
+                type="time"
+                value={form.endTime}
+                onChange={handleChange("endTime")}
+                min={
+                  form.startDate && form.endDate && form.startDate === form.endDate
+                    ? form.startTime || undefined
+                    : undefined
+                }
+                className={inputClass()}
+                required
+              />
+            </FormField>
+
+            <FormField
+              label="Required Capacity"
+              id="capacity"
+              required
+              hint={`Minimum ${MIN_CAPACITY} seats`}
+            >
               <input
                 id="capacity"
                 type="number"
-                min="1"
+                min={MIN_CAPACITY}
                 value={form.capacity}
                 onChange={handleChange("capacity")}
-                placeholder="Minimum seats required"
+                placeholder={`Minimum ${MIN_CAPACITY} seats`}
                 className={inputClass()}
+                required
               />
             </FormField>
 
-            <FormField label="Select Date From" id="dateFrom">
+            <FormField label="Name of the Organization" id="organizationName" required>
               <input
-                id="dateFrom"
-                type="date"
-                value={form.dateFrom}
-                onChange={handleChange("dateFrom")}
-                min={new Date().toISOString().split("T")[0]}
+                id="organizationName"
+                type="text"
+                value={form.organizationName}
+                onChange={handleChange("organizationName")}
+                placeholder="Enter organization name"
                 className={inputClass()}
+                required
               />
             </FormField>
 
-            <FormField label="Select Date To" id="dateTo">
-              <input
-                id="dateTo"
-                type="date"
-                value={form.dateTo}
-                onChange={handleChange("dateTo")}
-                min={form.dateFrom || new Date().toISOString().split("T")[0]}
-                className={inputClass()}
-              />
-            </FormField>
+            <div className="md:col-span-2">
+              <FormField label="Contact Person Name" id="contactPersonName" required>
+                <input
+                  id="contactPersonName"
+                  type="text"
+                  value={form.contactPersonName}
+                  onChange={handleChange("contactPersonName")}
+                  placeholder="Enter contact person name"
+                  className={inputClass()}
+                  required
+                />
+              </FormField>
+            </div>
 
-            <FormField label="Timing From" id="timeFrom">
-              <input
-                id="timeFrom"
-                type="time"
-                value={form.timeFrom}
-                onChange={handleChange("timeFrom")}
-                className={inputClass()}
+            <div className="md:col-span-2">
+              <OtpVerificationField
+                label="Email Id"
+                valueId="email"
+                otpId="emailOtp"
+                type="email"
+                inputType="email"
+                value={form.email}
+                otp={form.emailOtp}
+                verified={form.emailVerified}
+                onValueChange={(event) =>
+                  updateForm({ email: event.target.value, emailVerified: false, emailOtp: "" })
+                }
+                onOtpChange={(event) => updateForm({ emailOtp: event.target.value })}
+                onVerifiedChange={(verified) => updateForm({ emailVerified: verified })}
+                required
+                enableOtp
+                placeholder="name@organization.com"
               />
-            </FormField>
+            </div>
 
-            <FormField label="Timing To" id="timeTo">
-              <input
-                id="timeTo"
-                type="time"
-                value={form.timeTo}
-                onChange={handleChange("timeTo")}
-                min={form.timeFrom || undefined}
-                className={inputClass()}
+            <div className="md:col-span-2">
+              <OtpVerificationField
+                label="Contact Number"
+                valueId="contactNumber"
+                otpId="mobileOtp"
+                type="mobile"
+                inputType="tel"
+                value={form.contactNumber}
+                otp={form.mobileOtp}
+                verified={form.mobileVerified}
+                onValueChange={(event) =>
+                  updateForm({
+                    contactNumber: event.target.value,
+                    mobileVerified: false,
+                    mobileOtp: "",
+                  })
+                }
+                onOtpChange={(event) => updateForm({ mobileOtp: event.target.value })}
+                onVerifiedChange={(verified) => updateForm({ mobileVerified: verified })}
+                required
+                enableOtp
+                placeholder="10-digit mobile number"
               />
-            </FormField>
+            </div>
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-end">
@@ -406,7 +675,7 @@ export default function BookCenter() {
                           {center.name}
                         </h3>
                         <p className="mt-2 text-sm text-[#6b7280]">
-                          {[center.address, center.city, center.state, center.country]
+                          {[center.address, center.city, center.state, center.country, center.pinCode]
                             .filter(Boolean)
                             .join(", ")}
                         </p>
@@ -422,23 +691,19 @@ export default function BookCenter() {
                       <div>
                         <dt className="font-semibold text-[#0b1a33]">Date</dt>
                         <dd className="mt-1 text-[#6b7280]">
-                          {form.dateFrom || form.dateTo
-                            ? `${form.dateFrom || "—"} to ${form.dateTo || "—"}`
-                            : "Flexible"}
+                          {`${form.startDate || "—"} to ${form.endDate || "—"}`}
                         </dd>
                       </div>
                       <div>
                         <dt className="font-semibold text-[#0b1a33]">Timing</dt>
                         <dd className="mt-1 text-[#6b7280]">
-                          {form.timeFrom || form.timeTo
-                            ? `${form.timeFrom || "—"} to ${form.timeTo || "—"}`
-                            : "Flexible"}
+                          {`${form.startTime || "—"} to ${form.endTime || "—"}`}
                         </dd>
                       </div>
                       <div>
-                        <dt className="font-semibold text-[#0b1a33]">Contact</dt>
+                        <dt className="font-semibold text-[#0b1a33]">Category</dt>
                         <dd className="mt-1 text-[#6b7280]">
-                          {center.contactPhone || center.contactEmail || "—"}
+                          {formatStarLabel(center.category || form.category)}
                         </dd>
                       </div>
                       <div>

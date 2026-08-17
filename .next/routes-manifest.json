@@ -191,10 +191,28 @@
       "namedRegex": "^/book\\-a\\-center(?:/)?$"
     },
     {
+      "page": "/client/booking-requests",
+      "regex": "^/client/booking\\-requests(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/booking\\-requests(?:/)?$"
+    },
+    {
+      "page": "/client/contracts",
+      "regex": "^/client/contracts(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/contracts(?:/)?$"
+    },
+    {
       "page": "/client/dashboard",
       "regex": "^/client/dashboard(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/client/dashboard(?:/)?$"
+    },
+    {
+      "page": "/client/past-bookings",
+      "regex": "^/client/past\\-bookings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/past\\-bookings(?:/)?$"
     },
     {
       "page": "/client/payment-history",
@@ -203,10 +221,46 @@
       "namedRegex": "^/client/payment\\-history(?:/)?$"
     },
     {
+      "page": "/client/payments",
+      "regex": "^/client/payments(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/payments(?:/)?$"
+    },
+    {
       "page": "/client/profile",
       "regex": "^/client/profile(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/client/profile(?:/)?$"
+    },
+    {
+      "page": "/client/reports",
+      "regex": "^/client/reports(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/reports(?:/)?$"
+    },
+    {
+      "page": "/client/saved-centers",
+      "regex": "^/client/saved\\-centers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/saved\\-centers(?:/)?$"
+    },
+    {
+      "page": "/client/search-centers",
+      "regex": "^/client/search\\-centers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/search\\-centers(?:/)?$"
+    },
+    {
+      "page": "/client/support",
+      "regex": "^/client/support(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/support(?:/)?$"
+    },
+    {
+      "page": "/client/upcoming-bookings",
+      "regex": "^/client/upcoming\\-bookings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/upcoming\\-bookings(?:/)?$"
     },
     {
       "page": "/client/update-center",

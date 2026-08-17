@@ -21,9 +21,10 @@ const ADMIN_MENU = [
 
 const CLIENT_MENU = [
   { label: "Dashboard", href: "/client/dashboard" },
+  { label: "Search Centers", href: "/client/search-centers" },
+  { label: "Booking Requests", href: "/client/booking-requests" },
+  { label: "Payments", href: "/client/payments" },
   { label: "My Profile", href: "/client/profile" },
-  { label: "Update Center", href: "/client/update-center" },
-  { label: "Payment History", href: "/client/payment-history" },
 ];
 
 export default function ProfileDropdown({

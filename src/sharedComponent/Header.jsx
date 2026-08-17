@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import logo from "../../public/logo.jpeg";
+import UserContext from "@/context/userContext";
+import ProfileDropdown from "./ProfileDropdown";
 
 const NAV_LINKS = [
   { label: "Book a Center", href: "/book-a-center" },
@@ -86,7 +88,8 @@ function NavDropdown({ label, items }) {
 
 const HomeHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  const context = useContext(UserContext);
+  const user = context?.user;
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-slate-200/80 bg-white">
@@ -105,17 +108,25 @@ const HomeHeader = () => {
           </nav>
 
           <div className="flex items-center justify-end gap-3 sm:gap-4">
-            <button type="button" className="hidden items-center gap-1.5 text-sm font-medium text-[#475569] md:flex" aria-label="Select region">
-              <GlobeIcon className="h-4 w-4 text-[#0056D2]" />
-              India / International
-              <ChevronDownIcon className="h-3.5 w-3.5 text-slate-400" />
-            </button>
-            <Link href="/login" className="hidden text-sm font-medium text-[#0b1a33] hover:text-[#0056D2] sm:inline">
-              Login
-            </Link>
-            <Link href="/become-partner" className="rounded-lg bg-[#0056D2] px-4 py-2 text-xs font-bold text-white hover:bg-[#0046b0] sm:px-5 sm:py-2.5 sm:text-sm">
-              List Your Center
-            </Link>
+            
+            {user ? (
+              <ProfileDropdown name={user.name} email={user.email} role={user.role} />
+            ) : (
+              <>
+              <button type="button" className="hidden items-center gap-1.5 text-sm font-medium text-[#475569] md:flex" aria-label="Select region">
+                <GlobeIcon className="h-4 w-4 text-[#0056D2]" />
+                India / International
+                <ChevronDownIcon className="h-3.5 w-3.5 text-slate-400" />
+              </button>
+              <Link href="/login" className="hidden text-sm font-medium text-[#0b1a33] hover:text-[#0056D2] sm:inline">
+                Login
+              </Link>
+              <Link href="/become-partner" className="rounded-lg bg-[#0056D2] px-4 py-2 text-xs font-bold text-white hover:bg-[#0046b0] sm:px-5 sm:py-2.5 sm:text-sm">
+                List Your Center
+              </Link>
+              </>
+            )}
+            
             <button
               type="button"
               className="flex h-10 w-10 items-center justify-center rounded-lg text-[#0b1a33] hover:bg-slate-100 lg:hidden"

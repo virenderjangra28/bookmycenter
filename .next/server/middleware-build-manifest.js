@@ -8,6 +8,7 @@ globalThis.__BUILD_MANIFEST = {
   ],
   "lowPriorityFiles": [
 <<<<<<< HEAD
+<<<<<<< HEAD
     "static/oFKavydTKB5HPF5b3034o/_buildManifest.js",
     "static/oFKavydTKB5HPF5b3034o/_ssgManifest.js",
     "static/oFKavydTKB5HPF5b3034o/_clientMiddlewareManifest.js"
@@ -15,6 +16,11 @@ globalThis.__BUILD_MANIFEST = {
     "static/pjsyzELovD9DLG971LVy1/_buildManifest.js",
     "static/pjsyzELovD9DLG971LVy1/_ssgManifest.js",
     "static/pjsyzELovD9DLG971LVy1/_clientMiddlewareManifest.js"
+>>>>>>> virender-jangra
+=======
+    "static/f8JA9K8J4dSG2O3IX17fH/_buildManifest.js",
+    "static/f8JA9K8J4dSG2O3IX17fH/_ssgManifest.js",
+    "static/f8JA9K8J4dSG2O3IX17fH/_clientMiddlewareManifest.js"
 >>>>>>> virender-jangra
   ],
   "rootMainFiles": [

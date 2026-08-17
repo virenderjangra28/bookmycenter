@@ -17,7 +17,13 @@ export const CENTER_TYPES = [
   "Training",
 ];
 
-export const STAR_RATINGS = ["1 Star", "2 Star", "3 Star", "4 Star", "5 Star"];
+export const STAR_RATINGS = [
+  { label: "1 Star", value: 1 },
+  { label: "2 Star", value: 2 },
+  { label: "3 Star", value: 3 },
+  { label: "4 Star", value: 4 },
+  { label: "5 Star", value: 5 },
+];
 
 export const CONNECTION_TYPES = ["Fibre", "Leased Line", "Broadband", "Other"];
 

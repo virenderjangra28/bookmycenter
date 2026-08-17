@@ -187,15 +187,15 @@ export default function BecomePartner() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!form.emailVerified || !form.mobileVerified) {
-      toast.error("Please verify email and mobile number with OTP");
-      return;
-    }
+    // if (!form.emailVerified || !form.mobileVerified) {
+    //   toast.error("Please verify email and mobile number with OTP");
+    //   return;
+    // }
 
-    if (!form.declaration.termsAccepted) {
-      toast.error("Please accept the required declarations");
-      return;
-    }
+    // if (!form.declaration.termsAccepted) {
+    //   toast.error("Please accept the required declarations");
+    //   return;
+    // }
 
     setSubmitting(true);
     try {
@@ -260,7 +260,9 @@ export default function BecomePartner() {
               <FormField label="Rate Your Centre" id="centerRating" required>
                 <select id="centerRating" value={form.centerRating} onChange={(e) => updateForm("centerRating", e.target.value)} className={inputClass()} required>
                   <option value="">Select rating</option>
-                  {STAR_RATINGS.map((rating) => <option key={rating} value={rating}>{rating}</option>)}
+                  {STAR_RATINGS.map((rating) => (
+                    <option key={rating.value} value={rating.value}>{rating.label}</option>
+                  ))}
                 </select>
               </FormField>
               <FormField label="Centre Capacity" id="centreCapacity" required>

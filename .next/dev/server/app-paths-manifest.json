@@ -1,10 +1,5 @@
 {
-  "/api/admin/users/login/route": "app/api/admin/users/login/route.js",
-  "/api/admin/users/route": "app/api/admin/users/route.js",
-  "/api/centerlist/route": "app/api/centerlist/route.js",
   "/api/countrylist/route": "app/api/countrylist/route.js",
   "/become-partner/page": "app/become-partner/page.js",
-  "/book-a-center/page": "app/book-a-center/page.js",
-  "/login/page": "app/login/page.js",
   "/page": "app/page.js"
 }

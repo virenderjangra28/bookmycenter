@@ -217,7 +217,7 @@ export default function UpdateCenter() {
                     value={form.city}
                     onChange={handleChange("city")}
                     placeholder="City"
-                    className={inputClass()}
+                    className={inputClass()} 
                     required
                   />
                 </FormField>

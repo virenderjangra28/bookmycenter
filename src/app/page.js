@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import {
   HeroSection,
   QuickActionSection,
@@ -6,6 +7,7 @@ import {
   EnterpriseSection,
   HowItWorksSection,
 } from "../sharedComponent/homeSection/index.js";
+import FeaturedCentersLoader from "../sharedComponent/homeSection/FeaturedCentersLoader";
 
 export default function Home() {
   return (
@@ -13,7 +15,9 @@ export default function Home() {
       <HeroSection />
       <QuickActionSection />
       <CenterTypesSection />
-      <FeaturedCentersSection />
+      <Suspense fallback={<FeaturedCentersSection centers={[]} />}>
+        <FeaturedCentersLoader />
+      </Suspense>
       <section id="enterprise">
         <EnterpriseSection />
       </section>

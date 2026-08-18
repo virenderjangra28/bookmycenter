@@ -26,7 +26,7 @@ function isUserActive(value) {
 }
 
 export default function UserList() {
-  const initilize = useRef(false);
+  const initialize = useRef(false);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState(null);
@@ -69,8 +69,8 @@ export default function UserList() {
   }, []);
 
   useEffect(() => {
-    if(initilize.current) return;
-    initilize.current = true;
+    if(initialize.current) return;
+    initialize.current = true;
     loadUsers(currentPage);
   }, [currentPage, loadUsers]);
 

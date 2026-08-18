@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import logo from "../../public/logo.jpeg";
 import UserContext from "@/context/userContext";
 import ProfileDropdown from "./ProfileDropdown";
@@ -39,7 +39,7 @@ function LogoMark() {
       <span className="text-[17px] font-bold tracking-tight text-[#0b1a33]">
         BookMyCenter
       </span> */}
-      <Image src={logo} alt="BookMyCenter" width={149} height={60} />
+      <Image src={logo} alt="BookMyCenter" width={149} height={60} style={{ objectFit: "contain", height: "70px" }}/>
     </Link>
   );
 }
@@ -57,6 +57,62 @@ function GlobeIcon({ className }) {
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} aria-hidden>
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A8.966 8.966 0 013 12c0-1.577.406-3.06 1.12-4.332" />
     </svg>
+  );
+}
+
+function RegionToggle({ className = "" }) {
+  const [region, setRegion] = useState("India");
+
+  useEffect(() => {
+    const saved = window.localStorage.getItem("bmc-region");
+    if (saved === "India" || saved === "International") {
+      setRegion(saved);
+    }
+  }, []);
+
+  const optionClass = (selected) =>
+    `relative inline-grid justify-items-center font-medium leading-none ${
+      selected ? "text-[#0b1a33]" : "text-[#64748b] hover:text-[#0b1a33]"
+    }`;
+
+  const selectedRegion = (text) => {
+    setRegion(text);
+    window.localStorage.setItem("bmc-region", text);
+  };
+
+  return (
+    <div
+      className={`hidden shrink-0 items-center gap-1.5 whitespace-nowrap text-sm md:flex ${className}`}
+    >
+      <GlobeIcon className="h-4 w-4 shrink-0 text-[#334155]" />
+      <button
+        type="button"
+        onClick={() => selectedRegion("India")}
+        className={optionClass(region === "India")}
+        aria-pressed={region === "India"}
+      >
+        <span className="invisible font-semibold" aria-hidden>
+          India
+        </span>
+        <span className={`absolute ${region === "India" ? "font-semibold" : "font-medium"}`}>
+          India
+        </span>
+      </button>
+      <span className="text-[#cbd5e1]">/</span>
+      <button
+        type="button"
+        onClick={() => selectedRegion("International")}
+        className={optionClass(region === "International")}
+        aria-pressed={region === "International"}
+      >
+        <span className="invisible font-semibold" aria-hidden>
+          International
+        </span>
+        <span className={`absolute ${region === "International" ? "font-semibold" : "font-medium"}`}>
+          International
+        </span>
+      </button>
+    </div>
   );
 }
 
@@ -86,7 +142,7 @@ function NavDropdown({ label, items }) {
   );
 }
 
-const HomeHeader = () => {
+const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const context = useContext(UserContext);
   const user = context?.user;
@@ -113,11 +169,7 @@ const HomeHeader = () => {
               <ProfileDropdown name={user.name} email={user.email} role={user.role} />
             ) : (
               <>
-              <button type="button" className="hidden items-center gap-1.5 text-sm font-medium text-[#475569] md:flex" aria-label="Select region">
-                <GlobeIcon className="h-4 w-4 text-[#0056D2]" />
-                India / International
-                <ChevronDownIcon className="h-3.5 w-3.5 text-slate-400" />
-              </button>
+              <RegionToggle />
               <Link href="/login" className="hidden text-sm font-medium text-[#0b1a33] hover:text-[#0056D2] sm:inline">
                 Login
               </Link>
@@ -168,4 +220,4 @@ const HomeHeader = () => {
   );
 };
 
-export default HomeHeader;
+export default Header;

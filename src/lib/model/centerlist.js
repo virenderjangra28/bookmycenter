@@ -155,6 +155,8 @@ const centerlistSchema = new mongoose.Schema(
         photos: photosSchema,
         additionalPhotos: [String],
         created_at: { type: Date, default: Date.now },
+        isVerified: { type: Boolean, default: false },
+        isAvailable: { type: Boolean, default: true },
     },
     { collection: "centerLists" }
 );

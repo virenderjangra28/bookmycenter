@@ -157,6 +157,8 @@ const centerlistSchema = new mongoose.Schema(
         created_at: { type: Date, default: Date.now },
         isVerified: { type: Boolean, default: false },
         isAvailable: { type: Boolean, default: true },
+        price: { type: Number, default: 0 },
+        pricePerCandidate: { type: Number, default: 0 },
     },
     { collection: "centerLists" }
 );

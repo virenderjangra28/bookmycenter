@@ -171,7 +171,7 @@ export function createStaffDetails() {
 export function createCenter(index = 1) {
   return {
     id: crypto.randomUUID(),
-    label: `Center-${index}`,
+    label: `Center-details`,
     separateRegistrationArea: "",
     bagStorage: "",
     totalAreaSqFt: "",

@@ -10,5 +10,5 @@ export const statelist = async (countryName) => {
         
     })
     const data = await response.json();
-    return data.data.states || [];
+    return Array.isArray(data?.data?.states) ? data.data.states : [];
    }

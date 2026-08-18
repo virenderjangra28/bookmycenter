@@ -12,6 +12,7 @@ export const CLIENT_NAV = [
   { label: "Booking Requests", href: "/client/booking-requests" },
   { label: "Upcoming Bookings", href: "/client/upcoming-bookings" },
   { label: "Past Bookings", href: "/client/past-bookings" },
+  { label: "Update Center", href: "/client/update-center" },
   { label: "Contracts / PO", href: "/client/contracts" },
   { label: "Payments", href: "/client/payments" },
   { label: "Reports", href: "/client/reports" },

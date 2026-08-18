@@ -28,14 +28,19 @@ import {
   SectionHeader,
   YesNoSelect,
 } from "./FormControls";
+import { citylist } from "@/services/citylist";
+import { statelist } from "@/services/statelist";
 
 export default function BecomePartner() {
   const [form, setForm] = useState(createInitialForm);
   const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
   const [loadingCountries, setLoadingCountries] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const countrySearchRef = useRef(null);
+  const isDomestic = "India"
 
   const isCbt = form.centerType === "CBT";
   const isPbt = form.centerType === "PBT/Paper Exam";
@@ -72,8 +77,91 @@ export default function BecomePartner() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+
+  // Sync region type with header selection (India / International)
+  useEffect(() => {
+    const applyRegion = async (savedRegion) => {
+      const isDomestic = savedRegion !== "International";
+      setShowCountryDropdown(false);
+      setCities([]);
+
+      if (isDomestic) {
+        setForm((prev) => ({ ...prev, country: 'INDIA'}));
+        setForm((prev) => ({ ...prev, state: ""}));
+        setForm((prev) => ({ ...prev, city: ""}));
+        setForm((prev) => ({ ...prev, pinCode: "" }));
+        await loadStates('INDIA');
+        return;
+      }
+
+      setForm((prev) => ({ ...prev, country: ""}));
+      setForm((prev) => ({ ...prev, state: ""}));
+      setForm((prev) => ({ ...prev, city: ""}));
+      setForm((prev) => ({ ...prev, pinCode: "" }));
+      setStates([]);
+    };
+
+    applyRegion(window.localStorage.getItem("bmc-region"));
+
+    const onRegionChange = (event) => {
+      applyRegion(event.detail || window.localStorage.getItem("bmc-region"));
+    };
+
+    window.addEventListener("bmc-region-change", onRegionChange);
+    return () => window.removeEventListener("bmc-region-change", onRegionChange);
+  }, []);
+
   const updateForm = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const loadStates = async (countryName) => {
+    if (!countryName) {
+      setStates([]);
+      setCities([]);
+      return;
+    }
+
+    try {
+      const statesData = await statelist(countryName);
+      setStates(Array.isArray(statesData) ? statesData : []);
+    } catch {
+      setStates([]);
+    }
+    setCities([]);
+  };
+
+  const loadCities = async (countryName, stateName) => {
+    if (!countryName || !stateName) {
+      setCities([]);
+      return;
+    }
+
+    try {
+      const citiesData = await citylist(countryName, stateName);
+      setCities(Array.isArray(citiesData) ? citiesData : []);
+    } catch {
+      setCities([]);
+    }
+  };
+
+  const handleCountryChange = (event) => {
+    setForm((prev) => ({ ...prev, country: event.target.value, state: "", city: "" }));
+    setStates([]);
+    setCities([]);
+    setShowCountryDropdown(true);
+  };
+
+  const handleCountrySelect = async (countryName) => {
+    setForm((prev) => ({ ...prev, country: countryName, state: "", city: "" }));
+    setShowCountryDropdown(false);
+    await loadStates(countryName);
+  };
+
+  const handleStateChange = async (event) => {
+    const stateName = event.target.value;
+    setForm((prev) => ({ ...prev, state: stateName, city: "" }));
+    await loadCities(form.country, stateName);
   };
 
   const updateNested = (section, field, value) => {
@@ -229,7 +317,7 @@ export default function BecomePartner() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Organization */}
           <section className={sectionClass()}>
-            <SectionHeader title="Organization Details" description="Tell us about your organization." />
+            <SectionHeader title="" description="" />
             <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
               <div className="md:col-span-2">
                 <FormField label="Name of the Organization" id="organizationName" required>
@@ -273,16 +361,16 @@ export default function BecomePartner() {
 
           {/* Location */}
           <section className={sectionClass()}>
-            <SectionHeader title="Location" description="Country → State → City → Pin Code → Full Address" />
+            <SectionHeader title="Location" description="" />
             <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
               <FormField label="Country" id="country" required>
                 <div ref={countrySearchRef} className="relative">
-                  <input id="country" type="search" value={form.country} onChange={(e) => { updateForm("country", e.target.value); setShowCountryDropdown(true); }} onFocus={() => setShowCountryDropdown(true)} placeholder={loadingCountries ? "Loading..." : "Search country"} className={inputClass()} required disabled={loadingCountries} />
+                  <input id="country" type="search" value={form.country} disabled={isDomestic} onChange={handleCountryChange} onFocus={() => setShowCountryDropdown(true)} placeholder={loadingCountries ? "Loading..." : "Search country"} className={inputClass()} required disabled={loadingCountries} autoComplete="off" />
                   {showCountryDropdown && !loadingCountries && (
                     <ul className="absolute inset-x-0 top-full z-20 mt-2 max-h-56 overflow-y-auto rounded-lg border border-[#e5e7eb] bg-white py-2 shadow-lg">
                       {filteredCountries.map((country) => (
                         <li key={country.code || country.name}>
-                          <button type="button" onClick={() => { updateForm("country", country.name); setShowCountryDropdown(false); }} className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm hover:bg-[#f3f4f6]">
+                          <button type="button" onClick={() => handleCountrySelect(country.name)} className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm hover:bg-[#f3f4f6]">
                             {country.flag ? <span>{country.flag}</span> : null}<span>{country.name}</span>
                           </button>
                         </li>
@@ -291,20 +379,34 @@ export default function BecomePartner() {
                   )}
                 </div>
               </FormField>
-              <FormField label="State" id="state" required><input id="state" value={form.state} onChange={(e) => updateForm("state", e.target.value)} className={inputClass()} required /></FormField>
-              <FormField label="City" id="city" required><input id="city" value={form.city} onChange={(e) => updateForm("city", e.target.value)} className={inputClass()} required /></FormField>
+              <FormField label="State" id="state" required>
+                <input id="state" type="text" list="partner-state-options" value={form.state} onChange={handleStateChange} placeholder={form.country ? "Enter or select state" : "Select country first"} className={inputClass()} disabled={!form.country} required />
+                <datalist id="partner-state-options">
+                  {states.map((state) => (
+                    <option key={state.name} value={state.name} />
+                  ))}
+                </datalist>
+              </FormField>
+              <FormField label="City" id="city" required>
+                <input id="city" type="text" list="partner-city-options" value={form.city} onChange={(e) => updateForm("city", e.target.value)} placeholder={form.state ? "Enter or select city" : "Select state first"} className={inputClass()} disabled={!form.state} required />
+                <datalist id="partner-city-options">
+                  {cities.map((city) => (
+                    <option key={city} value={city} />
+                  ))}
+                </datalist>
+              </FormField>
               <FormField label="Pin Code" id="pinCode" required><input id="pinCode" value={form.pinCode} onChange={(e) => updateForm("pinCode", e.target.value)} className={inputClass()} required /></FormField>
               <div className="md:col-span-2">
                 <FormField label="Full Address" id="fullAddress" required>
                   <textarea id="fullAddress" value={form.fullAddress} onChange={(e) => updateForm("fullAddress", e.target.value)} rows={3} className={inputClass()} required />
                 </FormField>
               </div>
-              <div className="md:col-span-2"><CenterMapPicker latitude={form.latitude} longitude={form.longitude} onLocationChange={handleLocationChange} /></div>
+              {/* <div className="md:col-span-2"><CenterMapPicker latitude={form.latitude} longitude={form.longitude} onLocationChange={handleLocationChange} /></div>
               <FormField label="Latitude" id="latitude" required><input id="latitude" value={form.latitude} onChange={(e) => updateForm("latitude", e.target.value)} className={inputClass()} required /></FormField>
-              <FormField label="Longitude" id="longitude" required><input id="longitude" value={form.longitude} onChange={(e) => updateForm("longitude", e.target.value)} className={inputClass()} required /></FormField>
-              <MultiPhotoUpload id="locationHall" label="Centre Hall Photos" required values={form.locationPhotos.hall} onChange={handleLocationPhotos("hall")} />
+              <FormField label="Longitude" id="longitude" required><input id="longitude" value={form.longitude} onChange={(e) => updateForm("longitude", e.target.value)} className={inputClass()} required /></FormField> */}
+              {/* <MultiPhotoUpload id="locationHall" label="Centre Hall Photos" required values={form.locationPhotos.hall} onChange={handleLocationPhotos("hall")} />
               <MultiPhotoUpload id="locationEntrance" label="Entrance Photos" required values={form.locationPhotos.entrance} onChange={handleLocationPhotos("entrance")} />
-              <MultiPhotoUpload id="locationWashroom" label="Washroom Photos" required values={form.locationPhotos.washroom} onChange={handleLocationPhotos("washroom")} />
+              <MultiPhotoUpload id="locationWashroom" label="Washroom Photos" required values={form.locationPhotos.washroom} onChange={handleLocationPhotos("washroom")} /> */}
             </div>
           </section>
 

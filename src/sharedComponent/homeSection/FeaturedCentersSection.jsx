@@ -63,11 +63,11 @@ function CenterCard({ center }) {
     <article className="flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_4px_18px_rgba(15,23,42,0.06)]">
       <div className="relative aspect-[16/10] w-full">
         <Image src={center.image} alt={center.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 25vw" />
-        <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-[#0056D2] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+        {center.isVerified && <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-[#0056D2] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
           <CheckIcon className="h-3 w-3" />
           BMC Verified
-        </span>
-        <button
+        </span>}  
+        {/* <button
           type="button"
           aria-label="Add to wishlist"
           className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white text-slate-400 shadow-sm hover:text-red-500"
@@ -75,7 +75,7 @@ function CenterCard({ center }) {
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
           </svg>
-        </button>
+        </button> */}
       </div>
 
       <div className="flex flex-1 flex-col p-4">

@@ -1,10 +1,17 @@
 {
   "/api/admin/users/login/route": "app/api/admin/users/login/route.js",
+  "/api/admin/users/logout/route": "app/api/admin/users/logout/route.js",
+  "/api/admin/users/me/route": "app/api/admin/users/me/route.js",
   "/api/admin/users/route": "app/api/admin/users/route.js",
+  "/api/centerlist/[id]/route": "app/api/centerlist/[id]/route.js",
   "/api/centerlist/route": "app/api/centerlist/route.js",
+  "/api/client/center/route": "app/api/client/center/route.js",
   "/api/countrylist/route": "app/api/countrylist/route.js",
   "/become-partner/page": "app/become-partner/page.js",
   "/book-a-center/page": "app/book-a-center/page.js",
+  "/client/dashboard/page": "app/client/dashboard/page.js",
+  "/client/update-center/page": "app/client/update-center/page.js",
+  "/client/update-centers/page": "app/client/update-centers/page.js",
   "/login/page": "app/login/page.js",
   "/page": "app/page.js"
 }

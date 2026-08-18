@@ -47,6 +47,7 @@ function mapCenter(center, user, location, index) {
     internet: formatInternet(center),
     price: "On request",
     available: center.isAvailable !== false,
+    isVerified: center.isVerified !== false,
   };
 }
 
@@ -55,7 +56,7 @@ async function fetchFeaturedCentersFromDb() {
 
   const docs = await Centerlist.find()
     .select(
-      "userId label totalSeatingCapacity examRooms isAvailable internetInfrastructure.backupInternetAvailable internetInfrastructure.primarySpeed photos.buildingFront created_at"
+      "userId label totalSeatingCapacity examRooms isAvailable isVerified internetInfrastructure.backupInternetAvailable internetInfrastructure.primarySpeed photos.buildingFront created_at"
     )
     .slice("photos.buildingFront", 1)
     .sort({ created_at: -1 })

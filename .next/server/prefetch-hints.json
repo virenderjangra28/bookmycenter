@@ -335,6 +335,25 @@
       }
     }
   },
+  "/client/update-centers": {
+    "hints": 64,
+    "slots": {
+      "children": {
+        "hints": 96,
+        "slots": {
+          "children": {
+            "hints": 96,
+            "slots": {
+              "children": {
+                "hints": 160,
+                "slots": null
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "/find-your-exam": {
     "hints": 64,
     "slots": {

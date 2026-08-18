@@ -96,7 +96,6 @@ export default function BookCenter() {
   const [hasSearched, setHasSearched] = useState(false);
   const [results, setResults] = useState([]);
   const [error, setError] = useState(null);
-
   const isDomestic = form.regionType === "Domestic";
   const today = new Date().toISOString().split("T")[0];
 
@@ -179,20 +178,53 @@ export default function BookCenter() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleRegionTypeChange = async (event) => {
-    const regionType = event.target.value;
-    setShowCountryDropdown(false);
-    setCities([]);
+  // Sync region type with header selection (India / International)
+  useEffect(() => {
+    const applyRegion = async (savedRegion) => {
+      const isDomestic = savedRegion !== "International";
+      setShowCountryDropdown(false);
+      setCities([]);
 
-    if (regionType === "Domestic") {
-      updateForm({ regionType, country: INDIA, state: "", city: "", pinCode: "" });
-      await loadStates(INDIA);
-      return;
-    }
+      if (isDomestic) {
+        updateForm({ regionType: "Domestic", country: INDIA, state: "", city: "", pinCode: "" });
+        await loadStates(INDIA);
+        return;
+      }
 
-    updateForm({ regionType, country: "", state: "", city: "", pinCode: "" });
-    setStates([]);
-  };
+      updateForm({
+        regionType: "International",
+        country: "",
+        state: "",
+        city: "",
+        pinCode: "",
+      });
+      setStates([]);
+    };
+
+    applyRegion(window.localStorage.getItem("bmc-region"));
+
+    const onRegionChange = (event) => {
+      applyRegion(event.detail || window.localStorage.getItem("bmc-region"));
+    };
+
+    window.addEventListener("bmc-region-change", onRegionChange);
+    return () => window.removeEventListener("bmc-region-change", onRegionChange);
+  }, []);
+
+  // const handleRegionTypeChange = async (event) => {
+  //   const regionType = event.target.value;
+  //   setShowCountryDropdown(false);
+  //   setCities([]);
+
+  //   if (regionType === "Domestic") {
+  //     updateForm({ regionType, country: INDIA, state: "", city: "", pinCode: "" });
+  //     await loadStates(INDIA);
+  //     return;
+  //   }
+
+  //   updateForm({ regionType, country: "", state: "", city: "", pinCode: "" });
+  //   setStates([]);
+  // };
 
   const handleCountryChange = (event) => {
     updateForm({ country: event.target.value, state: "", city: "", pinCode: "" });
@@ -226,10 +258,10 @@ export default function BookCenter() {
     event.preventDefault();
     setError(null);
 
-    if (!form.emailVerified || !form.mobileVerified) {
-      toast.error("Please verify email and mobile number with OTP");
-      return;
-    }
+    // if (!form.emailVerified || !form.mobileVerified) {
+    //   toast.error("Please verify email and mobile number with OTP");
+    //   return;
+    // }
 
     const capacity = Number(form.capacity);
     if (!Number.isFinite(capacity) || capacity < MIN_CAPACITY) {
@@ -268,9 +300,10 @@ export default function BookCenter() {
             Find the right center for your requirement.
           </h1>
           <p className="mt-3 text-sm text-[#64748b] sm:text-base">
-            Search by location, centre type, date, timing and capacity. Email and mobile OTP
-            verification is required.
+            Search by location, centre type, date, timing and capacity.
           </p>
+          {/* Email and mobile OTP
+            verification is required. */}
         </div>
       </section>
 
@@ -282,7 +315,7 @@ export default function BookCenter() {
           <h2 className="text-xl font-bold text-[#0b1a33]">Search Requirement</h2>
 
           <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
-            <Field label="Select International or Domestic" id="regionType" required>
+            {/* <Field label="Select International or Domestic" id="regionType" required>
               <div className="relative">
                 <select
                   id="regionType"
@@ -297,7 +330,7 @@ export default function BookCenter() {
                 </select>
                 <ChevronIcon className="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#64748b]" />
               </div>
-            </Field>
+            </Field> */}
 
             <Field label="Country" id="country" required>
               <div ref={countrySearchRef} className="relative">

@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema(
     forgotPasswordToken : String,
     forgotPasswordTokenExpiry : Date,
     company: String,
+    organizationType: String,
     verificationToken : String,
     verificationTokenExpiry : Date,
     isActive: { type: mongoose.Schema.Types.Mixed, default: 0 },

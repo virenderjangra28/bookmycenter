@@ -54,20 +54,20 @@ function CenterCard({ center }) {
     { key: "seats", label: `${center.seats} Seats` },
     { key: "labs", label: `${center.labs} Labs` },
     { key: "internet", label: `${center.internet} Internet` },
-    { key: "cctv", label: "CCTV" },
-    { key: "power", label: "Power Backup" },
-    { key: "ac", label: "AC" },
+    { key: "cctv", label: `${center.cctvSecurity === "Yes" ? "CCTV" : "No CCTV"}` },
+    { key: "power", label: `${center.generatorAvailable === "Yes" ? "Power Backup" : "No Power Backup"}` },
+    { key: "ac", label: `${center.airConditioning === 'Yes' ? "AC" : "No AC"}` },
   ];
 
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_4px_18px_rgba(15,23,42,0.06)]">
       <div className="relative aspect-[16/10] w-full">
         <Image src={center.image} alt={center.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 25vw" />
-        <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-[#0056D2] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+        {center.isVerified && <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-[#0056D2] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
           <CheckIcon className="h-3 w-3" />
           BMC Verified
-        </span>
-        <button
+        </span>}  
+        {/* <button
           type="button"
           aria-label="Add to wishlist"
           className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white text-slate-400 shadow-sm hover:text-red-500"
@@ -75,11 +75,11 @@ function CenterCard({ center }) {
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
           </svg>
-        </button>
+        </button> */}
       </div>
 
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="text-[15px] font-bold leading-snug text-[#0b1a33]">{center.name}</h3>
+        <h3 className="text-[15px] font-bold leading-snug text-[#0b1a33]">{center.name.length > 30 ? center.name.substring(0, 30) + '...' : center.name}</h3>
 
         <div className="mt-1.5 flex items-center justify-between gap-2 text-[13px]">
           <span className="inline-flex min-w-0 items-center gap-1 truncate text-slate-500">
@@ -133,6 +133,67 @@ function CenterCard({ center }) {
 }
 
 const VISIBLE_COUNT = 4;
+
+function CenterCardSkeleton() {
+  return (
+    <article
+      className="flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_4px_18px_rgba(15,23,42,0.06)]"
+      aria-hidden
+    >
+      <div className="relative aspect-[16/10] w-full animate-pulse bg-slate-200">
+        <span className="absolute left-3 top-3 h-5 w-24 rounded-full bg-slate-300" />
+      </div>
+
+      <div className="flex flex-1 flex-col p-4">
+        <div className="h-5 w-4/5 animate-pulse rounded bg-slate-200" />
+
+        <div className="mt-2 flex items-center justify-between gap-2">
+          <div className="h-3.5 w-28 animate-pulse rounded bg-slate-200" />
+          <div className="h-3.5 w-16 animate-pulse rounded bg-slate-200" />
+        </div>
+
+        <div className="mt-4 grid grid-cols-3 gap-x-2 gap-y-2.5">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="flex min-w-0 items-center gap-1.5">
+              <span className="h-4 w-4 shrink-0 animate-pulse rounded bg-slate-200" />
+              <span className="h-3 w-12 animate-pulse rounded bg-slate-200" />
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 flex items-center justify-between gap-2">
+          <div className="h-5 w-28 animate-pulse rounded bg-slate-200" />
+          <div className="h-4 w-20 animate-pulse rounded bg-slate-200" />
+        </div>
+
+        <div className="mt-3 h-10 w-full animate-pulse rounded-md bg-slate-200" />
+      </div>
+    </article>
+  );
+}
+
+export function FeaturedCentersSectionSkeleton() {
+  return (
+    <section className="bg-white py-12 lg:py-16" aria-busy="true" aria-label="Loading featured centers">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div className="flex items-center justify-between gap-4">
+          <h2 className="text-2xl font-bold text-[#0b1a33] sm:text-[1.75rem]">Featured Verified Centers</h2>
+          <span className="inline-flex items-center gap-1 text-sm font-bold text-[#0056D2]">
+            View All Centers <span aria-hidden>→</span>
+          </span>
+        </div>
+
+        <div className="relative mt-8">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {Array.from({ length: VISIBLE_COUNT }).map((_, index) => (
+              <CenterCardSkeleton key={index} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 const FeaturedCentersSection = ({ centers = [] }) => {
   const list = centers.length > 0 ? centers : FEATURED_CENTERS;

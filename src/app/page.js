@@ -3,11 +3,11 @@ import {
   HeroSection,
   QuickActionSection,
   CenterTypesSection,
-  FeaturedCentersSection,
   EnterpriseSection,
   HowItWorksSection,
 } from "../sharedComponent/homeSection/index.js";
 import FeaturedCentersLoader from "../sharedComponent/homeSection/FeaturedCentersLoader";
+import { FeaturedCentersSectionSkeleton } from "../sharedComponent/homeSection/FeaturedCentersSection";
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
       <HeroSection />
       <QuickActionSection />
       <CenterTypesSection />
-      <Suspense fallback={<FeaturedCentersSection centers={[]} />}>
+      <Suspense fallback={<FeaturedCentersSectionSkeleton />}>
         <FeaturedCentersLoader />
       </Suspense>
       <section id="enterprise">

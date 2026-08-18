@@ -78,6 +78,7 @@ function RegionToggle({ className = "" }) {
   const selectedRegion = (text) => {
     setRegion(text);
     window.localStorage.setItem("bmc-region", text);
+    window.dispatchEvent(new CustomEvent("bmc-region-change", { detail: text }));
   };
 
   return (

@@ -38,6 +38,7 @@ export async function GET() {
     }
 }
 
+
 export async function POST(request) {
     try {
         await connectDB();
@@ -188,6 +189,8 @@ export async function POST(request) {
                         : [],
                     isVerified: false,
                     isAvailable: false,
+                    price: center.price || 0,
+                    pricePerCandidate: center.pricePerCandidate || 0,
                 }))
             );
         }

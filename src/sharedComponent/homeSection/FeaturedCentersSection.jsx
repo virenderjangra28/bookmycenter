@@ -134,9 +134,10 @@ function CenterCard({ center }) {
 
 const VISIBLE_COUNT = 4;
 
-const FeaturedCentersSection = () => {
+const FeaturedCentersSection = ({ centers = [] }) => {
+  const list = centers.length > 0 ? centers : FEATURED_CENTERS;
   const [startIndex, setStartIndex] = useState(0);
-  const maxStart = Math.max(0, FEATURED_CENTERS.length - VISIBLE_COUNT);
+  const maxStart = Math.max(0, list.length - VISIBLE_COUNT);
 
   const goPrev = useCallback(() => {
     setStartIndex((current) => (current <= 0 ? maxStart : current - 1));
@@ -146,7 +147,7 @@ const FeaturedCentersSection = () => {
     setStartIndex((current) => (current >= maxStart ? 0 : current + 1));
   }, [maxStart]);
 
-  const visibleCenters = FEATURED_CENTERS.slice(startIndex, startIndex + VISIBLE_COUNT);
+  const visibleCenters = list.slice(startIndex, startIndex + VISIBLE_COUNT);
 
   return (
     <section className="bg-white py-12 lg:py-16">
@@ -159,42 +160,46 @@ const FeaturedCentersSection = () => {
         </div>
 
         <div className="relative mt-8">
-          <button
-            type="button"
-            onClick={goPrev}
-            aria-label="Previous centers"
-            className="absolute -left-4 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-[#0b1a33] shadow-md hover:bg-slate-50 lg:flex"
-          >
-            <ChevronLeftIcon className="h-5 w-5" />
-          </button>
+          {list.length > 4 && (
+            <button
+              type="button"
+              onClick={goPrev}
+              aria-label="Previous centers"
+              className="absolute -left-4 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-[#0b1a33] shadow-md hover:bg-slate-50 lg:flex"
+            >
+              <ChevronLeftIcon className="h-5 w-5" />
+            </button>
+          )}
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {visibleCenters.map((center) => (
               <CenterCard key={center.id} center={center} />
             ))}
           </div>
-
-          <button
-            type="button"
-            onClick={goNext}
-            aria-label="Next centers"
-            className="absolute -right-4 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-[#0b1a33] shadow-md hover:bg-slate-50 lg:flex"
-          >
-            <ChevronRightIcon className="h-5 w-5" />
-          </button>
-        </div>
-
-        <div className="mt-6 flex justify-center gap-2">
-          {Array.from({ length: maxStart + 1 }).map((_, index) => (
+          {list.length > 4 && (
             <button
-              key={index}
               type="button"
-              aria-label={`Slide ${index + 1}`}
-              onClick={() => setStartIndex(index)}
-              className={`rounded-full transition-all ${index === startIndex ? "h-2 w-6 bg-[#0056D2]" : "h-2 w-2 bg-slate-300"}`}
-            />
-          ))}
+              onClick={goNext}
+              aria-label="Next centers"
+              className="absolute -right-4 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-[#0b1a33] shadow-md hover:bg-slate-50 lg:flex"
+            >
+              <ChevronRightIcon className="h-5 w-5" />
+            </button>
+          )}
         </div>
+        {list.length > 4 && (
+          <div className="mt-6 flex justify-center gap-2">
+            {Array.from({ length: maxStart + 1 }).map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                aria-label={`Slide ${index + 1}`}
+                onClick={() => setStartIndex(index)}
+                className={`rounded-full transition-all ${index === startIndex ? "h-2 w-6 bg-[#0056D2]" : "h-2 w-2 bg-slate-300"}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

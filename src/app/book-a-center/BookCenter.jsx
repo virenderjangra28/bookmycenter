@@ -4,8 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { CENTER_TYPES, STAR_RATINGS } from "../become-partner/constants";
 import { OtpVerificationField } from "../become-partner/FormControls";
-import { citylist } from "../services/citylist";
-import { statelist } from "../services/statelist";
+import { citylist } from "@/services/citylist";
+import { statelist } from "@/services/statelist";
 
 const INDIA = "India";
 const MIN_CAPACITY = 100;

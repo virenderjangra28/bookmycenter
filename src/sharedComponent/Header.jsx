@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import logo from "../../public/logo.jpeg";
 import UserContext from "@/context/userContext";
 import ProfileDropdown from "./ProfileDropdown";
@@ -63,10 +63,22 @@ function GlobeIcon({ className }) {
 function RegionToggle({ className = "" }) {
   const [region, setRegion] = useState("India");
 
+  useEffect(() => {
+    const saved = window.localStorage.getItem("bmc-region");
+    if (saved === "India" || saved === "International") {
+      setRegion(saved);
+    }
+  }, []);
+
   const optionClass = (selected) =>
     `relative inline-grid justify-items-center font-medium leading-none ${
       selected ? "text-[#0b1a33]" : "text-[#64748b] hover:text-[#0b1a33]"
     }`;
+
+  const selectedRegion = (text) => {
+    setRegion(text);
+    window.localStorage.setItem("bmc-region", text);
+  };
 
   return (
     <div
@@ -75,7 +87,7 @@ function RegionToggle({ className = "" }) {
       <GlobeIcon className="h-4 w-4 shrink-0 text-[#334155]" />
       <button
         type="button"
-        onClick={() => setRegion("India")}
+        onClick={() => selectedRegion("India")}
         className={optionClass(region === "India")}
         aria-pressed={region === "India"}
       >
@@ -89,7 +101,7 @@ function RegionToggle({ className = "" }) {
       <span className="text-[#cbd5e1]">/</span>
       <button
         type="button"
-        onClick={() => setRegion("International")}
+        onClick={() => selectedRegion("International")}
         className={optionClass(region === "International")}
         aria-pressed={region === "International"}
       >

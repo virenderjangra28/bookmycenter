@@ -22,6 +22,22 @@ function parseCenterRating(value) {
     return match ? Number(match[0]) : undefined;
 }
 
+export async function GET() {
+    try {
+        await connectDB();
+        const centerList = await Centerlist.find()
+            .select("-photos -additionalPhotos")
+            .sort({ created_at: -1 })
+            .limit(50)
+            .lean()
+            .maxTimeMS(4000);
+        return NextResponse.json({ message: "Center list fetched successfully", data: centerList }, { status: 200 });
+    } catch (error) {
+        console.error("GET /api/centerlist failed:", error);
+        return NextResponse.json({ error: error.message || "Failed to get center list" }, { status: 500 });
+    }
+}
+
 export async function POST(request) {
     try {
         await connectDB();

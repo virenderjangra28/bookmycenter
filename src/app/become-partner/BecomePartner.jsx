@@ -137,7 +137,7 @@ export default function BecomePartner() {
 
     try {
       const citiesData = await citylist(countryName, stateName);
-      setCities(Array.isArray(citiesData) ? citiesData : []);
+      setCities([...new Set(Array.isArray(citiesData) ? citiesData : [])]);
     } catch {
       setCities([]);
     }
@@ -401,8 +401,8 @@ export default function BecomePartner() {
               <FormField label="City" id="city" required>
                 <input id="city" type="text" list="partner-city-options" value={form.city} onChange={(e) => updateForm("city", e.target.value)} placeholder={form.state ? "Enter or select city" : "Select state first"} className={inputClass()} disabled={!form.state} required />
                 <datalist id="partner-city-options">
-                  {cities.map((city) => (
-                    <option key={city} value={city} />
+                  {cities.map((city, index) => (
+                    <option key={`${city}-${index}`} value={city} />
                   ))}
                 </datalist>
               </FormField>

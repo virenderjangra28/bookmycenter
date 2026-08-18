@@ -45,7 +45,10 @@ function mapCenter(center, user, location, index) {
     seats: seats || 100,
     labs: toNumber(center.examRooms) || 1,
     internet: formatInternet(center),
-    price: "On request",
+    price: center.price ,
+    airConditioning: center.accessibility.airConditioning || false,
+    cctvSecurity: center.cctvSecurity.cctvInstalled || false,
+    generatorAvailable: center.powerInfrastructure.generatorAvailable || false,
     available: center.isAvailable !== false,
     isVerified: center.isVerified !== false,
   };
@@ -56,7 +59,7 @@ async function fetchFeaturedCentersFromDb() {
 
   const docs = await Centerlist.find()
     .select(
-      "userId label totalSeatingCapacity examRooms isAvailable isVerified internetInfrastructure.backupInternetAvailable internetInfrastructure.primarySpeed photos.buildingFront created_at"
+      "userId label totalSeatingCapacity examRooms isAvailable isVerified internetInfrastructure.backupInternetAvailable internetInfrastructure.primarySpeed photos.buildingFront accessibility.airConditioning cctvSecurity.cctvInstalled powerInfrastructure.generatorAvailable price created_at"
     )
     .slice("photos.buildingFront", 1)
     .sort({ created_at: -1 })

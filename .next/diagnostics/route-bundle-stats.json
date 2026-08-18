@@ -17,12 +17,12 @@
   },
   {
     "route": "/become-partner",
-    "firstLoadUncompressedJsBytes": 568999,
+    "firstLoadUncompressedJsBytes": 569027,
     "firstLoadChunkPaths": [
       ".next/static/chunks/2g-73_75n4a85.js",
       ".next/static/chunks/34-4nhg6wl22z.js",
       ".next/static/chunks/16djmba0nogy5.js",
-      ".next/static/chunks/03ed8o7279yke.js",
+      ".next/static/chunks/1rhhngp-zm7tp.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
       ".next/static/chunks/1r74ual3939ty.js",
@@ -46,11 +46,11 @@
   },
   {
     "route": "/",
-    "firstLoadUncompressedJsBytes": 543073,
+    "firstLoadUncompressedJsBytes": 545548,
     "firstLoadChunkPaths": [
       ".next/static/chunks/2g-73_75n4a85.js",
       ".next/static/chunks/34-4nhg6wl22z.js",
-      ".next/static/chunks/2xoferq7k6wi-.js",
+      ".next/static/chunks/2whk31v7gkhae.js",
       ".next/static/chunks/3s6nzrbk-8mnv.js",
       ".next/static/chunks/2mmpezlrfmbu5.js",
       ".next/static/chunks/1r74ual3939ty.js",

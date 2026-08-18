@@ -40,7 +40,7 @@ export default function BecomePartner() {
   const [submitting, setSubmitting] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const countrySearchRef = useRef(null);
-  const isDomestic = "India"
+  const [isDomestic, setIsDomestic] = useState(false);
 
   const isCbt = form.centerType === "CBT";
   const isPbt = form.centerType === "PBT/Paper Exam";
@@ -81,16 +81,14 @@ export default function BecomePartner() {
   // Sync region type with header selection (India / International)
   useEffect(() => {
     const applyRegion = async (savedRegion) => {
-      const isDomestic = savedRegion !== "International";
+      const domestic = savedRegion !== "International";
+      setIsDomestic(domestic);
       setShowCountryDropdown(false);
       setCities([]);
 
-      if (isDomestic) {
-        setForm((prev) => ({ ...prev, country: 'INDIA'}));
-        setForm((prev) => ({ ...prev, state: ""}));
-        setForm((prev) => ({ ...prev, city: ""}));
-        setForm((prev) => ({ ...prev, pinCode: "" }));
-        await loadStates('INDIA');
+      if (domestic) {
+        setForm((prev) => ({ ...prev, country: "India", state: "", city: "", pinCode: "" }));
+        await loadStates("India");
         return;
       }
 
@@ -365,8 +363,21 @@ export default function BecomePartner() {
             <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
               <FormField label="Country" id="country" required>
                 <div ref={countrySearchRef} className="relative">
-                  <input id="country" type="search" value={form.country} disabled={isDomestic} onChange={handleCountryChange} onFocus={() => setShowCountryDropdown(true)} placeholder={loadingCountries ? "Loading..." : "Search country"} className={inputClass()} required disabled={loadingCountries} autoComplete="off" />
-                  {showCountryDropdown && !loadingCountries && (
+                  <input
+                    id="country"
+                    type="search"
+                    value={form.country}
+                    onChange={handleCountryChange}
+                    onFocus={() => {
+                      if (!isDomestic) setShowCountryDropdown(true);
+                    }}
+                    placeholder={loadingCountries ? "Loading..." : isDomestic ? "India" : "Search country"}
+                    className={inputClass()}
+                    required
+                    disabled={loadingCountries || isDomestic}
+                    autoComplete="off"
+                  />
+                  {showCountryDropdown && !loadingCountries && !isDomestic && (
                     <ul className="absolute inset-x-0 top-full z-20 mt-2 max-h-56 overflow-y-auto rounded-lg border border-[#e5e7eb] bg-white py-2 shadow-lg">
                       {filteredCountries.map((country) => (
                         <li key={country.code || country.name}>

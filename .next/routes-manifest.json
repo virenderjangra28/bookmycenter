@@ -39,6 +39,14 @@
       "namedRegex": "^/api/admin/users/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/api/centerlist/[id]",
+      "regex": "^/api/centerlist/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/centerlist/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/exams/[id]",
       "regex": "^/exams/([^/]+?)(?:/)?$",
       "routeKeys": {
@@ -267,6 +275,12 @@
       "regex": "^/client/update\\-center(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/client/update\\-center(?:/)?$"
+    },
+    {
+      "page": "/client/update-centers",
+      "regex": "^/client/update\\-centers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/update\\-centers(?:/)?$"
     },
     {
       "page": "/favicon.ico",

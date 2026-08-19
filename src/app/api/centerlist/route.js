@@ -146,9 +146,9 @@ export async function POST(request) {
         //Compliance Declaration
         const complianceDeclaration = await CompDeclaration.create({
             userId: userId,
-            authorityName: body.complianceDeclaration?.authorityName || "",
-            authorityDesignation: body.complianceDeclaration?.authorityDesignation || "",
-            authDate: body.complianceDeclaration?.authDate || "",
+            authorityName: body.declaration?.authorisedPersonName || "",
+            authorityDesignation: body.declaration?.designation || "",
+            authDate: body.declaration?.declarationDate || null,
         });
 
         //Centre Details

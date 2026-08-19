@@ -14,6 +14,10 @@ function getInitials(name = "") {
   return `${parts[0][0] ?? ""}${parts[parts.length - 1][0] ?? ""}`.toUpperCase();
 }
 
+function isAdminRole(role) {
+  return role === 1 || role === "1";
+}
+
 const ADMIN_MENU = [
   { label: "Dashboard", href: "/admin/dashboard" },
   { label: "User List", href: "/admin/user-list" },
@@ -36,7 +40,8 @@ export default function ProfileDropdown({
   const containerRef = useRef(null);
   const router = useRouter();
   const { logout } = useContext(UserContext);
-  const menuItems = role === "1" ? ADMIN_MENU : CLIENT_MENU;
+  const isAdmin = isAdminRole(role);
+  const menuItems = isAdmin ? ADMIN_MENU : CLIENT_MENU;
 
   const handleLogout = async () => {
     setOpen(false);
@@ -92,7 +97,7 @@ export default function ProfileDropdown({
               <p className="mt-0.5 truncate text-xs text-[#6b7280]">{email}</p>
             ) : null}
             <p className="mt-1 text-[10px] font-medium uppercase tracking-wide text-[#0a7ea4]">
-              {role === "1" ? "Admin" : "Client"}
+              {isAdmin ? "Admin" : "Client"}
             </p>
           </div>
 

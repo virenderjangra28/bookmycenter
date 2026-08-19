@@ -62,6 +62,14 @@ export function CheckboxGroup({ options, values, onChange }) {
 }
 
 export async function readFileAsDataUrl(file) {
+  if (file?.type?.startsWith("image/")) {
+    try {
+      return await compressImageFile(file);
+    } catch {
+      // Fall through to the original file if compression fails.
+    }
+  }
+
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
@@ -70,33 +78,75 @@ export async function readFileAsDataUrl(file) {
   });
 }
 
-export function FileUploadField({ id, label, required, value, onChange, accept, hint }) {
+async function compressImageFile(file, maxSize = 1280, quality = 0.72) {
+  const bitmap = await createImageBitmap(file);
+  const scale = Math.min(1, maxSize / Math.max(bitmap.width, bitmap.height));
+  const width = Math.round(bitmap.width * scale);
+  const height = Math.round(bitmap.height * scale);
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d");
+  context.drawImage(bitmap, 0, 0, width, height);
+  bitmap.close?.();
+  return canvas.toDataURL("image/jpeg", quality);
+}
+
+function isImageSrc(value) {
+  return (
+    typeof value === "string" &&
+    (value.startsWith("data:image") || /\.(avif|gif|jpe?g|png|webp)(\?|$)/i.test(value))
+  );
+}
+
+function resetFileInput(event) {
+  event.target.value = "";
+}
+
+export function FileUploadField({ id, label, required, value, onChange, onRemove, accept, hint }) {
   return (
     <FormField label={label} id={id} required={required} hint={hint}>
       <input
         id={id}
         type="file"
         accept={accept || "*/*"}
-        onChange={onChange}
+        onChange={(event) => {
+          onChange(event);
+          resetFileInput(event);
+        }}
         className={inputClass()}
         required={required && !value}
       />
       {value ? (
-        typeof value === "string" && value.startsWith("data:image") ? (
-          <img
-            src={value}
-            alt={`${label} preview`}
-            className="mt-3 h-32 w-full rounded-lg border border-[#e5e7eb] object-cover"
-          />
-        ) : (
-          <p className="mt-2 text-xs text-[#0a7ea4]">Document uploaded</p>
-        )
+        <div className="relative mt-3">
+          {isImageSrc(value) ? (
+            <img
+              src={value}
+              alt={`${label} preview`}
+              className="h-32 w-full rounded-lg border border-[#e5e7eb] object-cover"
+            />
+          ) : (
+            <p className="rounded-lg border border-[#e5e7eb] bg-[#f8fafc] px-3 py-2 text-xs text-[#0a7ea4]">
+              Document uploaded
+            </p>
+          )}
+          {onRemove ? (
+            <button
+              type="button"
+              onClick={onRemove}
+              aria-label={`Remove ${label}`}
+              className="absolute right-2 top-2 rounded-full bg-[#0b1a33]/80 px-2.5 py-1 text-xs font-semibold text-white hover:bg-[#b03a2e]"
+            >
+              Remove
+            </button>
+          ) : null}
+        </div>
       ) : null}
     </FormField>
   );
 }
 
-export function MultiPhotoUpload({ id, label, required, values, onChange, hint }) {
+export function MultiPhotoUpload({ id, label, required, values, onChange, onRemove, hint }) {
   return (
     <FormField label={label} id={id} required={required} hint={hint}>
       <input
@@ -104,19 +154,33 @@ export function MultiPhotoUpload({ id, label, required, values, onChange, hint }
         type="file"
         accept="image/*"
         multiple
-        onChange={onChange}
+        onChange={(event) => {
+          onChange(event);
+          resetFileInput(event);
+        }}
         className={inputClass()}
         required={required && values.length === 0}
       />
       {values.length > 0 ? (
         <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {values.map((src, index) => (
-            <img
-              key={`${id}-${index}`}
-              src={src}
-              alt={`${label} ${index + 1}`}
-              className="h-24 w-full rounded-lg border border-[#e5e7eb] object-cover"
-            />
+            <div key={`${id}-${index}`} className="relative">
+              <img
+                src={src}
+                alt={`${label} ${index + 1}`}
+                className="h-24 w-full rounded-lg border border-[#e5e7eb] object-cover"
+              />
+              {onRemove ? (
+                <button
+                  type="button"
+                  onClick={() => onRemove(index)}
+                  aria-label={`Remove ${label} ${index + 1}`}
+                  className="absolute right-1.5 top-1.5 rounded-full bg-[#0b1a33]/80 px-2 py-0.5 text-[11px] font-semibold text-white hover:bg-[#b03a2e]"
+                >
+                  Remove
+                </button>
+              ) : null}
+            </div>
           ))}
         </div>
       ) : null}

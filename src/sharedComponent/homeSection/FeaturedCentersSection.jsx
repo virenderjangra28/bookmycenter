@@ -122,7 +122,7 @@ function CenterCard({ center }) {
         </div>
 
         <Link
-          href="/book-a-center"
+          href={`/center-details/${center.id}`}
           className="mt-3 flex w-full items-center justify-center rounded-md border border-[#0056D2] py-2.5 text-sm font-semibold text-[#0056D2] transition hover:bg-[#0056D2] hover:text-white"
         >
           View Center

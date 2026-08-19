@@ -14,6 +14,7 @@ import {
   MANDATORY_PHOTO_FIELDS,
   OPERATING_DAYS,
   ORGANIZATION_TYPES,
+  PHOTO_UNCHANGED,
   STAR_RATINGS,
 } from "@/app/become-partner/constants";
 import {
@@ -39,6 +40,67 @@ const REQUIRED_PHOTO_KEYS = [
   "emergencyExit",
 ];
 
+const REQUIRED_DECLARATIONS = [
+  ["termsAccepted", "I agree to the BookMyCenter Terms & Conditions."],
+  ["confidentialityAccepted", "I agree to maintain examination confidentiality and security."],
+  ["verificationConsent", "I consent to physical/virtual centre verification."],
+  ["accurateInfrastructure", "I agree to provide accurate infrastructure and capacity information."],
+  ["informationAccurate", "I confirm all information provided is true and accurate."],
+];
+
+function isSamePhotoList(current, initial) {
+  if (current === initial) return true;
+  if (!Array.isArray(current) || !Array.isArray(initial) || current.length !== initial.length) {
+    return false;
+  }
+  return current.every((item, index) => item === initial[index]);
+}
+
+function photoOrMarker(current, initial) {
+  if (current === initial || isSamePhotoList(current, initial)) {
+    return PHOTO_UNCHANGED;
+  }
+  return current ?? "";
+}
+
+function buildSavePayload(form, initial) {
+  const initialCenters = initial?.centers || [];
+
+  return {
+    ...form,
+    gstDocument: form.gstDocument === initial?.gstDocument ? PHOTO_UNCHANGED : form.gstDocument,
+    panDocument: form.panDocument === initial?.panDocument ? PHOTO_UNCHANGED : form.panDocument,
+    registrationDocument:
+      form.registrationDocument === initial?.registrationDocument
+        ? PHOTO_UNCHANGED
+        : form.registrationDocument,
+    locationPhotos: {
+      hall: photoOrMarker(form.locationPhotos?.hall, initial?.locationPhotos?.hall),
+      entrance: photoOrMarker(form.locationPhotos?.entrance, initial?.locationPhotos?.entrance),
+      washroom: photoOrMarker(form.locationPhotos?.washroom, initial?.locationPhotos?.washroom),
+    },
+    banking: {
+      ...form.banking,
+      cancelledCheque:
+        form.banking?.cancelledCheque === initial?.banking?.cancelledCheque
+          ? PHOTO_UNCHANGED
+          : form.banking?.cancelledCheque,
+    },
+    centers: (form.centers || []).map((center) => {
+      const initialCenter = initialCenters.find((item) => item._id && item._id === center._id);
+      const photos = {};
+      for (const [key, value] of Object.entries(center.photos || {})) {
+        photos[key] = photoOrMarker(value, initialCenter?.photos?.[key]);
+      }
+      return {
+        ...center,
+        photos,
+        additionalPhotos: photoOrMarker(center.additionalPhotos, initialCenter?.additionalPhotos),
+      };
+    }),
+  };
+}
+
 export default function UpdateCenter() {
   const [form, setForm] = useState(createInitialForm);
   const [countries, setCountries] = useState([]);
@@ -47,6 +109,7 @@ export default function UpdateCenter() {
   const [saving, setSaving] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const countrySearchRef = useRef(null);
+  const initialFormRef = useRef(null);
 
   const isCbt = form.centerType === "CBT";
   const isPbt = form.centerType === "PBT/Paper Exam";
@@ -82,7 +145,7 @@ export default function UpdateCenter() {
         if (response.ok && data.success) {
           const next = data.data || {};
           const defaults = createInitialForm();
-          setForm({
+          const nextForm = {
             ...defaults,
             ...next,
             locationPhotos: { ...defaults.locationPhotos, ...(next.locationPhotos || {}) },
@@ -90,7 +153,9 @@ export default function UpdateCenter() {
             availability: { ...defaults.availability, ...(next.availability || {}) },
             declaration: { ...defaults.declaration, ...(next.declaration || {}) },
             centers: Array.isArray(next.centers) && next.centers.length ? next.centers : defaults.centers,
-          });
+          };
+          initialFormRef.current = nextForm;
+          setForm(nextForm);
         } else {
           toast.error(data.result || "Failed to load center details");
         }
@@ -211,6 +276,20 @@ export default function UpdateCenter() {
     }
   };
 
+  const removeCenterPhoto = (centerIndex, photoKey, photoIndex) => {
+    updateCenter(centerIndex, (center) => ({
+      ...center,
+      photos: {
+        ...center.photos,
+        [photoKey]: (center.photos[photoKey] || []).filter((_, index) => index !== photoIndex),
+      },
+    }));
+  };
+
+  const removeSingleFile = (field) => {
+    updateForm(field, "");
+  };
+
   const addCenter = () => {
     setForm((prev) => ({
       ...prev,
@@ -226,8 +305,16 @@ export default function UpdateCenter() {
     }));
   };
 
+  const allDeclarationsAccepted = REQUIRED_DECLARATIONS.every(
+    ([field]) => Boolean(form.declaration[field])
+  );
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!allDeclarationsAccepted) {
+      toast.error("Please accept all declarations before saving.");
+      return;
+    }
     setSaving(true);
 
     try {
@@ -235,11 +322,12 @@ export default function UpdateCenter() {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(form),
+        body: JSON.stringify(buildSavePayload(form, initialFormRef.current)),
       });
       const data = await response.json();
 
       if (response.ok && data.success) {
+        initialFormRef.current = form;
         toast.success(data.result || "Center details updated successfully");
       } else {
         toast.error(data.result || "Failed to update center details");
@@ -272,7 +360,7 @@ export default function UpdateCenter() {
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
             <section className={sectionClass()}>
-              <SectionHeader title="Organization Details" description="Tell us about your organization." />
+              <SectionHeader title="" description="" />
               <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
                 <div className="md:col-span-2">
                   <FormField label="Name of the Organization" id="organizationName" required>
@@ -379,7 +467,7 @@ export default function UpdateCenter() {
             </section>
 
             <section className={sectionClass()}>
-              <SectionHeader title="Location" description="Country → State → City → Pin Code → Full Address" />
+              <SectionHeader title="Location" description="" />
               <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
                 <FormField label="Country" id="country" required>
                   <div ref={countrySearchRef} className="relative">
@@ -457,14 +545,14 @@ export default function UpdateCenter() {
                     />
                   </FormField>
                 </div>
-                <div className="md:col-span-2">
+                {/* <div className="md:col-span-2">
                   <CenterMapPicker
                     latitude={form.latitude}
                     longitude={form.longitude}
                     onLocationChange={handleLocationChange}
                   />
-                </div>
-                <FormField label="Latitude" id="latitude" required>
+                </div> */}
+                {/* <FormField label="Latitude" id="latitude" required>
                   <input
                     id="latitude"
                     value={form.latitude}
@@ -472,8 +560,8 @@ export default function UpdateCenter() {
                     className={inputClass()}
                     required
                   />
-                </FormField>
-                <FormField label="Longitude" id="longitude" required>
+                </FormField> */}
+                {/* <FormField label="Longitude" id="longitude" required>
                   <input
                     id="longitude"
                     value={form.longitude}
@@ -481,15 +569,15 @@ export default function UpdateCenter() {
                     className={inputClass()}
                     required
                   />
-                </FormField>
-                <MultiPhotoUpload
+                </FormField> */}
+                {/* <MultiPhotoUpload
                   id="locationHall"
                   label="Centre Hall Photos"
                   required={!form.locationPhotos.hall?.length}
                   values={form.locationPhotos.hall || []}
                   onChange={handleLocationPhotos("hall")}
-                />
-                <MultiPhotoUpload
+                /> */}
+                {/* <MultiPhotoUpload
                   id="locationEntrance"
                   label="Entrance Photos"
                   required={!form.locationPhotos.entrance?.length}
@@ -502,7 +590,7 @@ export default function UpdateCenter() {
                   required={!form.locationPhotos.washroom?.length}
                   values={form.locationPhotos.washroom || []}
                   onChange={handleLocationPhotos("washroom")}
-                />
+                /> */}
               </div>
             </section>
 
@@ -524,6 +612,7 @@ export default function UpdateCenter() {
                   required={!form.gstDocument}
                   value={form.gstDocument}
                   onChange={handleSingleFile("gstDocument")}
+                  onRemove={() => removeSingleFile("gstDocument")}
                   accept=".pdf,image/*"
                 />
                 <FormField label="PAN / Tax Registration Number" id="panNumber" required>
@@ -541,6 +630,7 @@ export default function UpdateCenter() {
                   required={!form.panDocument}
                   value={form.panDocument}
                   onChange={handleSingleFile("panDocument")}
+                  onRemove={() => removeSingleFile("panDocument")}
                   accept=".pdf,image/*"
                 />
                 <FormField label="Registration / Incorporation Number" id="registrationNumber" required>
@@ -558,6 +648,7 @@ export default function UpdateCenter() {
                   required={!form.registrationDocument}
                   value={form.registrationDocument}
                   onChange={handleSingleFile("registrationDocument")}
+                  onRemove={() => removeSingleFile("registrationDocument")}
                   accept=".pdf,image/*"
                 />
               </div>
@@ -694,6 +785,32 @@ export default function UpdateCenter() {
                       onChange={(e) => updateCenterField(centerIndex, "waitingArea", e.target.value)}
                       required
                     />
+                  </FormField>
+                  <FormField label="Price" id={`price-${centerIndex}`} required>
+                    <input
+                      id={`price-${centerIndex}`}
+                      type="number"
+                      min="0"
+                      step="1"
+                      value={center.price ?? ""}
+                      onChange={(e) => updateCenterField(centerIndex, "price", e.target.value)}
+                      className={inputClass()}
+                      required
+                    />
+                  </FormField>
+                  <FormField label="Active" id={`active-${centerIndex}`} required>
+                    <select
+                      id={`active-${centerIndex}`}
+                      value={center.isAvailable === false || center.isAvailable === "0" ? "0" : "1"}
+                      onChange={(e) =>
+                        updateCenterField(centerIndex, "isAvailable", e.target.value === "1")
+                      }
+                      className={inputClass()}
+                      required
+                    >
+                      <option value="1">Active</option>
+                      <option value="0">Inactive</option>
+                    </select>
                   </FormField>
                 </div>
 
@@ -1174,7 +1291,8 @@ export default function UpdateCenter() {
                       }
                       values={center.photos?.[key] || []}
                       onChange={handleCenterPhotos(centerIndex, key)}
-                      hint="Allow multiple photos"
+                      onRemove={(photoIndex) => removeCenterPhoto(centerIndex, key, photoIndex)}
+                      hint="Remove a photo to replace it, then upload a new one."
                     />
                   ))}
                 </div>
@@ -1242,6 +1360,7 @@ export default function UpdateCenter() {
                   label="Cancelled Cheque Upload"
                   value={form.banking.cancelledCheque}
                   onChange={handleBankFile}
+                  onRemove={() => updateNested("banking", "cancelledCheque", "")}
                   accept="image/*,.pdf"
                 />
               </div>
@@ -1328,24 +1447,19 @@ export default function UpdateCenter() {
                   technical assessment, commercial agreement and applicable client/examination
                   requirements.
                 </p>
-                {[
-                  ["termsAccepted", "I agree to the BookMyCenter Terms & Conditions."],
-                  ["confidentialityAccepted", "I agree to maintain examination confidentiality and security."],
-                  ["verificationConsent", "I consent to physical/virtual centre verification."],
-                  [
-                    "accurateInfrastructure",
-                    "I agree to provide accurate infrastructure and capacity information.",
-                  ],
-                  ["informationAccurate", "I confirm all information provided is true and accurate."],
-                ].map(([field, label]) => (
+                {REQUIRED_DECLARATIONS.map(([field, label]) => (
                   <label key={field} className="flex items-start gap-2">
                     <input
                       type="checkbox"
                       checked={Boolean(form.declaration[field])}
                       onChange={(e) => updateNested("declaration", field, e.target.checked)}
                       className="mt-1 h-4 w-4 rounded border-[#d1d5db] text-[#0a7ea4]"
+                      required
                     />
-                    <span>{label}</span>
+                    <span>
+                      {label}
+                      <span className="text-[#b03a2e]"> *</span>
+                    </span>
                   </label>
                 ))}
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
@@ -1392,8 +1506,8 @@ export default function UpdateCenter() {
               </Link>
               <button
                 type="submit"
-                disabled={saving}
-                className="inline-flex items-center justify-center rounded-lg bg-[#0a7ea4] px-6 py-3 text-sm font-semibold text-white hover:bg-[#086688] disabled:opacity-60"
+                disabled={saving || !allDeclarationsAccepted}
+                className="inline-flex items-center justify-center rounded-lg bg-[#0a7ea4] px-6 py-3 text-sm font-semibold text-white hover:bg-[#086688] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {saving ? "Saving..." : "Save Center Details"}
               </button>

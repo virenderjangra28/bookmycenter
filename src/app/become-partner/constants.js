@@ -52,6 +52,8 @@ export const CCTV_COVERAGE_OPTIONS = [
   "Server / Control Room",
 ];
 
+export const PHOTO_UNCHANGED = "__unchanged__";
+
 export const MANDATORY_PHOTO_FIELDS = [
   { key: "buildingFront", label: "Building – Front View / Entrance" },
   { key: "reception", label: "Reception / Registration Area" },
@@ -181,6 +183,8 @@ export function createCenter(index = 1) {
     maxCandidatesPerShift: "",
     shiftsPerDay: "",
     waitingArea: "",
+    price: "",
+    isAvailable: true,
     cbtInfrastructure: createCbtInfrastructure(),
     internetInfrastructure: createInternetInfrastructure(),
     pbtInfrastructure: createPbtInfrastructure(),

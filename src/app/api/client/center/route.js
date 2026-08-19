@@ -8,7 +8,7 @@ import CenterAvilability from "@/lib/model/centerAvailability";
 import CompDeclaration from "@/lib/model/complianceDeclaration";
 import Centerlist from "@/lib/model/centerlist";
 import { getDataFromToken } from "@/helper/getDataFromToken";
-import { createCenter, createInitialForm } from "@/app/become-partner/constants";
+import { createCenter, createInitialForm, PHOTO_UNCHANGED } from "@/app/become-partner/constants";
 
 function isClientRole(role) {
   return role === 2 || role === "2";
@@ -58,6 +58,8 @@ function toFormCenter(doc, index) {
     maxCandidatesPerShift: doc.maxCandidatesPerShift || "",
     shiftsPerDay: doc.shiftsPerDay || "",
     waitingArea: doc.waitingArea || "",
+    price: doc.price ?? "",
+    isAvailable: doc.isAvailable !== false,
     cbtInfrastructure: { ...base.cbtInfrastructure, ...(doc.cbtInfrastructure || {}) },
     internetInfrastructure: { ...base.internetInfrastructure, ...(doc.internetInfrastructure || {}) },
     pbtInfrastructure: { ...base.pbtInfrastructure, ...(doc.pbtInfrastructure || {}) },
@@ -131,7 +133,7 @@ function mapPartnerForm(user, location, legal, banking, availability, declaratio
       multiDayExams: Boolean(availability?.multiDayExams),
       shortNoticeExams: Boolean(availability?.shortNoticeExams),
     },
-    declaration: {
+    declaration: { 
       ...form.declaration,
       authorisedPersonName: declaration?.authorityName || "",
       designation: declaration?.authorityDesignation || "",
@@ -177,6 +179,19 @@ export async function GET(request) {
   }
 }
 
+function applyChangedPhotoFields(set, prefix, incoming) {
+  if (!incoming || typeof incoming !== "object" || Array.isArray(incoming)) return;
+  for (const [key, value] of Object.entries(incoming)) {
+    if (value === PHOTO_UNCHANGED) continue;
+    set[`${prefix}.${key}`] = value;
+  }
+}
+
+function applyChangedValue(set, path, value, transform) {
+  if (value === PHOTO_UNCHANGED) return;
+  set[path] = transform ? transform(value) : value;
+}
+
 export async function PATCH(request) {
   try {
     await connectDB();
@@ -202,81 +217,81 @@ export async function PATCH(request) {
     user.centerType = body.centerType || "";
     user.centerRating = parseCenterRating(body.centerRating);
     user.centerCapacity = String(body.centreCapacity || body.centerCapacity || "");
-    await user.save();
 
-    await Location.findOneAndUpdate(
-      { userId },
-      {
-        userId,
-        country: body.country || "",
-        state: body.state || "",
-        city: body.city || "",
-        pinCode: body.pinCode || "",
-        fullAddress: body.fullAddress || "",
-        latitude: body.latitude || "",
-        longitude: body.longitude || "",
-        locationPhotos: body.locationPhotos || {},
-      },
-      { upsert: true, new: true }
+    const locationSet = {
+      userId,
+      country: body.country || "",
+      state: body.state || "",
+      city: body.city || "",
+      pinCode: body.pinCode || "",
+      fullAddress: body.fullAddress || "",
+      latitude: body.latitude || "",
+      longitude: body.longitude || "",
+    };
+    applyChangedPhotoFields(locationSet, "locationPhotos", body.locationPhotos);
+
+    const legalSet = {
+      userId,
+      gstNumber: body.gstNumber || "",
+      panNumber: body.panNumber || "",
+      corporateNumber: body.registrationNumber || body.corporateNumber || "",
+    };
+    applyChangedValue(legalSet, "legalRegistrationPhotos.gst", body.gstDocument, (value) =>
+      value ? [value] : []
+    );
+    applyChangedValue(legalSet, "legalRegistrationPhotos.pan", body.panDocument, (value) =>
+      value ? [value] : []
+    );
+    applyChangedValue(
+      legalSet,
+      "legalRegistrationPhotos.corporate",
+      body.registrationDocument,
+      (value) => (value ? [value] : [])
     );
 
-    await LegalRegistration.findOneAndUpdate(
-      { userId },
-      {
-        userId,
-        gstNumber: body.gstNumber || "",
-        panNumber: body.panNumber || "",
-        corporateNumber: body.registrationNumber || body.corporateNumber || "",
-        legalRegistrationPhotos: {
-          gst: body.gstDocument ? [body.gstDocument] : [],
-          pan: body.panDocument ? [body.panDocument] : [],
-          corporate: body.registrationDocument ? [body.registrationDocument] : [],
-        },
-      },
-      { upsert: true, new: true }
+    const bankingSet = {
+      userId,
+      accountName: body.banking?.accountHolderName || "",
+      bankName: body.banking?.bankName || "",
+      accountNumber: body.banking?.accountNumber || "",
+      ifscCode: body.banking?.ifscCode || "",
+      branchName: body.banking?.branch || "",
+    };
+    applyChangedValue(
+      bankingSet,
+      "cancelCheckPhotos.checkPhoto",
+      body.banking?.cancelledCheque,
+      (value) => value || ""
     );
 
-    await BankingDetail.findOneAndUpdate(
-      { userId },
-      {
-        userId,
-        accountName: body.banking?.accountHolderName || "",
-        bankName: body.banking?.bankName || "",
-        accountNumber: body.banking?.accountNumber || "",
-        ifscCode: body.banking?.ifscCode || "",
-        branchName: body.banking?.branch || "",
-        cancelCheckPhotos: { checkPhoto: body.banking?.cancelledCheque || "" },
-      },
-      { upsert: true, new: true }
-    );
+    const availabilitySet = {
+      userId,
+      operatingDays: Array.isArray(body.availability?.operatingDays)
+        ? body.availability.operatingDays
+        : [],
+      operatingHoursFrom: body.availability?.hoursFrom || "",
+      operatingHoursTo: body.availability?.hoursTo || "",
+      weekdayExams: Boolean(body.availability?.weekdayExams),
+      weekendExams: Boolean(body.availability?.weekendExams),
+      multiDayExams: Boolean(body.availability?.multiDayExams),
+      shortNoticeExams: Boolean(body.availability?.shortNoticeExams),
+    };
 
-    await CenterAvilability.findOneAndUpdate(
-      { userId },
-      {
-        userId,
-        operatingDays: Array.isArray(body.availability?.operatingDays)
-          ? body.availability.operatingDays
-          : [],
-        operatingHoursFrom: body.availability?.hoursFrom || "",
-        operatingHoursTo: body.availability?.hoursTo || "",
-        weekdayExams: Boolean(body.availability?.weekdayExams),
-        weekendExams: Boolean(body.availability?.weekendExams),
-        multiDayExams: Boolean(body.availability?.multiDayExams),
-        shortNoticeExams: Boolean(body.availability?.shortNoticeExams),
-      },
-      { upsert: true, new: true }
-    );
+    const declarationSet = {
+      userId,
+      authorityName: body.declaration?.authorisedPersonName || "",
+      authorityDesignation: body.declaration?.designation || "",
+      authDate: body.declaration?.declarationDate || null,
+    };
 
-    await CompDeclaration.findOneAndUpdate(
-      { userId },
-      {
-        userId,
-        authorityName: body.declaration?.authorisedPersonName || "",
-        authorityDesignation: body.declaration?.designation || "",
-        authDate: body.declaration?.declarationDate || "",
-      },
-      { upsert: true, new: true }
-    );
+    await Promise.all([
+      user.save(),
+      Location.updateOne({ userId }, { $set: locationSet }, { upsert: true }),
+      LegalRegistration.updateOne({ userId }, { $set: legalSet }, { upsert: true }),
+      BankingDetail.updateOne({ userId }, { $set: bankingSet }, { upsert: true }),
+      CenterAvilability.updateOne({ userId }, { $set: availabilitySet }, { upsert: true }),
+      CompDeclaration.updateOne({ userId }, { $set: declarationSet }, { upsert: true }),
+    ]);
 
     const incomingCenters = Array.isArray(body.centers) ? body.centers : [];
     const existingCenters = await Centerlist.find({ userId }).select("_id").lean();
@@ -292,45 +307,59 @@ export async function PATCH(request) {
       await Centerlist.deleteMany({ _id: { $in: idsToDelete }, userId });
     }
 
-    for (const [index, center] of incomingCenters.entries()) {
-      const payload = {
-        userId,
-        centerId: center.id || "",
-        label: center.label || `Center-${index + 1}`,
-        separateRegistrationArea: center.separateRegistrationArea || "",
-        bagStorage: center.bagStorage || "",
-        totalAreaSqFt: center.totalAreaSqFt || "",
-        examRooms: center.examRooms || "",
-        totalSeatingCapacity: center.totalSeatingCapacity || "",
-        totalComputerCapacity: center.totalComputerCapacity || "",
-        maxCandidatesPerShift: center.maxCandidatesPerShift || "",
-        shiftsPerDay: center.shiftsPerDay || "",
-        waitingArea: center.waitingArea || "",
-        cbtInfrastructure: center.cbtInfrastructure || {},
-        internetInfrastructure: center.internetInfrastructure || {},
-        pbtInfrastructure: center.pbtInfrastructure || {},
-        powerInfrastructure: center.powerInfrastructure || {},
-        cctvSecurity: {
-          ...(center.cctvSecurity || {}),
-          cctvCoverage: Array.isArray(center.cctvSecurity?.cctvCoverage)
-            ? center.cctvSecurity.cctvCoverage
+    await Promise.all(
+      incomingCenters.map((center, index) => {
+        const payload = {
+          userId,
+          centerId: center.id || "",
+          label: center.label || `Center-${index + 1}`,
+          separateRegistrationArea: center.separateRegistrationArea || "",
+          bagStorage: center.bagStorage || "",
+          totalAreaSqFt: center.totalAreaSqFt || "",
+          examRooms: center.examRooms || "",
+          totalSeatingCapacity: center.totalSeatingCapacity || "",
+          totalComputerCapacity: center.totalComputerCapacity || "",
+          maxCandidatesPerShift: center.maxCandidatesPerShift || "",
+          shiftsPerDay: center.shiftsPerDay || "",
+          waitingArea: center.waitingArea || "",
+          price: Number(center.price) || 0,
+          isAvailable: center.isAvailable !== false && center.isAvailable !== "0",
+          cbtInfrastructure: center.cbtInfrastructure || {},
+          internetInfrastructure: center.internetInfrastructure || {},
+          pbtInfrastructure: center.pbtInfrastructure || {},
+          powerInfrastructure: center.powerInfrastructure || {},
+          cctvSecurity: {
+            ...(center.cctvSecurity || {}),
+            cctvCoverage: Array.isArray(center.cctvSecurity?.cctvCoverage)
+              ? center.cctvSecurity.cctvCoverage
+              : [],
+          },
+          authenticationFacilities: Array.isArray(center.authenticationFacilities)
+            ? center.authenticationFacilities
             : [],
-        },
-        authenticationFacilities: Array.isArray(center.authenticationFacilities)
-          ? center.authenticationFacilities
-          : [],
-        accessibility: center.accessibility || {},
-        staff: center.staff || {},
-        photos: center.photos || {},
-        additionalPhotos: Array.isArray(center.additionalPhotos) ? center.additionalPhotos : [],
-      };
+          accessibility: center.accessibility || {},
+          staff: center.staff || {},
+        };
 
-      if (center._id) {
-        await Centerlist.findOneAndUpdate({ _id: center._id, userId }, payload);
-      } else {
-        await Centerlist.create(payload);
-      }
-    }
+        if (center._id) {
+          applyChangedPhotoFields(payload, "photos", center.photos);
+          applyChangedValue(payload, "additionalPhotos", center.additionalPhotos, (value) =>
+            Array.isArray(value) ? value : []
+          );
+          return Centerlist.updateOne({ _id: center._id, userId }, { $set: payload });
+        }
+
+        const photos = {};
+        for (const [key, value] of Object.entries(center.photos || {})) {
+          if (value !== PHOTO_UNCHANGED) photos[key] = value;
+        }
+        payload.photos = photos;
+        payload.additionalPhotos = Array.isArray(center.additionalPhotos)
+          ? center.additionalPhotos
+          : [];
+        return Centerlist.create(payload);
+      })
+    );
 
     return NextResponse.json({
       success: true,

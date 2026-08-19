@@ -14,4 +14,4 @@ export const SAMPLE_CENTER = {
     connectivity: "Primary fibre plus backup ISP.",
     power: "UPS and DG backup.",
   },
-}; 
+};

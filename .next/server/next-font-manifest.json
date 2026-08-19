@@ -18,6 +18,12 @@
     "[project]/src/app/book-a-center/page": [
       "static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2"
     ],
+    "[project]/src/app/center-details/[id]/page": [
+      "static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2"
+    ],
+    "[project]/src/app/center-details/page": [
+      "static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2"
+    ],
     "[project]/src/app/client/booking-requests/page": [
       "static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2"
     ],
@@ -66,9 +72,6 @@
     "[project]/src/app/find-your-exam/page": [
       "static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2"
     ],
-    "[project]/src/app/location/page": [
-      "static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2"
-    ],
     "[project]/src/app/login/page": [
       "static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2"
     ],
@@ -76,9 +79,6 @@
       "static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2"
     ],
     "[project]/src/app/signup/page": [
-      "static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2"
-    ],
-    "[project]/src/app/state/page": [
       "static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2"
     ],
     "[project]/src/app/verify/reset-password/[token]/page": [

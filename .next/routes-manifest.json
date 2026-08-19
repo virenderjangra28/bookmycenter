@@ -47,6 +47,14 @@
       "namedRegex": "^/api/centerlist/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/center-details/[id]",
+      "regex": "^/center\\-details/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/center\\-details/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/exams/[id]",
       "regex": "^/exams/([^/]+?)(?:/)?$",
       "routeKeys": {
@@ -199,6 +207,12 @@
       "namedRegex": "^/book\\-a\\-center(?:/)?$"
     },
     {
+      "page": "/center-details",
+      "regex": "^/center\\-details(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/center\\-details(?:/)?$"
+    },
+    {
       "page": "/client/booking-requests",
       "regex": "^/client/booking\\-requests(?:/)?$",
       "routeKeys": {},
@@ -295,12 +309,6 @@
       "namedRegex": "^/find\\-your\\-exam(?:/)?$"
     },
     {
-      "page": "/location",
-      "regex": "^/location(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/location(?:/)?$"
-    },
-    {
       "page": "/login",
       "regex": "^/login(?:/)?$",
       "routeKeys": {},
@@ -311,12 +319,6 @@
       "regex": "^/signup(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/signup(?:/)?$"
-    },
-    {
-      "page": "/state",
-      "regex": "^/state(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/state(?:/)?$"
     },
     {
       "page": "/verify/verify-email",

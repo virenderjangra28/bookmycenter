@@ -88,6 +88,20 @@
       }
     }
   },
+  "/center-details": {
+    "hints": 64,
+    "slots": {
+      "children": {
+        "hints": 96,
+        "slots": {
+          "children": {
+            "hints": 160,
+            "slots": null
+          }
+        }
+      }
+    }
+  },
   "/client/booking-requests": {
     "hints": 64,
     "slots": {
@@ -368,20 +382,6 @@
       }
     }
   },
-  "/location": {
-    "hints": 64,
-    "slots": {
-      "children": {
-        "hints": 96,
-        "slots": {
-          "children": {
-            "hints": 160,
-            "slots": null
-          }
-        }
-      }
-    }
-  },
   "/login": {
     "hints": 64,
     "slots": {
@@ -406,20 +406,6 @@
     }
   },
   "/signup": {
-    "hints": 64,
-    "slots": {
-      "children": {
-        "hints": 96,
-        "slots": {
-          "children": {
-            "hints": 160,
-            "slots": null
-          }
-        }
-      }
-    }
-  },
-  "/state": {
     "hints": 64,
     "slots": {
       "children": {

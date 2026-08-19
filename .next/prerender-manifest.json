@@ -5,7 +5,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 3554714,
+      "htmlSize": 3554810,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -199,11 +199,39 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/center-details": {
+      "routeType": "page",
+      "response": "complete",
+      "compute": "static",
+      "htmlSize": 22230,
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/center-details",
+      "dataRoute": "/center-details.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/client/booking-requests": {
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 14111,
+      "htmlSize": 14198,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -231,7 +259,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 14087,
+      "htmlSize": 14174,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -259,7 +287,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 15439,
+      "htmlSize": 15526,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -287,7 +315,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 14081,
+      "htmlSize": 14168,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -315,7 +343,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 13664,
+      "htmlSize": 13751,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -343,7 +371,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 14073,
+      "htmlSize": 14160,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -371,7 +399,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 13487,
+      "htmlSize": 13574,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -399,7 +427,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 14067,
+      "htmlSize": 14154,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -427,7 +455,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 14091,
+      "htmlSize": 14178,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -455,7 +483,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 14125,
+      "htmlSize": 14212,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -483,7 +511,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 14081,
+      "htmlSize": 14168,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -511,7 +539,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 14780,
+      "htmlSize": 14867,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -539,7 +567,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 14140,
+      "htmlSize": 14227,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -567,7 +595,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 13698,
+      "htmlSize": 13785,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -651,34 +679,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/location": {
-      "routeType": "page",
-      "response": "complete",
-      "compute": "static",
-      "htmlSize": 15466,
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/location",
-      "dataRoute": "/location.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/login": {
       "routeType": "page",
       "response": "complete",
@@ -726,34 +726,6 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/signup",
       "dataRoute": "/signup.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/state": {
-      "routeType": "page",
-      "response": "complete",
-      "compute": "static",
-      "htmlSize": 15447,
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/state",
-      "dataRoute": "/state.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",

@@ -5,8 +5,8 @@ const FOOTER_COLUMNS = [
     title: "Book",
     links: [
       { label: "Book a Center", href: "/book-a-center" },
-      { label: "Explore Centers", href: "/book-a-center" },
-      { label: "Enterprise", href: "/#enterprise" },
+      { label: "Explore Centers", href: "/explore-center" },
+      { label: "Enterprise", href: "/enterprise" },
     ],
   },
   {

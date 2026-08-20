@@ -1,0 +1,6 @@
+{
+  "/center-details/[id]/page": "app/center-details/[id]/page.js",
+  "/enterprise/page": "app/enterprise/page.js",
+  "/explore-center/page": "app/explore-center/page.js",
+  "/page": "app/page.js"
+}

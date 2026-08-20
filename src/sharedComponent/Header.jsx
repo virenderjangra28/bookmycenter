@@ -9,8 +9,8 @@ import ProfileDropdown from "./ProfileDropdown";
 
 const NAV_LINKS = [
   { label: "Book a Center", href: "/book-a-center" },
-  { label: "Enterprise", href: "#enterprise" },
-  { label: "Explore Centers", href: "/book-a-center" },
+  { label: "Enterprise", href: "/enterprise" },
+  { label: "Explore Centers", href: "/explore-center" },
 ];
 
 const DROPDOWN_LINKS = {
@@ -131,12 +131,14 @@ function NavDropdown({ label, items }) {
         <ChevronDownIcon className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open ? (
-        <div className="absolute left-0 top-full z-50 mt-2 min-w-[200px] rounded-xl border border-slate-200 bg-white py-2 shadow-lg">
-          {items.map((item) => (
-            <Link key={item.label} href={item.href} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-[#0056D2]">
-              {item.label}
-            </Link>
-          ))}
+        <div className="absolute left-0 top-full z-50 pt-2">
+          <div className="min-w-[200px] rounded-xl border border-slate-200 bg-white py-2 shadow-lg">
+            {items.map((item) => (
+              <Link key={item.label} href={item.href} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-[#0056D2]">
+                {item.label}
+              </Link>
+            ))}
+          </div>
         </div>
       ) : null}
     </div>

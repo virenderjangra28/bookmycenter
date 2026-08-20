@@ -9,6 +9,5 @@ export const metadata = {
 
 export default async function ExploreCenterPage() {
   const centers = await getVerifiedCenters();
-  console.log("centers",centers)
   return <ExploreCenter centers={centers} />;
 }

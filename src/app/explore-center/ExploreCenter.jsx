@@ -23,26 +23,60 @@ function toExploreCenter(center, index) {
     location: cityName(center.location),
     badge: BADGES[index % BADGES.length],
     tags,
+    image: center.image || "",
   };
 }
 
-function CenterPlaceholder({image}) {
+function CenterPlaceholder({ image, alt }) {
+  const isRemote = typeof image === "string" && /^https?:\/\//.test(image);
+  const isInline = typeof image === "string" && (image.startsWith("data:") || image.startsWith("blob:"));
+
+  if (isRemote) {
+    const isConfiguredHost = image.includes("images.unsplash.com");
+
+    if (isConfiguredHost) {
+      return (
+        <div className="relative h-[168px] w-full overflow-hidden rounded-t-2xl">
+          <Image src={image} alt={alt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+        </div>
+      );
+    }
+
+    return (
+      <img
+        src={image}
+        alt={alt}
+        className="h-[168px] w-full rounded-t-2xl object-cover"
+      />
+    );
+  }
+
+  if (isInline) {
+    return (
+      <img
+        src={image}
+        alt={alt}
+        className="h-[168px] w-full rounded-t-2xl object-cover"
+      />
+    );
+  }
+
   return (
     <div
       className="h-[168px] w-full overflow-hidden rounded-t-2xl"
       style={{
         backgroundImage: "repeating-linear-gradient(90deg, #d7e8fb 0 52px, #f4f8fc 52px 72px)",
       }}
-      aria-hidden
+      role="img"
+      aria-label={alt}
     />
-    // <Image src={image} alt="image" />
   );
 }
 
 function CenterCard({ center }) {
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl border border-[#eef2f6] bg-white shadow-[0_12px_32px_rgba(15,23,42,0.06)]">
-      <CenterPlaceholder image={center.image}/>
+      <CenterPlaceholder image={center.image} alt={center.name} />
       <div className="flex flex-1 flex-col p-5">
         <span className="inline-flex w-fit rounded-full bg-[#d8f5e3] px-2.5 py-1 text-[11px] font-semibold text-[#1b8a4a]">
           {center.badge}

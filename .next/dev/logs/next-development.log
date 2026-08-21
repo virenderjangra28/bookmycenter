@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {"timestamp":"00:00:00.798","source":"Server","level":"LOG","message":""}
 {"timestamp":"00:00:02.479","source":"Server","level":"LOG","message":"centers [{...}]"}
 {"timestamp":"00:00:02.604","source":"Browser","level":"WARN","message":"Image with src \"/_next/static/media/logo.1woe5e6c607e6.jpeg\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."}
@@ -76,3 +77,8 @@
 {"timestamp":"00:04:59.666","source":"Server","level":"ERROR","message":"⨯ Error: Cannot find module '../chunks/ssr/[turbopack]_runtime.js'\nRequire stack:\n- /Users/virenderjangra/Documents/bookmycenter/.next/dev/server/pages/_document.js\n- /Users/virenderjangra/Documents/bookmycenter/node_modules/next/dist/server/require.js\n- /Users/virenderjangra/Documents/bookmycenter/node_modules/next/dist/server/load-components.js\n- /Users/virenderjangra/Documents/bookmycenter/node_modules/next/dist/build/utils.js\n- /Users/virenderjangra/Documents/bookmycenter/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js\n- /Users/virenderjangra/Documents/bookmycenter/node_modules/next/dist/server/lib/router-server.js\n- /Users/virenderjangra/Documents/bookmycenter/node_modules/next/dist/server/lib/start-server.js"}
 {"timestamp":"00:04:59.670","source":"Server","level":"ERROR","message":"Error: ENOENT: no such file or directory, open '/Users/virenderjangra/Documents/bookmycenter/.next/dev/routes-manifest.json'"}
 {"timestamp":"00:04:59.672","source":"Server","level":"ERROR","message":"Error: ENOENT: no such file or directory, open '/Users/virenderjangra/Documents/bookmycenter/.next/dev/routes-manifest.json'"}
+=======
+{"timestamp":"00:00:01.064","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:05.429","source":"Browser","level":"WARN","message":"Image with src \"/_next/static/media/logo.1woe5e6c607e6.jpeg\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."}
+{"timestamp":"00:00:05.435","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mImage with src \\\"/_next/static/media/logo.1woe5e6c607e6.jpeg\\\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \\\"auto\\\"' or 'height: \\\"auto\\\"' to maintain the aspect ratio.\\u001b[39m\""}
+>>>>>>> virender-jangra

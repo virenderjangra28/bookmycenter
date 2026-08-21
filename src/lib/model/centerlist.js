@@ -163,6 +163,8 @@ const centerlistSchema = new mongoose.Schema(
     { collection: "centerLists" }
 );
 
+centerlistSchema.index({ userId: 1 });
+
 if (mongoose.models.Centerlist) {
     mongoose.deleteModel("Centerlist");
 }

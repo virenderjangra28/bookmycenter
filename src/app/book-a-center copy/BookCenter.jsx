@@ -15,23 +15,23 @@ const INITIAL_FORM = {
   country: "",
   state: "",
   city: "",
-  // pinCode: "",
-  // fullAddress: "",
+  pinCode: "",
+  fullAddress: "",
   centerType: "",
   category: "",
-  // startDate: "",
-  // endDate: "",
-  // startTime: "",
-  // endTime: "",
+  startDate: "",
+  endDate: "",
+  startTime: "",
+  endTime: "",
   capacity: "",
-  // organizationName: "",
-  // contactPersonName: "",
-  // email: "",
-  // emailOtp: "",
-  // emailVerified: false,
-  // contactNumber: "",
-  // mobileOtp: "",
-  // mobileVerified: false,
+  organizationName: "",
+  contactPersonName: "",
+  email: "",
+  emailOtp: "",
+  emailVerified: false,
+  contactNumber: "",
+  mobileOtp: "",
+  mobileVerified: false,
 };
 
 function ChevronIcon({ className }) {
@@ -417,7 +417,7 @@ export default function BookCenter() {
               </datalist>
             </Field>
 
-            {/* <Field label="Pin Code" id="pinCode" required>
+            <Field label="Pin Code" id="pinCode" required>
               <input
                 id="pinCode"
                 type="text"
@@ -431,9 +431,9 @@ export default function BookCenter() {
                 maxLength={isDomestic ? 6 : 12}
                 required
               />
-            </Field> */}
+            </Field>
 
-            {/* <div className="md:col-span-2">
+            <div className="md:col-span-2">
               <Field label="Full Address" id="fullAddress" required>
                 <textarea
                   id="fullAddress"
@@ -445,16 +445,16 @@ export default function BookCenter() {
                   required
                 />
               </Field>
-            </div> */}
+            </div>
 
-            <Field label="Centre Type" id="centerType">
+            <Field label="Centre Type" id="centerType" required>
               <div className="relative">
                 <select
                   id="centerType"
                   value={form.centerType}
                   onChange={handleChange("centerType")}
                   className={selectClass()}
-                  
+                  required
                 >
                   <option value="">Select centre type</option>
                   {CENTER_TYPES.map((type) => (
@@ -467,14 +467,14 @@ export default function BookCenter() {
               </div>
             </Field>
 
-            <Field label="Category" id="category">
+            <Field label="Category" id="category" required>
               <div className="relative">
                 <select
                   id="category"
                   value={form.category}
                   onChange={handleChange("category")}
                   className={selectClass()}
-                  
+                  required
                 >
                   <option value="">Select category</option>
                   {STAR_RATINGS.map((rating) => (
@@ -487,7 +487,7 @@ export default function BookCenter() {
               </div>
             </Field>
 
-            {/* <Field label="Start Date" id="startDate" required>
+            <Field label="Start Date" id="startDate" required>
               <input
                 id="startDate"
                 type="date"
@@ -497,9 +497,9 @@ export default function BookCenter() {
                 className={`${inputClass()} [color-scheme:light]`}
                 required
               />
-            </Field> */}
+            </Field>
 
-            {/* <Field label="End Date" id="endDate" required>
+            <Field label="End Date" id="endDate" required>
               <input
                 id="endDate"
                 type="date"
@@ -509,9 +509,9 @@ export default function BookCenter() {
                 className={`${inputClass()} [color-scheme:light]`}
                 required
               />
-            </Field> */}
+            </Field>
 
-            {/* <Field label="Start Time" id="startTime" required>
+            <Field label="Start Time" id="startTime" required>
               <input
                 id="startTime"
                 type="time"
@@ -520,9 +520,9 @@ export default function BookCenter() {
                 className={`${inputClass()} [color-scheme:light]`}
                 required
               />
-            </Field> */}
+            </Field>
 
-            {/* <Field label="End Time" id="endTime" required>
+            <Field label="End Time" id="endTime" required>
               <input
                 id="endTime"
                 type="time"
@@ -536,7 +536,7 @@ export default function BookCenter() {
                 className={`${inputClass()} [color-scheme:light]`}
                 required
               />
-            </Field> */}
+            </Field>
 
             <Field
               label="Required Capacity"
@@ -556,7 +556,7 @@ export default function BookCenter() {
               />
             </Field>
 
-            {/* <Field label="Name of the Organization" id="organizationName" required>
+            <Field label="Name of the Organization" id="organizationName" required>
               <input
                 id="organizationName"
                 type="text"
@@ -566,9 +566,9 @@ export default function BookCenter() {
                 className={inputClass()}
                 required
               />
-            </Field> */}
+            </Field>
 
-            {/* <div className="md:col-span-2">
+            <div className="md:col-span-2">
               <Field label="Contact Person Name" id="contactPersonName" required>
                 <input
                   id="contactPersonName"
@@ -580,9 +580,9 @@ export default function BookCenter() {
                   required
                 />
               </Field>
-            </div> */}
+            </div>
 
-            {/* <div className="md:col-span-2">
+            <div className="md:col-span-2">
               <OtpVerificationField
                 label="Email Id"
                 valueId="email"
@@ -601,9 +601,9 @@ export default function BookCenter() {
                 enableOtp
                 placeholder="name@organization.com"
               />
-            </div> */}
+            </div>
 
-            {/* <div className="md:col-span-2">
+            <div className="md:col-span-2">
               <OtpVerificationField
                 label="Contact Number"
                 valueId="contactNumber"
@@ -626,7 +626,7 @@ export default function BookCenter() {
                 enableOtp
                 placeholder="10-digit mobile number"
               />
-            </div> */}
+            </div>
           </div>
 
           <div className="mt-8 flex justify-end">

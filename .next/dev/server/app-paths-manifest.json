@@ -1,6 +1,6 @@
 {
-  "/center-details/[id]/page": "app/center-details/[id]/page.js",
-  "/enterprise/page": "app/enterprise/page.js",
-  "/explore-center/page": "app/explore-center/page.js",
+  "/api/centers/search/route": "app/api/centers/search/route.js",
+  "/api/countrylist/route": "app/api/countrylist/route.js",
+  "/book-a-center/page": "app/book-a-center/page.js",
   "/page": "app/page.js"
 }
